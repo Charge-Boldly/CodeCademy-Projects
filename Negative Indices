@@ -1,0 +1,8 @@
+# Define the company motto
+company_motto = "Copeland's Corporate Company helps you capably cope with the constant cacophony of daily life"
+
+# Use negative indices to create a slice of the last 4 characters
+final_word = company_motto[-4:]
+
+# Print the last 4 characters
+print(final_word)  # Output: 'life'
