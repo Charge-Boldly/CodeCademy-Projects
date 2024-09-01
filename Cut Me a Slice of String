@@ -1,0 +1,9 @@
+# Define the last name
+last_name = "Villanueva"
+
+# Create a temporary password by slicing the third through sixth letters of last_name
+# Indices start at 0, so the third letter is at index 2 and the sixth letter is at index 5.
+temp_password = last_name[2:6]
+
+# Print the temporary password to verify the result
+print(temp_password)
