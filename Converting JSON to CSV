@@ -1,0 +1,15 @@
+import requests  # Import the requests module to handle HTTP requests
+import csv       # Import the csv module to handle CSV file operations
+
+# Make a GET request to the Census API to fetch data about counties in New York
+r = requests.get('https://api.census.gov/data/2020/acs/acs5?get=NAME,B08303_001E,B08303_013E&for=county:*&in=state:36')
+
+# Decode the JSON data from the API response
+r_json = r.json()
+
+# Open a file named 'commute_data.csv' in write mode ('w'), with newline='' to avoid extra blank lines in the file
+with open('commute_data.csv', mode='w', newline='') as file:
+    # Create a CSV writer object to write data to the file
+    writer = csv.writer(file)
+    # Write all rows of the JSON data to the CSV file
+    writer.writerows(r_json)
