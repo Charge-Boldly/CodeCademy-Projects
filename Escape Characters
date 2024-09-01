@@ -1,0 +1,5 @@
+# Define the password with escaped double quotes
+password = "theycallme\"crazy\"91"  # Use \" to include double quotes in the string
+
+# Print the password to check
+print(password)  # Output: theycallme"crazy"91  # This prints the password with quotes intact
