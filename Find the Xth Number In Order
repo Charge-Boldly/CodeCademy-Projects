@@ -1,0 +1,17 @@
+def getX(x, nums):
+    # Check if the list is empty or x is out of range
+    if not nums or x > len(nums):
+        return 0
+    
+    # Sort the list
+    sorted_nums = sorted(nums)
+    
+    # Return the Xth smallest number (1-based index)
+    return sorted_nums[x - 1]
+
+# Test cases
+print(getX(2, [6, 3, -1, 5]))       # Output: 3
+print(getX(2, [5, 10, -3, -3, 7, 9])) # Output: -3
+print(getX(4, [5, 10, -3, -3, 7, 9])) # Output: 7
+print(getX(7, [5, 10, -3, -3, 7, 9])) # Output: 0 (x is greater than the length)
+print(getX(1, []))                   # Output: 0 (empty list)
