@@ -1,0 +1,7 @@
+# Valid string using double quotes
+favorite_word = "coding"
+
+# Also valid string using single quotes
+favorite_word = 'coding'
+
+print(favorite_word)
