@@ -1,0 +1,9 @@
+import numpy  # Import the numpy library for numerical computations
+
+# Generate and print 500 random values from a binomial distribution
+# with 1 trial per experiment and an 80% chance of success.
+print(numpy.random.binomial(n = 1, p = 0.8, size = 500))
+
+# Generate and print 500 random values from a binomial distribution
+# with 100 trials per experiment and an 80% chance of success.
+print(numpy.random.binomial(n = 100, p = 0.8, size = 500))
