@@ -1,0 +1,21 @@
+def common_letters(string_one, string_two):
+    # Convert both strings to sets to find unique characters
+    set_one = set(string_one)
+    set_two = set(string_two)
+    
+    # Find common letters by intersecting the sets
+    common = list(set_one & set_two)
+    
+    # Sort the common letters based on their first appearance in string_one
+    common.sort(key=lambda x: string_one.index(x))
+    
+    # Return the list of common letters in the desired order
+    return common
+
+# Test cases
+print(common_letters("banana", "cream"))            # Expected output: ['a']
+print(common_letters("hello", "world"))             # Expected output: ['l', 'o']
+print(common_letters("apple", "peach"))             # Expected output: ['a', 'e', 'p']
+print(common_letters("abcd", "xyz"))                # Expected output: []
+print(common_letters("manhattan", "san francisco")) # Expected output: ['a', 'n']
+print(common_letters("python", "ruby on rails"))    # Expected output: ['y', 'o', 'n']
