@@ -1,0 +1,7 @@
+def letter_check(word, letter):
+    # Check if the letter is in the word
+    return letter in word
+
+# Test cases
+print(letter_check("strawberry", "a"))  # Expected output: True
+print(letter_check("strawberry", "o"))  # Expected output: False
