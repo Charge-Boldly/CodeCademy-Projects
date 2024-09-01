@@ -1,0 +1,12 @@
+import pandas as pd  # Import the pandas library with the alias 'pd'
+
+# Create a pandas DataFrame from the 'commute_data.csv' file
+commute_df = pd.read_csv("commute_data.csv")
+
+# Optional: Print the DataFrame to check its content
+print("Full DataFrame:")
+print(commute_df)
+
+# Preview the first few rows of the DataFrame and print the output
+print("\nPreview of the first few rows:")
+print(commute_df.head())
