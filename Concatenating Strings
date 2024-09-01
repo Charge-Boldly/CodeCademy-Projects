@@ -1,0 +1,32 @@
+def account_generator(first_name, last_name):
+    """
+    Generate an account name by concatenating the first three letters of the first name
+    and the last name.
+
+    Parameters:
+    first_name (str): The first name of the employee.
+    last_name (str): The last name of the employee.
+
+    Returns:
+    str: The generated account name.
+    """
+    # Get the first three letters of the first name
+    first_three_first_name = first_name[:3]
+    
+    # Get the first three letters of the last name
+    first_three_last_name = last_name[:3]
+    
+    # Concatenate the two substrings to form the account name
+    account_name = first_three_first_name + first_three_last_name
+    
+    return account_name
+
+# Provided first_name and last_name
+first_name = "Julie"
+last_name = "Blevins"
+
+# Call the function with the provided names and save the result to new_account
+new_account = account_generator(first_name, last_name)
+
+# Print the new account name
+print(new_account)  # Output should be: JulBlev
