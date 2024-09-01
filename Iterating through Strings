@@ -1,0 +1,18 @@
+def get_length(input_string):
+    # Define a function named get_length that takes one parameter, input_string
+
+    counter = 0
+    # Initialize a variable counter to 0. This will be used to count the characters in the string.
+
+    for char in input_string:
+        # Start a for loop that iterates over each character in the input_string
+
+        counter += 1
+        # Increment the counter by 1 for each character in the string
+
+    return counter
+    # After the loop finishes, return the value of counter, which now holds the total number of characters
+
+# Example usage:
+print(get_length("Hello, world!"))  # Output: 13
+# Call the get_length function with the string "Hello, world!" and print the result, which should be 13
