@@ -1,0 +1,32 @@
+def password_generator(first_name, last_name):
+    """
+    Generate a temporary password by concatenating the last three letters of the first name
+    and the last name.
+
+    Parameters:
+    first_name (str): The first name of the employee.
+    last_name (str): The last name of the employee.
+
+    Returns:
+    str: The generated password.
+    """
+    # Get the last three letters of the first name
+    last_three_first_name = first_name[-3:]
+    
+    # Get the last three letters of the last name
+    last_three_last_name = last_name[-3:]
+    
+    # Concatenate the two substrings to form the password
+    password = last_three_first_name + last_three_last_name
+    
+    return password
+
+# Provided first_name and last_name
+first_name = "Reiko"
+last_name = "Matsuki"
+
+# Generate the temporary password and assign it to temp_password
+temp_password = password_generator(first_name, last_name)
+
+# Print the temporary password
+print(temp_password)  # Output: ikouki
