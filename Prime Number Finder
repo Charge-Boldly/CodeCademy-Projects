@@ -1,0 +1,51 @@
+import math  # Import the math module for square root calculations
+
+def prime_finder(n):
+    # Function to find all prime numbers from 1 to n (inclusive)
+    
+    if n < 2:
+        # If n is less than 2, there are no prime numbers, return an empty list
+        return []
+    
+    primes = []  # Initialize an empty list to store prime numbers
+    
+    for num in range(2, n + 1):
+        # Iterate through numbers from 2 to n (inclusive)
+        if is_prime(num):
+            # Check if the current number is prime
+            primes.append(num)
+            # Append the prime number to the primes list
+    
+    return primes  # Return the list of prime numbers
+
+def is_prime(num):
+    # Function to check if a number num is a prime number
+    
+    if num < 2:
+        # Numbers less than 2 are not prime
+        return False
+    
+    if num == 2:
+        # 2 is the only even prime number
+        return True
+    
+    if num % 2 == 0:
+        # Any other even number is not prime
+        return False
+    
+    max_divisor = int(math.sqrt(num)) + 1
+    # Calculate the maximum divisor to check, which is the square root of num rounded up
+    
+    for i in range(3, max_divisor, 2):
+        # Check only odd divisors from 3 up to the calculated maximum divisor
+        if num % i == 0:
+            # If num is divisible by any of these divisors, it is not a prime
+            return False
+    
+    return True
+    # If no divisors were found, num is a prime number
+
+# Example usage:
+print(prime_finder(11))
+# Output: [2, 3, 5, 7, 11]
+# This will print all prime numbers from 1 to 11
