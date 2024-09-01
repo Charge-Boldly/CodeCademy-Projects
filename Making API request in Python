@@ -1,0 +1,21 @@
+import requests
+
+# URL to request county-level data for New York
+url = 'https://api.census.gov/data/2020/acs/acs5?get=NAME,B08303_001E,B08303_013E&for=county:*&in=state:36'
+
+# Make a GET request to the Census API
+r = requests.get(url)
+
+# Access the returned string data
+r_text = r.text
+
+# Print the raw text data
+print("Raw text data:")
+print(r_text)
+
+# Decode the JSON data
+r_json = r.json()
+
+# Print the JSON data
+print("\nJSON data:")
+print(r_json)
