@@ -1,0 +1,8 @@
+# List of words from the first line of the poem Reapers
+reapers_line_one_words = ["Black", "reapers", "with", "the", "sound", "of", "steel", "on", "stones"]
+
+# Use .join() to combine the words into a sentence
+reapers_line_one = ' '.join(reapers_line_one_words)
+
+# Print the combined sentence
+print(reapers_line_one)  # Output: "Black reapers with the sound of steel on stones"
