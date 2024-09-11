@@ -1,0 +1,8 @@
+# The first line of the poem
+line_one = "The sky has given over"
+
+# Use the .split() method to create a list of words
+line_one_words = line_one.split()
+
+# Print the list of words
+print(line_one_words)  # Output: ['The', 'sky', 'has', 'given', 'over']
