@@ -1,0 +1,12 @@
+# Original strings
+poem_title = "spring storm"
+poem_author = "William Carlos Williams"
+
+# Use the .title() method to convert the title to title case
+poem_title_fixed = poem_title.title()
+
+# Use the .upper() method to convert the author's name to uppercase
+poem_author_fixed = poem_author.upper()
+
+# Print both poem_author and poem_author_fixed
+print(poem_author, poem_author_fixed)  # Output: William Carlos Williams WILLIAM CARLOS WILLIAMS
