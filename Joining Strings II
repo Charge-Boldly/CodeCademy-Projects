@@ -1,0 +1,19 @@
+# List of lines from the poem Winter Trees
+winter_trees_lines = [
+    'All the complicated details',
+    'of the attiring and',
+    'the disattiring are completed!',
+    'A liquid moon',
+    'moves gently among',
+    'the long branches.',
+    'Thus having prepared their buds',
+    'against a sure winter',
+    'the wise trees',
+    'stand sleeping in the cold.'
+]
+
+# Use .join() to combine the lines into a single string with line breaks
+winter_trees_full = '\n'.join(winter_trees_lines)
+
+# Print the full poem
+print(winter_trees_full)
