@@ -1,0 +1,17 @@
+# Original list with unnecessary whitespace
+love_maybe_lines = ['Always    ', '     in the middle of our bloodiest battles  ', 
+                    'you lay down your arms', '           like flowering mines    ',
+                    '\n', '   to conquer me home.    ']
+
+# Create an empty list to store the stripped lines
+love_maybe_lines_stripped = []
+
+# Iterate through each line, strip the whitespace, and append to the new list
+for line in love_maybe_lines:
+    love_maybe_lines_stripped.append(line.strip())
+
+# Join the stripped lines into one large multi-line string
+love_maybe_full = '\n'.join(love_maybe_lines_stripped)
+
+# Display the full poem
+print(love_maybe_full)
