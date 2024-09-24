@@ -1,0 +1,7 @@
+sensors = {"living room": 21, "kitchen": 23, "bedroom": 20}
+sensors["pantry"] = 22  # Add the new sensor reading for the pantry
+
+num_cameras = {"backyard": 6, "garage": 2, "driveway": 1}  # Corrected by adding commas
+
+print(sensors)
+print(num_cameras)
