@@ -1,0 +1,91 @@
+def generate_keyword_phrase_for_encoding(message, keyword):
+    keyword_phrase = ""
+    keyword_index = 0
+    
+    # Loop through each character in the message
+    for char in message:
+        if char.isalpha():  # Check if the character is an alphabet letter
+            keyword_phrase += keyword[keyword_index % len(keyword)]  # Add the keyword letter
+            keyword_index += 1  # Move to the next letter in the keyword
+        else:
+            keyword_phrase += char  # Keep spaces and punctuation unchanged
+            
+    return keyword_phrase
+
+def encode_vigenere_cipher(message, keyword):
+    encoded_message = ""  # Initialize an empty string for the encoded message
+    keyword_phrase = generate_keyword_phrase_for_encoding(message, keyword)  # Generate the keyword phrase
+
+    for i, char in enumerate(message):
+        if char.isalpha():  # Check if the character is an alphabet letter
+            # Determine the shift value based on the corresponding character in the keyword phrase
+            shift = ord(keyword_phrase[i]) - ord('a') if char.islower() else ord(keyword_phrase[i]) - ord('A')
+            
+            # Handle lowercase letters
+            if char.islower():
+                new_char = chr((ord(char) - ord('a') + shift) % 26 + ord('a'))
+            # Handle uppercase letters
+            elif char.isupper():
+                new_char = chr((ord(char) - ord('A') + shift) % 26 + ord('A'))
+        else:
+            new_char = char  # Keep spaces and punctuation unchanged
+        
+        encoded_message += new_char  # Append the encoded character to the message
+
+    return encoded_message
+
+def generate_keyword_phrase(message, keyword):
+    keyword_phrase = ""
+    keyword_index = 0
+    
+    # Loop through each character in the message
+    for char in message:
+        if char.isalpha():  # Check if the character is an alphabet letter
+            keyword_phrase += keyword[keyword_index % len(keyword)]  # Add the keyword letter
+            keyword_index += 1  # Move to the next letter in the keyword
+        else:
+            keyword_phrase += char  # Keep spaces and punctuation unchanged
+            
+    return keyword_phrase
+
+def decode_vigenere_cipher(coded_message, keyword):
+    decoded_message = ""  # Initialize an empty string for the decoded message
+    keyword_phrase = generate_keyword_phrase(coded_message, keyword)  # Generate the keyword phrase
+
+    for i, char in enumerate(coded_message):
+        if char.isalpha():  # Check if the character is an alphabet letter
+            # Determine the shift value based on the corresponding character in the keyword phrase
+            shift = ord(keyword_phrase[i]) - ord('a') if char.islower() else ord(keyword_phrase[i]) - ord('A')
+            
+            # Handle lowercase letters
+            if char.islower():
+                new_char = chr((ord(char) - ord('a') - shift + 26) % 26 + ord('a'))
+            # Handle uppercase letters
+            elif char.isupper():
+                new_char = chr((ord(char) - ord('A') - shift + 26) % 26 + ord('A'))
+        else:
+            new_char = char  # Keep spaces and punctuation unchanged
+        
+        decoded_message += new_char  # Append the decoded character to the message
+
+    return decoded_message
+
+# Message to send to Vishal
+message_to_vishal = "Hello Vishal! I hope you're enjoying learning about ciphers. Let's keep our conversations fun and secret!"
+
+# Keyword to encode the message
+keyword = "friends"
+
+# Encode the message using the Vigenère Cipher
+encoded_message = encode_vigenere_cipher(message_to_vishal, keyword)
+
+# Print the encoded message
+print("Encoded Message:")
+print(encoded_message)
+
+# Bonus: Decode the encoded message to verify
+decoded_message = decode_vigenere_cipher(encoded_message, keyword)
+
+# Print the decoded message to verify it matches the original
+print("\nDecoded Message (for verification):")
+print(decoded_message)
