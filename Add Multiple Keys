@@ -1,0 +1,7 @@
+user_ids = {"teraCoder": 9018293, "proProgrammer": 119238}
+
+# Add two new users in one line
+user_ids.update({"theLooper": 138475, "stringQueen": 85739})
+
+# Print the updated dictionary to verify
+print(user_ids)  # This prints the user_ids dictionary
