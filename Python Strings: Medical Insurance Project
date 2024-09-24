@@ -1,0 +1,110 @@
+# String containing medical records for individuals
+medical_data = \
+"""Marina Allison   ,27   ,   31.1 , 
+#7010.0   ;Markus Valdez   ,   30, 
+22.4,   #4050.0 ;Connie Ballard ,43 
+,   25.3 , #12060.0 ;Darnell Weber   
+,   35   , 20.6   , #7500.0;
+Sylvie Charles   ,22, 22.1 
+,#3022.0   ;   Vinay Padilla,24,   
+26.9 ,#4620.0 ;Meredith Santiago, 51   , 
+29.3 ,#16330.0;   Andre Mccarty, 
+19,22.7 , #2900.0 ; 
+Lorena Hodson ,65, 33.1 , #19370.0; 
+Isaac Vu ,34, 24.8,   #7045.0"""
+
+# Print the original medical data to see the output
+print("Original Medical Data:")
+print(medical_data)
+
+# Replace all instances of # with $ and store in updated_medical_data
+updated_medical_data = medical_data.replace("#", "$")
+
+# Print the updated medical data
+print("\nUpdated Medical Data:")
+print(updated_medical_data)
+
+# Initialize num_records
+num_records = 0
+
+# Iterate through the updated medical data and count occurrences of $
+for character in updated_medical_data:
+    if character == "$":
+        num_records += 1
+
+# Print the number of records
+print(f'\nNumber of medical records: {num_records}')
+print("There are " + str(num_records) + " medical records in the data.")
+
+# Split updated_medical_data into a list of medical records
+medical_data_split = updated_medical_data.split(";")
+
+# Define an empty list for medical records
+medical_records = []
+
+# Iterate through each record in medical_data_split
+for record in medical_data_split:
+    # Split the record into components and append the split strings to medical_records
+    medical_records.append(record.split(','))
+
+# Clean up the whitespace in the medical records using a nested loop
+medical_records_clean = []
+for record in medical_records:
+    record_clean = []  # Initialize an empty list for the current record
+    for item in record:  # Nested loop to go through each item in the record
+        record_clean.append(item.strip())  # Strip whitespace and add to record_clean
+    # Add the cleaned medical record to the medical_records_clean list
+    medical_records_clean.append(record_clean)
+
+# Create a list to hold formatted records
+formatted_records = []
+
+# Create separate lists for names, ages, bmis, and insurance costs
+names = []
+ages = []
+bmis = []
+insurance_costs = []
+
+# Iterate through medical_records_clean to format each record
+for record in medical_records_clean:
+    record_clean = []
+    if len(record) >= 4:  # Ensure there are enough fields
+        name = record[0].upper()  # Name in uppercase
+        age = int(record[1]) if record[1].isdigit() else None  # Convert age to int
+        bmi = float(record[2]) if record[2] else None  # Convert BMI to float
+        cost = float(record[3].replace('$', '').strip()) if len(record) > 3 and record[3] else None  # Convert cost to float
+
+        # Append formatted values to record_clean
+        record_clean.append(name)
+        record_clean.append(age)
+        record_clean.append(bmi)
+        record_clean.append(cost)
+
+        # Add the cleaned record to formatted_records
+        formatted_records.append(record_clean)
+
+        # Store each value in the respective lists
+        names.append(name)
+        ages.append(age)
+        bmis.append(bmi)
+        insurance_costs.append(cost)
+
+# Print the lists of names, ages, bmis, and insurance costs
+print("\nNames:", names)
+print("Ages:", ages)
+print("BMIs:", bmis)
+print("Insurance Costs:", insurance_costs)
+
+# Calculate the average BMI
+total_bmi = 0  # Initialize total_bmi
+
+# Use a for loop to iterate through bmis and add each bmi to total_bmi
+for bmi in bmis:
+    total_bmi += float(bmi)  # Add each BMI to total_bmi
+
+# Calculate the average BMI
+average_bmi = total_bmi / len(bmis) if len(bmis) > 0 else 0
+
+# Print the average BMI
+print(f"\nAverage BMI: {average_bmi:.2f}")
+print("Average BMI: " + str(average_bmi))
