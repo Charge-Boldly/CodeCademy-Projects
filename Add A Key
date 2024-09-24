@@ -1,0 +1,13 @@
+animals_in_zoo = {}
+
+# Add "zebras" to the dictionary with a value of 8
+animals_in_zoo["zebras"] = 8
+
+# Add "monkeys" to the dictionary with a value of 12
+animals_in_zoo["monkeys"] = 12
+
+# Add "dinosaurs" to the dictionary with a value of 0
+animals_in_zoo["dinosaurs"] = 0
+
+# Print the updated dictionary to verify
+print(animals_in_zoo)
