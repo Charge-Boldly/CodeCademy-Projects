@@ -1,0 +1,4 @@
+my_empty_dictionary = {}
+
+# Print the empty dictionary to verify
+print(my_empty_dictionary)
