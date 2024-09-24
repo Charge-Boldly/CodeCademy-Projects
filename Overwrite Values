@@ -1,0 +1,15 @@
+oscar_winners = {
+    "Best Picture": "La La Land",
+    "Best Actor": "Casey Affleck",
+    "Best Actress": "Emma Stone",
+    "Animated Feature": "Zootopia"
+}
+
+# Update the value for "Best Picture" to "Moonlight"
+oscar_winners["Best Picture"] = "Moonlight"
+
+# Add "Supporting Actress" with the value "Viola Davis"
+oscar_winners["Supporting Actress"] = "Viola Davis"
+
+# Print the updated dictionary to verify
+print(oscar_winners)
