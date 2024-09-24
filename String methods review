@@ -1,0 +1,37 @@
+# String containing information about highlighted poems
+poems_info = "Afterimages:Audre Lorde:1997, The Shadow:William Carlos Williams:1915, Ecstasy:Gabriela Mistral:1925, Georgia Dusk:Jean Toomer:1923, Parting Before Daybreak:An Qi:2014, The Untold Want:Walt Whitman:1871, Mr. Grumpledump's Song:Shel Silverstein:2004, Angel Sound Mexico City:Carmen Boullosa:2013, In Love:Kamala Suraiyya:1965, Dream Variations:Langston Hughes:1994, Dreamwood:Adrienne Rich:1987"
+
+# Print the poems information to the console
+print(poems_info)
+
+# Split the string into a list of individual poems based on the comma
+poems_list = poems_info.split(',')
+
+# Create a new list to store cleaned poem information
+cleaned_poems_list = []
+
+# Iterate through the list of poems to remove any leading or trailing whitespace
+for poem in poems_list:
+    cleaned_poems_list.append(poem.strip())
+
+# Initialize a list to hold details of each poem
+poems_details = []
+
+# Split each cleaned poem entry into components: title, author, and year
+for poem in cleaned_poems_list:
+    poems_details.append(poem.split(':'))
+
+# Separate lists for titles, authors, and publication years
+titles = []
+authors = []
+publication_years = []
+
+# Populate the separate lists with information from poems_details
+for details in poems_details:
+    titles.append(details[0])
+    authors.append(details[1])
+    publication_years.append(details[2])
+
+# Print the formatted output for each poem's information
+for index in range(len(poems_details)):
+    print('The poem "{}" was written by {} and published in {}.'.format(titles[index], authors[index], publication_years[index]))
