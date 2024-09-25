@@ -1,0 +1,11 @@
+drinks = ["espresso", "chai", "decaf", "drip"]
+caffeine = [64, 40, 0, 120]
+
+# Create an iterator of pairs between drinks and caffeine
+zipped_drinks = zip(drinks, caffeine)
+
+# Create a dictionary using a dict comprehension
+drinks_to_caffeine = {drink: caffeine_content for drink, caffeine_content in zipped_drinks}
+
+# Print the resulting dictionary
+print(drinks_to_caffeine)
