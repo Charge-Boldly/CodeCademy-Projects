@@ -1,0 +1,13 @@
+user_ids = {
+    "teraCoder": 100019,
+    "pythonGuy": 182921,
+    "samTheJavaMaam": 123112,
+    "lyleLoop": 102931,
+    "keysmithKeith": 129384
+}
+
+# Use .get() to retrieve the user ID for "superStackSmash", with a default of 100000
+stack_id = user_ids.get("superStackSmash", 100000)
+
+# Print the value of stack_id
+print(stack_id)
