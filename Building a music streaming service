@@ -1,0 +1,27 @@
+# Define the lists
+songs = ["Like a Rolling Stone", "Satisfaction", "Imagine", "What's Going On", "Respect", "Good Vibrations"]
+playcounts = [78, 29, 44, 21, 89, 5]
+
+# Create the dictionary using dict comprehension
+plays = {song: playcount for song, playcount in zip(songs, playcounts)}
+
+# Output the current plays dictionary
+print("Before adding new entry:", plays)
+
+# Add a new entry for "Purple Haze"
+plays["Purple Haze"] = 1
+
+# Update the playcount for "Respect"
+plays["Respect"] = 94
+
+# Output the updated plays dictionary
+print("After updating 'Respect':", plays)
+
+# Create the library dictionary
+library = {
+    "The Best Songs": plays,
+    "Sunday Feelings": {}
+}
+
+# Output the library dictionary
+print("Library dictionary:", library)
