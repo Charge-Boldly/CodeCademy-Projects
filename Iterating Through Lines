@@ -1,0 +1,6 @@
+# Using 'with' to open the file how_many_lines.txt
+with open('how_many_lines.txt') as lines_doc:
+    # Iterate through each line in the file
+    for line in lines_doc.readlines():
+        # Print out each line
+        print(line)
