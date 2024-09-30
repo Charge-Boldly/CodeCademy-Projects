@@ -1,0 +1,12 @@
+# Dictionary of exercises
+num_exercises = {"functions": 10, "syntax": 13, "control flow": 15, "loops": 22, "lists": 19, "classes": 18, "dictionaries": 18}
+
+# Initializing total_exercises to 0
+total_exercises = 0
+
+# Iterating through the values in the dictionary and adding to total_exercises
+for value in num_exercises.values():
+    total_exercises += value
+
+# Output the total number of exercises
+print(total_exercises)
