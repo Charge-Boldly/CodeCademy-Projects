@@ -1,0 +1,7 @@
+# Using 'with' to open the file welcome.txt
+with open('welcome.txt') as text_file:
+    # Reading the contents of the file and saving it to text_data
+    text_data = text_file.read()
+
+# Print the contents of text_data
+print(text_data)
