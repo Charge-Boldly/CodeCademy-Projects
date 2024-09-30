@@ -1,0 +1,115 @@
+# Define an empty dictionary to store medical costs
+medical_costs = {}
+
+# Add key-value pairs to the medical_costs dictionary
+medical_costs["Marina"] = 6607.0
+medical_costs["Vinay"] = 3225.0
+
+# Print the updated medical_costs dictionary to verify
+print(medical_costs)
+
+# Add three more patients in one line using .update()
+medical_costs.update({"Connie": 8886.0, "Isaac": 16444.0, "Valentina": 6420.0})
+
+# Print the updated medical_costs dictionary to verify the new additions
+print(medical_costs)
+
+# Print the final medical_costs dictionary
+print(medical_costs)
+
+# Update the value associated with Vinay to 3325.0
+medical_costs["Vinay"] = 3325.0
+
+# Print the updated dictionary
+print(medical_costs)
+
+# Calculate the average medical cost of each patient
+total_cost = 0
+for cost in medical_costs.values():
+    total_cost += cost
+
+# Calculate the average
+average_cost = total_cost / len(medical_costs)
+
+# Print the average medical cost
+print("Average Insurance Cost: " + str(average_cost))
+
+# Create two lists for names and ages
+names = ["Marina", "Vinay", "Connie", "Isaac", "Valentina"]
+ages = [27, 24, 43, 35, 52]
+
+# Create a dictionary to map patient names to their ages
+patient_ages = dict(zip(names, ages))
+
+# Print the patient_ages dictionary
+print("Patient Ages:", patient_ages)
+
+# Create an empty dictionary to represent medical records
+medical_records = {}
+
+# Add medical data for Marina
+medical_records["Marina"] = {
+    "Age": 27,
+    "Sex": "Female",
+    "BMI": 31.1,
+    "Children": 2,
+    "Smoker": "Non-smoker",
+    "Insurance_cost": medical_costs["Marina"]
+}
+
+# Add medical data for the other individuals
+medical_records["Vinay"] = {
+    "Age": 24,
+    "Sex": "Male",
+    "BMI": 26.9,
+    "Children": 0,
+    "Smoker": "Non-smoker",
+    "Insurance_cost": medical_costs["Vinay"]
+}
+medical_records["Connie"] = {
+    "Age": 43,
+    "Sex": "Female",
+    "BMI": 25.3,
+    "Children": 3,
+    "Smoker": "Non-smoker",
+    "Insurance_cost": medical_costs["Connie"]
+}
+medical_records["Isaac"] = {
+    "Age": 35,
+    "Sex": "Male",
+    "BMI": 20.6,
+    "Children": 4,
+    "Smoker": "Smoker",
+    "Insurance_cost": medical_costs["Isaac"]
+}
+medical_records["Valentina"] = {
+    "Age": 52,
+    "Sex": "Female",
+    "BMI": 18.7,
+    "Children": 1,
+    "Smoker": "Non-smoker",
+    "Insurance_cost": medical_costs["Valentina"]
+}
+
+# Print the medical_records dictionary to verify all additions
+print("Medical Records:", medical_records)
+
+# Print out Connie’s insurance cost
+print("Connie's insurance cost is " + str(medical_records["Connie"]["Insurance_cost"]) + " dollars.")
+
+# Access Isaac's BMI
+isaac_bmi = medical_records["Isaac"]["BMI"]
+print("Isaac's BMI is " + str(isaac_bmi) + ".")
+
+# Remove Vinay from medical_records
+medical_records.pop("Vinay")
+
+# Print the updated medical_records dictionary to verify the removal
+print("Updated Medical Records:", medical_records)
+
+# Iterate through medical_records to print patient details
+for name, record in medical_records.items():
+    print(name + " is a " + str(record["Age"]) + \
+          " year old " + record["Sex"] + " " + record["Smoker"] + \
+          " with a BMI of " + str(record["BMI"]) + \
+          " and insurance cost of " + str(record["Insurance_cost"]) + ".")
