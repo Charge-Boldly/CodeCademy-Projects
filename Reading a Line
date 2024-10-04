@@ -1,0 +1,4 @@
+with open('just_the_first.txt') as first_line_doc:
+    first_line = first_line_doc.readline()  # Save the first line into the variable first_line
+
+print(first_line)  # Print out the first line
