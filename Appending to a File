@@ -1,0 +1,3 @@
+with open('cool_dogs.txt', 'a') as cool_dogs_file:
+    # Appending "Air Buddy" to the file
+    cool_dogs_file.write('Air Buddy\n')
