@@ -1,0 +1,17 @@
+import csv
+
+# Open the file in read mode (default)
+with open('books.csv') as books_csv:
+    # Create a DictReader instance with '@' as the delimiter
+    books_reader = csv.DictReader(books_csv, delimiter='@')
+    
+    # Initialize an empty list to store ISBN numbers
+    isbn_list = []
+    
+    # Iterate through each row in books_reader
+    for row in books_reader:
+        # Append the ISBN number to the list using the ['ISBN'] key
+        isbn_list.append(row['ISBN'])
+
+# Print the list of ISBN numbers
+print(isbn_list)
