@@ -1,0 +1,9 @@
+import json
+
+# Open the file message.json in read mode
+with open('message.json') as message_json:
+    # Load the JSON data into a Python dictionary
+    message = json.load(message_json)
+
+# Now you can interact with the 'message' dictionary
+print(message['text'])  # Print the value associated with the 'text' key
