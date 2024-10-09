@@ -1,0 +1,18 @@
+import json
+
+# Define the data payload
+data_payload = [
+  {'interesting message': 'What is JSON? A web application\'s little pile of secrets.',
+   'follow up': 'But enough talk!'}
+]
+
+# Open the file in write-mode
+with open('data.json', 'w') as data_json:
+    # Save the data to a JSON file
+    json.dump(data_payload, data_json, indent=4)  # indent=4 for pretty formatting
+
+# Example of using json.dump() with a different payload
+payload = {'message': 'OK'}
+
+with open('file.json', 'w') as file_json:
+    json.dump(payload, file_json)  # Save the payload to 'file.json'
