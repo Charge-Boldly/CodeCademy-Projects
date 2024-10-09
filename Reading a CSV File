@@ -1,0 +1,9 @@
+import csv
+
+with open('cool_csv.csv') as cool_csv_file:
+    # Create a DictReader object to read the CSV file as a dictionary
+    cool_csv_dict = csv.DictReader(cool_csv_file)
+    
+    # Print the "Cool Fact" from each row
+    for row in cool_csv_dict:
+        print(row['Cool Fact'])
