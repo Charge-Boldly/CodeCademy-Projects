@@ -1,0 +1,77 @@
+# Task 1
+# Function to calculate y given m, b, and x
+def get_y(m, b, x):
+    return m * x + b
+
+# Testing get_y
+print(get_y(1, 0, 7) == 7)  # True: y = 1*7 + 0 = 7
+print(get_y(5, 10, 3) == 25)  # True: y = 5*3 + 10 = 25
+
+
+# Tasks 2 and 3
+# Function to calculate the error between a point and the line
+def calculate_error(m, b, point):
+    x, y = point
+    # Calculate the expected y value for the given x
+    expected_y = get_y(m, b, x)
+    # Return the absolute error
+    return abs(y - expected_y)
+
+# Task 4
+# Testing calculate_error
+print(calculate_error(1, 0, (3, 3)))  # 0 (True): Point (3,3) lies on the line y=x
+print(calculate_error(1, 0, (3, 4)))  # 1 (True): Point (3,4) is 1 unit away from y=x
+print(calculate_error(1, -1, (3, 3)))  # 1 (True): Point (3,3) is 1 unit away from y=x-1
+print(calculate_error(-1, 1, (3, 3)))  # 5 (True): Point (3,3) is 5 units away from y=-x+1
+
+
+# Task 5
+# Function to calculate total error for a list of data points
+def calculate_all_error(m, b, datapoints):
+    total_error = 0
+    for point in datapoints:
+        total_error += calculate_error(m, b, point)
+    return total_error
+
+
+# Task 6
+# Testing calculate_all_error
+datapoints = [(1, 1), (3, 3), (5, 5), (-1, -1)]
+print(calculate_all_error(1, 0, datapoints))  # 0 (True): All points on the line y=x
+print(calculate_all_error(1, 1, datapoints))  # 4 (True): Each point is 1 unit from y=x+1
+print(calculate_all_error(1, -1, datapoints))  # 4 (True): Each point is 1 unit from y=x-1
+print(calculate_all_error(-1, 1, datapoints))  # 18 (True): Total distance from y=-x+1
+
+
+# Tasks 8 and 9
+# Example list comprehensions for possible slopes (m) and intercepts (b)
+possible_ms = [round(m * 0.1, 1) for m in range(-100, 101)]  # Possible slopes from -10 to 10 inclusive, in increments of 0.1
+possible_bs = [round(b * 0.1, 1) for b in range(-200, 201)]  # Possible intercepts from -20 to 20 inclusive, in increments of 0.1
+
+
+# Task 10
+datapoints = [(1, 2), (2, 0), (3, 4), (4, 4), (5, 3)]
+
+
+# Tasks 11 and 12
+# Variables for optimization
+smallest_error = float("inf")  # Start with infinity
+best_m = 0
+best_b = 0
+
+# Iterate over possible slopes and intercepts
+for m in possible_ms:
+    for b in possible_bs:
+        error = calculate_all_error(m, b, datapoints)  # Calculate total error for this (m, b)
+        if error < smallest_error:  # If it's less than the current smallest error
+            smallest_error = error  # Update smallest error
+            best_m = m  # Update best m
+            best_b = b  # Update best b
+
+# Task 13
+# Print the best slope and intercept found
+print(f"Best slope (m): {best_m}, Best intercept (b): {best_b}, Smallest error: {smallest_error}")
+
+# Predicting the bounce height for a ball with width 6
+predicted_height = get_y(best_m, best_b, 6)
+print(f"Predicted bounce height for a 6cm ball: {predicted_height}")
