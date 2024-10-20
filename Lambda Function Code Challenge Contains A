@@ -1,0 +1,5 @@
+contains_a = lambda word: 'a' in word
+
+print(contains_a("banana"))  # True
+print(contains_a("apple"))   # True
+print(contains_a("cherry"))  # False
