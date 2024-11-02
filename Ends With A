@@ -1,0 +1,4 @@
+ends_in_a = lambda s: s.endswith('a')
+
+print(ends_in_a("data"))       # Expected output: True
+print(ends_in_a("aardvark"))   # Expected output: False
