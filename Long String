@@ -1,0 +1,4 @@
+long_string = lambda s: len(s) > 12
+
+print(long_string("short"))            # Expected output: False
+print(long_string("photosynthesis"))    # Expected output: True
