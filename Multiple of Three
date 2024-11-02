@@ -1,0 +1,10 @@
+# Lambda function that checks if a number is a multiple of three
+multiple_of_three = lambda num: "multiple of three" if num % 3 == 0 else "not a multiple"
+
+print(multiple_of_three(9))   # Expected output: "multiple of three"
+print(multiple_of_three(10))  # Expected output: "not a multiple"
+
+# Explanation:
+# - `num % 3 == 0`: Checks if num divides evenly by 3 (remainder is 0).
+# - If True, it returns "multiple of three".
+# - If False, it returns "not a multiple".
