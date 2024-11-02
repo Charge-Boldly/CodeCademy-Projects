@@ -1,0 +1,18 @@
+import codecademylib3
+import pandas as pd
+
+# Creating the DataFrame with store information
+df2 = pd.DataFrame([
+  [1, 'San Diego', 100],         # Row 1
+  [2, 'Los Angeles', 120],       # Row 2
+  [3, 'San Francisco', 90],      # Row 3
+  [4, 'Sacramento', 115]         # Row 4
+],
+  columns=[
+    'Store ID',                   # Column name for Store ID
+    'Location',                   # Column name for Location
+    'Number of Employees'         # Column name for Number of Employees
+  ]
+)
+
+print(df2)
