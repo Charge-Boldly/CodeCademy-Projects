@@ -1,0 +1,11 @@
+import random
+
+# Lambda function that returns the input number plus a random integer between 1 and 10 (inclusive)
+add_random = lambda num: num + random.randint(1, 10)
+
+print(add_random(5))    # Output will vary: e.g., 7, 10, etc. depending on the random number
+print(add_random(100))  # Output will vary: e.g., 101, 105, etc. depending on the random number
+
+# Explanation:
+# - `random.randint(1, 10)`: Generates a random integer between 1 and 10, inclusive.
+# - `num + random.randint(1, 10)`: Adds this random integer to the input num.
