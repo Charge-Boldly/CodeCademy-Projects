@@ -1,0 +1,9 @@
+# Lambda function that returns the ones' place (last digit) of a number
+ones_place = lambda num: num % 10
+
+print(ones_place(123))  # Expected output: 3
+print(ones_place(4))    # Expected output: 4
+
+# Explanation:
+# - `num % 10`: Uses the modulo operator to find the remainder when num is divided by 10.
+# - This remainder represents the last digit (ones' place) of the number.
