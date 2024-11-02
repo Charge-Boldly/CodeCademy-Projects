@@ -1,0 +1,9 @@
+# Lambda function that returns twice the square of the input number
+double_square = lambda num: 2 * (num ** 2)
+
+print(double_square(5))  # Expected output: 50
+print(double_square(3))  # Expected output: 18
+
+# Explanation:
+# - `num ** 2`: Calculates the square of num (num multiplied by itself).
+# - `2 * (num ** 2)`: Multiplies the square by 2 to get twice the square.
