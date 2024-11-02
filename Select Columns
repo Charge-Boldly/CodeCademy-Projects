@@ -1,0 +1,31 @@
+import codecademylib3
+import pandas as pd  # Importing pandas library to work with DataFrames
+
+# Create a DataFrame named df with provided data.
+# Each list represents a row, with data for each month and appointments at four clinics
+df = pd.DataFrame([
+  ['January', 100, 100, 23, 100],  # Row 1: January data
+  ['February', 51, 45, 145, 45],   # Row 2: February data
+  ['March', 81, 96, 65, 96],       # Row 3: March data
+  ['April', 80, 80, 54, 180],      # Row 4: April data
+  ['May', 51, 54, 54, 154],        # Row 5: May data
+  ['June', 112, 109, 79, 129]      # Row 6: June data
+],
+  # Assigning names to columns for easier reference
+  columns=['month', 'clinic_east', 'clinic_north', 'clinic_south', 'clinic_west']
+)
+
+# Selecting the 'clinic_north' column from df.
+# This extracts only the data from the 'clinic_north' column, making clinic_north a Series
+clinic_north = df['clinic_north']  # OR we could write df.clinic_north
+
+# Print the clinic_north column data to see the monthly appointments for clinic_north
+print(clinic_north)
+
+# Check the data type of clinic_north
+# This confirms that clinic_north is a Series, which is a one-dimensional array-like structure in pandas
+print(type(clinic_north))
+
+# Check the data type of df
+# This confirms that df is a DataFrame, a two-dimensional table-like structure in pandas
+print(type(df))
