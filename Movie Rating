@@ -1,0 +1,10 @@
+# Lambda function that rates a movie based on a rating score
+rate_movie = lambda rating: "I liked this movie" if rating > 8.5 else "This movie was not very good"
+
+print(rate_movie(9.2))  # Expected output: "I liked this movie"
+print(rate_movie(7.2))  # Expected output: "This movie was not very good"
+
+# Explanation:
+# - `rating > 8.5`: Checks if the movie's rating is greater than 8.5.
+# - If True, it returns "I liked this movie".
+# - If False, it returns "This movie was not very good".
