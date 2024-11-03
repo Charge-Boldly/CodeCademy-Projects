@@ -1,0 +1,22 @@
+# Importing codecademylib3 for compatibility with the Codecademy platform
+import codecademylib3
+
+# Importing the pandas library for data manipulation
+import pandas as pd
+
+# Creating a DataFrame 'df' containing names and emails of individuals
+df = pd.DataFrame([
+    ['JOHN SMITH', 'john.smith@gmail.com'],
+    ['Jane Doe', 'jdoe@yahoo.com'],
+    ['joe schmo', 'joeschmo@hotmail.com']
+],
+    # Specifying column names for the DataFrame
+    columns=['Name', 'Email']
+)
+
+# Adding a new column 'Lowercase Name' to 'df' by applying the .str.lower() function to 'Name' column
+# This converts all names in the 'Name' column to lowercase and assigns the result to 'Lowercase Name'
+df['Lowercase Name'] = df['Name'].str.lower()
+
+# Printing the DataFrame to display the updated table with the new 'Lowercase Name' column
+print(df)
