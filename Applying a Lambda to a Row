@@ -1,0 +1,21 @@
+# Importing codecademylib3 for Codecademy environment compatibility
+import codecademylib3
+
+# Importing pandas for data handling
+import pandas as pd
+
+# Reading in the employees.csv file and storing it as a DataFrame 'df'
+df = pd.read_csv('employees.csv')
+
+# Defining a lambda function named 'total_earned' that calculates total earnings including overtime
+# The lambda function takes a row as input
+total_earned = lambda row: (
+    row['hours_worked'] * row['hourly_wage'] if row['hours_worked'] <= 40
+    else (40 * row['hourly_wage']) + ((row['hours_worked'] - 40) * (row['hourly_wage'] * 1.5))
+)
+
+# Applying 'total_earned' to each row of 'df' and creating a new column 'total_earned'
+df['total_earned'] = df.apply(total_earned, axis=1)
+
+# Printing the DataFrame to show the new 'total_earned' column with calculated total earnings
+print(df)
