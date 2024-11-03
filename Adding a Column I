@@ -1,0 +1,22 @@
+# Importing codecademylib3 for Codecademy compatibility (specific to the Codecademy environment)
+import codecademylib3
+
+# Importing the pandas library for data manipulation and analysis
+import pandas as pd
+
+# Creating a DataFrame 'df' with data on products, including Product ID, Description, Cost to Manufacture, and Price
+df = pd.DataFrame([
+    [1, '3 inch screw', 0.5, 0.75],
+    [2, '2 inch nail', 0.10, 0.25],
+    [3, 'hammer', 3.00, 5.50],
+    [4, 'screwdriver', 2.50, 3.00]
+],
+    # Naming the columns in the DataFrame
+    columns=['Product ID', 'Description', 'Cost to Manufacture', 'Price']
+)
+
+# Adding a new column to 'df' called 'Sold in Bulk?', specifying whether each item is sold in bulk
+df['Sold in Bulk?'] = ['Yes', 'Yes', 'No', 'No']
+
+# Printing the DataFrame to show the updated table with the new column
+print(df)
