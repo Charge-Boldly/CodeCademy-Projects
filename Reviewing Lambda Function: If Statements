@@ -1,0 +1,8 @@
+# Defining a lambda function named 'mylambda' that checks the user's age
+# If 'age' is 13 or greater, it returns "Welcome to BattleCity!"
+# If 'age' is less than 13, it returns "You must be 13 or older"
+mylambda = lambda age: "Welcome to BattleCity!" if age >= 13 else "You must be 13 or older"
+
+# Testing 'mylambda' with different age inputs
+print(mylambda(15))  # Should print: Welcome to BattleCity!
+print(mylambda(12))  # Should print: You must be 13 or older
