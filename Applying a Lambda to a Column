@@ -1,0 +1,19 @@
+# Importing codecademylib3 for Codecademy environment compatibility
+import codecademylib3
+
+# Importing pandas for data handling
+import pandas as pd
+
+# Reading in the employees.csv file and storing it as a DataFrame 'df'
+df = pd.read_csv('employees.csv')
+
+# Defining a lambda function called 'get_last_name' that takes a name as input
+# It splits the name at each space and returns the last element of the resulting list, which is the last name
+get_last_name = lambda name: name.split()[-1]
+
+# Applying 'get_last_name' to the 'name' column in 'df' to create a new column 'last_name'
+# This new column will contain only the last names of employees
+df['last_name'] = df['name'].apply(get_last_name)
+
+# Printing the DataFrame to show the new 'last_name' column
+print(df)
