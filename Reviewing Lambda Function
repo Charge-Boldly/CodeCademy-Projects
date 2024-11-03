@@ -1,0 +1,6 @@
+# Creating a lambda function named 'mylambda' that takes a string 'x' as input
+# It returns a string containing the first character (x[0]) and the last character (x[-1])
+mylambda = lambda x: x[0] + x[-1]
+
+# Testing 'mylambda' with the example string provided
+print(mylambda('This is a string'))
