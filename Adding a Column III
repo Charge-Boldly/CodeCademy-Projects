@@ -1,0 +1,23 @@
+# Importing codecademylib3 for compatibility with Codecademy platform
+import codecademylib3
+
+# Importing pandas for data manipulation
+import pandas as pd
+
+# Creating a DataFrame 'df' containing product data with columns: Product ID, Description, Cost to Manufacture, and Price
+df = pd.DataFrame([
+    [1, '3 inch screw', 0.5, 0.75],
+    [2, '2 inch nail', 0.10, 0.25],
+    [3, 'hammer', 3.00, 5.50],
+    [4, 'screwdriver', 2.50, 3.00]
+],
+    # Naming the columns for easy identification of each data field
+    columns=['Product ID', 'Description', 'Cost to Manufacture', 'Price']
+)
+
+# Adding a new column 'Margin' that calculates the profit margin
+# The margin is the difference between 'Price' and 'Cost to Manufacture'
+df['Margin'] = df['Price'] - df['Cost to Manufacture']
+
+# Printing the updated DataFrame to show the added 'Margin' column
+print(df)
