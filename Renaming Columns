@@ -1,0 +1,13 @@
+import codecademylib3
+import pandas as pd
+
+# Load the IMDb data from the CSV file into a DataFrame
+df = pd.read_csv('imdb.csv')
+
+# Rename the columns to make them more descriptive and suitable for presentation
+# Here, we replace the old names with the new names in the same order:
+# 'id' -> 'ID', 'name' -> 'Title', 'genre' -> 'Category', 'year' -> 'Year Released', 'imdb_rating' -> 'Rating'
+df.columns = ['ID', 'Title', 'Category', 'Year Released', 'Rating']
+
+# Print the updated DataFrame to check the new column names
+print(df)
