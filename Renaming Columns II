@@ -1,0 +1,11 @@
+import codecademylib3
+import pandas as pd
+
+# Load the IMDb data from the CSV file into a DataFrame
+df = pd.read_csv('imdb.csv')
+
+# Rename the column 'name' to 'movie_title' in place (i.e., directly modifying df)
+df.rename(columns={'name': 'movie_title'}, inplace=True)
+
+# Print the updated DataFrame to confirm the change
+print(df)
