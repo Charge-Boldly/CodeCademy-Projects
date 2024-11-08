@@ -1,0 +1,17 @@
+import codecademylib3
+import pandas as pd
+
+# Load the data
+orders = pd.read_csv('shoefly.csv')
+
+# Print the first 5 rows
+print(orders.head(5))
+
+# Add 'shoe_source' column based on 'shoe_material'
+orders['shoe_source'] = orders.shoe_material.apply(lambda x: 'animal' if x == 'leather' else 'vegan')
+
+# Add 'salutation' column based on 'gender' and 'last_name'
+orders['salutation'] = orders.apply(lambda row: 'Dear Mr. ' + row['last_name'] if row['gender'] == 'male' else 'Dear Ms. ' + row['last_name'], axis=1)
+
+# Print the updated DataFrame to verify
+print(orders.head())
