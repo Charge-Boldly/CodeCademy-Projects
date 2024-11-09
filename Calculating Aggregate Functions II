@@ -1,0 +1,11 @@
+import codecademylib3  # Importing Codecademy's custom library
+import pandas as pd  # Importing pandas for data manipulation
+
+# Load the data from 'orders.csv' into the DataFrame 'orders'
+orders = pd.read_csv('orders.csv')
+
+# Find the most expensive shoe for each shoe type and reset the index to convert it into a DataFrame
+pricey_shoes = orders.groupby('shoe_type').price.max().reset_index()
+
+# Print the result to see the DataFrame with shoe types and their most expensive prices
+print(pricey_shoes)
