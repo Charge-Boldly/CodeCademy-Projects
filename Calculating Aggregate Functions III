@@ -1,0 +1,13 @@
+import codecademylib3  # Importing Codecademy's custom library
+import numpy as np  # Importing numpy for numerical operations
+import pandas as pd  # Importing pandas for data manipulation
+
+# Load the data from 'orders.csv' into the DataFrame 'orders'
+orders = pd.read_csv('orders.csv')
+
+# Calculate the 25th percentile for shoe price for each shoe color
+# and reset the index to convert the result into a DataFrame
+cheap_shoes = orders.groupby('shoe_color').price.quantile(0.25).reset_index()
+
+# Print the result to see the DataFrame with shoe colors and their 25th percentile price
+print(cheap_shoes)
