@@ -1,0 +1,15 @@
+import codecademylib3  # Importing Codecademy's custom library
+import pandas as pd  # Importing pandas for data manipulation
+
+# Load the data from 'orders.csv' into the DataFrame 'orders'
+orders = pd.read_csv('orders.csv')
+
+# Find the most expensive shoe for each shoe type by grouping the data by 'shoe_type'
+# and finding the maximum price within each group. Save the result to 'pricey_shoes'
+pricey_shoes = orders.groupby('shoe_type').price.max()
+
+# Print the result to see the most expensive shoe for each type
+print(pricey_shoes)
+
+# Check and print the type of 'pricey_shoes'
+print(type(pricey_shoes))
