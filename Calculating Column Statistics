@@ -1,0 +1,20 @@
+import codecademylib3  # Importing the Codecademy library
+import pandas as pd  # Importing pandas library for data manipulation
+
+# Load the data from 'orders.csv' into a DataFrame called 'orders'
+orders = pd.read_csv('orders.csv')
+
+# Display the first 10 rows of the orders DataFrame to see some sample data
+print(orders.head(10))
+
+# Find the highest price in the 'price' column and store it in 'most_expensive'
+most_expensive = orders['price'].max()
+
+# Print the value of the most expensive shoe price
+print(most_expensive)
+
+# Calculate the number of unique colors in the 'shoe_color' column and store it in 'num_colors'
+num_colors = orders['shoe_color'].nunique()
+
+# Print the number of unique shoe colors available
+print(num_colors)
