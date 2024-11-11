@@ -1,0 +1,15 @@
+import codecademylib3
+import numpy as np
+import pandas as pd
+
+# Loading the dataset
+orders = pd.read_csv('orders.csv')
+
+# Grouping by shoe_type and shoe_color, then counting the occurrences of each combination
+shoe_counts = orders.groupby(['shoe_type', 'shoe_color']).id.count().reset_index()
+
+# Renaming the 'id' column to something more descriptive
+shoe_counts = shoe_counts.rename(columns={'id': 'count'})
+
+# Display the resulting DataFrame
+print(shoe_counts)
