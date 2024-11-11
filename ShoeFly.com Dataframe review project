@@ -1,0 +1,33 @@
+# Import necessary libraries
+import codecademylib3
+import pandas as pd
+
+# Load the dataset containing user visit data
+user_visits = pd.read_csv('page_visits.csv')
+
+# Print the first few rows of the DataFrame to examine its structure and data
+print(user_visits.head())
+
+# Group by 'utm_source' to count visits from each source
+click_source = user_visits.groupby('utm_source').id.count().reset_index()
+click_source = click_source.rename(columns={'id': 'count'})
+print(click_source)
+
+# Group by both 'utm_source' and 'month' to get the count of visits per source for each month
+click_source_by_month = user_visits.groupby(['utm_source', 'month']).id.count().reset_index()
+click_source_by_month = click_source_by_month.rename(columns={'id': 'count'})
+print(click_source_by_month)
+
+# Create a pivot table with 'utm_source' as rows and 'month' as columns
+# - index='utm_source' means each row will represent a unique source
+# - columns='month' makes each month a separate column
+# - values='count' fills each cell with the count of visits from each source for each month
+# - fill_value=0 fills in any missing data (e.g., if no visits from a source in a month) with 0
+click_source_by_month_pivot = click_source_by_month.pivot(
+    index='utm_source',
+    columns='month',
+    values='count'
+).fillna(0).reset_index()
+
+# Display the resulting pivot table
+print(click_source_by_month_pivot)
