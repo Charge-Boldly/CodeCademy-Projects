@@ -1,0 +1,25 @@
+import codecademylib3
+import pandas as pd
+
+# Load the data
+sales = pd.read_csv('sales.csv')
+print("Sales DataFrame:")
+print(sales)
+
+targets = pd.read_csv('targets.csv')
+print("\nTargets DataFrame:")
+print(targets)
+
+# Merge the DataFrames
+sales_vs_targets = pd.merge(sales, targets, on='month')
+
+# Display the result
+print("\nSales vs Targets DataFrame:")
+print(sales_vs_targets)
+
+# Define crushing_it by filtering rows where revenue is greater than target
+crushing_it = sales_vs_targets[sales_vs_targets['revenue'] > sales_vs_targets['target']]
+
+# Display the result
+print("\nMonths when Cool T-Shirts Inc. crushed their targets:")
+print(crushing_it)
