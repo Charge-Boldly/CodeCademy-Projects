@@ -1,0 +1,30 @@
+# Import the Codecademy library for any platform-specific functions or settings
+import codecademylib3
+
+# Import the pandas library and give it the alias 'pd' for easy use
+import pandas as pd
+
+# Read the 'orders.csv' file and load its contents into a DataFrame called 'orders'
+# This will store all the order-related data in a table format
+orders = pd.read_csv('orders.csv')
+
+# Read the 'products.csv' file and load its contents into a DataFrame called 'products'
+# This will store all the product-related data in a table format
+products = pd.read_csv('products.csv')
+
+# Print the contents of the 'orders' DataFrame to display all order details
+# This will allow you to inspect the data before merging with the products table
+print(orders)
+
+# Print the contents of the 'products' DataFrame to display all product details
+# This will allow you to inspect the data before merging with the orders table
+print(products)
+
+# Merge the 'orders' and 'products' DataFrames into a new DataFrame called 'merged_df'
+# The merge is done automatically using columns with the same name in both DataFrames (in this case, 'id')
+# pandas will try to match rows based on columns that have the same name
+merged_df = pd.merge(orders, products)
+
+# Print the merged DataFrame to show the result of combining the 'orders' and 'products' data
+# The result will display order details along with matching product details
+print(merged_df)
