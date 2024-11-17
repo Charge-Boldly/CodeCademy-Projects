@@ -1,0 +1,30 @@
+import codecademylib3
+import pandas as pd
+
+# Load the existing sales and targets data
+sales = pd.read_csv('sales.csv')
+print("Sales DataFrame:")
+print(sales)
+
+targets = pd.read_csv('targets.csv')
+print("\nTargets DataFrame:")
+print(targets)
+
+# Load the new men_women_sales.csv data
+men_women = pd.read_csv('men_women_sales.csv')
+print("\nMen and Women Sales DataFrame:")
+print(men_women)
+
+# Merge all three DataFrames (sales, targets, men_women)
+all_data = sales.merge(targets, on='month').merge(men_women, on='month')
+
+# Display the resulting merged DataFrame
+print("\nAll Data Merged DataFrame:")
+print(all_data)
+
+# Select rows where revenue > target AND women > men
+results = all_data[(all_data['revenue'] > all_data['target']) & (all_data['women'] > all_data['men'])]
+
+# Display the filtered result
+print("\nFiltered Results:")
+print(results)
