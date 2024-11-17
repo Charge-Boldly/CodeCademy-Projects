@@ -1,0 +1,36 @@
+import pandas as pd
+
+# Load data files
+try:
+    orders = pd.read_csv('orders.csv')
+    products = pd.read_csv('products.csv')
+    customers = pd.read_csv('customers.csv')
+except FileNotFoundError as e:
+    print(f"Error: {e}. Ensure the file is in the correct location.")
+    raise
+
+# Print the tables (for verification)
+print("Orders Table:")
+print(orders)
+print("\nProducts Table:")
+print(products)
+print("\nCustomers Table:")
+print(customers)
+
+# Find the customer_id for Order 5
+try:
+    # Extract the customer_id for Order 5
+    order_5_customer_id = orders.loc[orders['order_id'] == 5, 'customer_id'].values[0]
+
+    # Use the customer_id to find the phone number
+    order_5_phone_number = customers.loc[customers['customer_id'] == order_5_customer_id, 'phone_number'].values[0]
+
+    # Define the variable explicitly
+    print("\nThe phone number for the customer in Order 5 is:", order_5_phone_number)
+except KeyError as e:
+    print(f"KeyError: {e}. Check column names in the CSV files.")
+except IndexError as e:
+    print(f"IndexError: {e}. Ensure Order 5 exists in the 'orders' table.")
+
+# Ensure the variable order_5_phone_number is defined and ready to use
+print("\nVariable order_5_phone_number is defined as:", order_5_phone_number)
