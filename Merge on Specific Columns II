@@ -1,0 +1,23 @@
+# Import the Codecademy library (specific to the learning environment)
+import codecademylib3
+
+# Import the pandas library and give it an alias 'pd' for easier use
+import pandas as pd
+
+# Read the data from the 'orders.csv' file and store it in a DataFrame called 'orders'
+orders = pd.read_csv('orders.csv')
+
+# Read the data from the 'products.csv' file and store it in a DataFrame called 'products'
+products = pd.read_csv('products.csv')
+
+# Merge the 'orders' and 'products' DataFrames based on matching product IDs
+orders_products = pd.merge(
+    orders,  # The first DataFrame (orders)
+    products,  # The second DataFrame (products)
+    left_on = 'product_id',  # Use the 'product_id' column from the orders DataFrame to match
+    right_on = 'id',  # Use the 'id' column from the products DataFrame to match
+    suffixes = ['_orders', '_products']  # Add suffixes to columns with the same name to avoid confusion
+)
+
+# Print the merged DataFrame to see the result
+print(orders_products)
