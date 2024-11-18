@@ -1,0 +1,25 @@
+# Import the necessary library for working with data
+import codecademylib3
+import pandas as pd
+
+# Load the bakery's menu data from a CSV file into a DataFrame
+bakery = pd.read_csv('bakery.csv')
+
+# Print the bakery's menu to check its contents
+print("Bakery menu:")
+print(bakery)
+
+# Load the ice cream parlor's menu data from a CSV file into a DataFrame
+ice_cream = pd.read_csv('ice_cream.csv')
+
+# Print the ice cream parlor's menu to check its contents
+print("\nIce cream parlor menu:")
+print(ice_cream)
+
+# Combine the bakery's menu and the ice cream parlor's menu into one DataFrame
+# This concatenates both DataFrames row-wise (default behavior)
+menu = pd.concat([bakery, ice_cream])
+
+# Print the combined menu to see the result
+print("\nCombined menu (Bakery + Ice Cream):")
+print(menu)
