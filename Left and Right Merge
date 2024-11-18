@@ -1,0 +1,56 @@
+# Import the necessary library for working with data
+import codecademylib3
+import pandas as pd
+
+# Load the inventory data for Store A from a CSV file
+store_a = pd.read_csv('store_a.csv')
+
+# Load the inventory data for Store B from a CSV file
+store_b = pd.read_csv('store_b.csv')
+
+# Display the data for Store A to see what it looks like
+print("Store A inventory:")
+print(store_a)
+
+# Display the data for Store B to see what it looks like
+print("\nStore B inventory:")
+print(store_b)
+
+# Perform a left merge, combining Store A's inventory with Store B's
+# This keeps all items from Store A and adds matching items from Store B
+store_a_b_left = pd.merge(store_a, store_b, how='left', on='item', suffixes=('_a', '_b'))
+
+# Display the resulting DataFrame to see how Store A's data combines with Store B's
+print("\nLeft merge (Store A items with Store B inventory):")
+print(store_a_b_left)
+
+# Filter to find items that are in Store A but not in Store B
+# Items not found in Store B will have NaN in the 'store_b_inventory' column
+store_a_only = store_a_b_left[store_a_b_left['store_b_inventory'].isnull()]
+
+# Display the items that are only in Store A
+print("\nItems carried by Store A but not Store B:")
+print(store_a_only)
+
+# Perform another left merge, but this time use Store B as the base DataFrame
+# This keeps all items from Store B and adds matching items from Store A
+store_b_a_left = pd.merge(store_b, store_a, how='left', on='item', suffixes=('_b', '_a'))
+
+# Display the resulting DataFrame to see how Store B's data combines with Store A's
+print("\nLeft merge (Store B items with Store A inventory):")
+print(store_b_a_left)
+
+# Filter to find items that are in Store B but not in Store A
+# Items not found in Store A will have NaN in the 'store_a_inventory' column
+store_b_only = store_b_a_left[store_b_a_left['store_a_inventory'].isnull()]
+
+# Display the items that are only in Store B
+print("\nItems carried by Store B but not Store A:")
+print(store_b_only)
+
+# Display both DataFrames to compare their contents
+print("\nStore A merged with Store B (Left Join):")
+print(store_a_b_left)
+
+print("\nStore B merged with Store A (Left Join):")
+print(store_b_a_left)
