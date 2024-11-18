@@ -1,0 +1,43 @@
+# Import the necessary library for working with data
+import codecademylib3
+import pandas as pd
+
+# Load the visits data from a CSV file into a DataFrame
+# The 'parse_dates=[1]' argument ensures that the second column (index 1) is parsed as datetime
+visits = pd.read_csv('visits.csv', parse_dates=[1])
+
+# Print the visits DataFrame to inspect its structure and content
+print("Visits DataFrame:")
+print(visits)
+
+# Load the checkouts data from a CSV file into a DataFrame
+# Similarly, parse the second column (index 1) as datetime
+checkouts = pd.read_csv('checkouts.csv', parse_dates=[1])
+
+# Print the checkouts DataFrame to inspect its structure and content
+print("\nCheckouts DataFrame:")
+print(checkouts)
+
+# Merge the visits and checkouts DataFrames
+# Perform an inner merge on the 'user_id' column to combine matching data
+v_to_c = pd.merge(visits, checkouts, on='user_id')
+
+# Print the merged DataFrame to inspect its structure and content
+print("\nMerged DataFrame (Visits to Checkouts):")
+print(v_to_c)
+
+# Calculate the time between the visit and checkout
+# Create a new column 'time' that calculates the difference between checkout_time and visit_time
+v_to_c['time'] = v_to_c.checkout_time - v_to_c.visit_time
+
+# Print the updated DataFrame with the 'time' column
+print("\nUpdated DataFrame with Time Calculation:")
+print(v_to_c)
+
+# Use .mean() to calculate the average time to checkout
+# The result is the average of the 'time' column, which is in timedelta format
+average_time = v_to_c.time.mean()
+
+# Print the average time to checkout
+print("\nAverage Time to Checkout:")
+print(average_time)
