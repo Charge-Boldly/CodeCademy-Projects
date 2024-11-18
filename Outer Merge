@@ -1,0 +1,21 @@
+import codecademylib3
+import pandas as pd
+
+# Load the data
+store_a = pd.read_csv('store_a.csv')
+store_b = pd.read_csv('store_b.csv')
+
+# Print the dataframes
+print("Store A inventory:")
+print(store_a)
+
+print("\nStore B inventory:")
+print(store_b)
+
+# Perform the outer merge
+store_a_b_outer = pd.merge(store_a, store_b, how='outer')
+
+# Print the merged DataFrame
+print("\nMerged inventory (Store A + Store B):")
+print(store_a_b_outer)
+
