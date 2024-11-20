@@ -1,0 +1,82 @@
+import pandas as pd  # For data manipulation
+import re  # For regex operations
+
+# Set display option to view full content of columns
+pd.set_option('display.max_colwidth', -1)  # Use -1 for unrestricted column width in older pandas versions
+
+# Load the dataset
+jeopardy = pd.read_csv("jeopardy.csv")
+
+# Clean column names by stripping leading/trailing spaces
+jeopardy.columns = jeopardy.columns.str.strip()
+
+# Define a function to filter questions based on a list of words
+def filter_questions(data, words):
+    """
+    Filters rows where the 'Question' column contains all the specified words.
+    Args:
+        data (DataFrame): The dataset to filter.
+        words (list): List of words to search for in questions.
+    Returns:
+        DataFrame: Filtered rows containing all words.
+    """
+    # Create a regex pattern to match whole words (case-insensitive)
+    pattern = r"\b(?:{})\b".format("|".join(re.escape(word.lower()) for word in words))
+    # Filter rows based on the regex pattern
+    return data[data['Question'].str.lower().str.contains(pattern, na=False)]
+
+# Define a function to clean and convert "Value" column to floats
+def clean_value(value):
+    """
+    Cleans and converts monetary values to floats.
+    Args:
+        value (str): A monetary value as a string.
+    Returns:
+        float: The cleaned value as a float or 0.0 for invalid entries.
+    """
+    if isinstance(value, str) and value.lower() == "no value":  # Handle invalid or missing values
+        return 0.0
+    # Remove dollar signs and commas, then convert to float
+    return float(value.replace("$", "").replace(",", "")) if isinstance(value, str) else 0.0
+
+# Apply the cleaning function to create a new column for float values
+jeopardy['Float Value'] = jeopardy['Value'].apply(clean_value)
+
+# Define a function to count unique answers
+def unique_answer_counts(data):
+    """
+    Counts occurrences of unique answers in the dataset.
+    Args:
+        data (DataFrame): The dataset to analyze.
+    Returns:
+        Series: Unique answers and their counts.
+    """
+    return data['Answer'].value_counts()
+
+# Convert the "Air Date" column to datetime format for easier filtering
+jeopardy['Air Date'] = pd.to_datetime(jeopardy['Air Date'], errors='coerce')
+
+# Filter questions from specific decades
+questions_90s = jeopardy[(jeopardy['Air Date'].dt.year >= 1990) & (jeopardy['Air Date'].dt.year < 2000)]
+questions_2000s = jeopardy[(jeopardy['Air Date'].dt.year >= 2000) & (jeopardy['Air Date'].dt.year < 2010)]
+
+# Count questions containing the word "computer" in each time range
+count_90s = questions_90s['Question'].str.contains("computer", case=False, na=False).sum()
+count_2000s = questions_2000s['Question'].str.contains("computer", case=False, na=False).sum()
+
+# Example usage
+filtered_questions = filter_questions(jeopardy, ["King", "England"])  # Filter questions
+print(filtered_questions['Question'])  # Print filtered questions
+
+# Calculate average value of questions containing "King"
+king_questions = filter_questions(jeopardy, ["King"])
+avg_king_value = king_questions['Float Value'].mean()
+print(f"Average value of 'King' questions: {avg_king_value}")
+
+# Count unique answers for "King" questions
+king_answers = unique_answer_counts(king_questions)
+print(king_answers)
+
+# Print counts of "computer" questions from the 90s and 2000s
+print(f"Questions containing 'computer' in the 90s: {count_90s}")
+print(f"Questions containing 'computer' in the 2000s: {count_2000s}")
