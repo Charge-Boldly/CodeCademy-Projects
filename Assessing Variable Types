@@ -1,0 +1,15 @@
+# Import codecademylib3
+import codecademylib3
+
+# Import pandas with alias
+import pandas as pd
+
+# Import dataset as a Pandas dataframe
+movies = pd.read_csv("netflix_movies.csv", index_col=0)
+
+# View the first five rows of the dataframe
+print(movies.head())  # .head() shows the first five rows by default
+
+# Set the correct value for rating_variable_type
+rating_variable_type = 'categorical'  # The 'rating' column represents categories
+print(rating_variable_type)  # Print the variable type
