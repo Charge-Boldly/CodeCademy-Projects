@@ -1,0 +1,30 @@
+import pandas as pd
+
+# Import dataset as a Pandas dataframe
+movies = pd.read_csv("netflix_movies.csv")
+
+# View the first five rows of the dataframe
+print("First five rows of the dataset:")
+print(movies.head())
+
+# Print the data types of all columns
+print("\nData types of all columns before modification:")
+print(movies.dtypes)
+
+# Fill in the missing 'cast_count' values with 0
+movies['cast_count'].fillna(0, inplace=True)
+
+# Attempt to change the type of the 'cast_count' column to int64 directly
+# This step will work now because null values have been handled
+try:
+    movies['cast_count'] = movies['cast_count'].astype("int64")
+    print("\nSuccessfully converted 'cast_count' to int64.")
+except ValueError as e:
+    print("\nError during conversion to int64:")
+    print(e)
+
+# Check the data types of the columns again
+print("\nData types of all columns after modification:")
+print(movies.dtypes)
+
+
