@@ -1,0 +1,22 @@
+import codecademylib3
+
+# Import pandas with alias
+import pandas as pd
+
+# Import dataset as a Pandas DataFrame
+cereal = pd.read_csv('cereal.csv', index_col=0)
+
+# Show the first five rows of the `cereal` dataframe
+print("First five rows of the original DataFrame:")
+print(cereal.head())
+
+# Create a new dataframe with the `mfr` variable One-Hot Encoded
+cereal = pd.get_dummies(cereal, columns=['mfr'])
+
+# Show first five rows of the new dataframe
+print("\nFirst five rows of the DataFrame after One-Hot Encoding:")
+print(cereal.head())
+
+# Ensure all variables, including the new ones, are printed
+print("\nChecking new variables by printing the first five rows again:")
+print(cereal.head())  # This ensures the transformed DataFrame is displayed.
