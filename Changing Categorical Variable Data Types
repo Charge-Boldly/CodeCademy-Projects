@@ -1,0 +1,34 @@
+import codecademylib3
+
+# Import pandas with alias
+import pandas as pd
+
+# Import dataset as a Pandas dataframe
+movies = pd.read_csv("netflix_movies.csv")
+
+# View the first five rows of the dataframe
+print(movies.head())
+
+# Print the data types of all variables in the dataframe
+print("Data types before changes:")
+print(movies.dtypes)
+
+# Add the variables you plan to change to this list
+change = ['title']
+
+# Change the 'title' variable to a "string" (object type in Pandas)
+movies['title'] = movies['title'].astype('string')
+
+# Example: Change another variable if necessary (e.g., 'genre')
+# Assume 'genre' is another column you'd like to change to string type
+if 'genre' in movies.columns:
+    movies['genre'] = movies['genre'].astype('string')
+
+# Print the data types again after changes
+print("\nData types after changes:")
+print(movies.dtypes)
+
+# Check the data types of all the categorical variables in the movies DataFrame
+print("\nData types of categorical variables:")
+categorical_columns = movies.select_dtypes(include=['string', 'object']).columns
+print(movies[categorical_columns].dtypes)
