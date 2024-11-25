@@ -1,0 +1,63 @@
+import codecademylib3  # Importing a library for interactive coding (specific to Codecademy)
+
+# Import pandas with alias
+import pandas as pd  # Import the pandas library and give it the alias 'pd' for easier access to functions
+
+# Read in the census dataframe
+census = pd.read_csv('census_data.csv', index_col=0)  
+# This line reads the 'census_data.csv' file into a pandas DataFrame called 'census'.
+# The 'index_col=0' argument means that the first column in the CSV file will be used as the index of the DataFrame.
+
+# Call the .head() method on the census dataframe and print the output
+print(census.head())  
+# The .head() method returns the first five rows of the 'census' DataFrame. 
+# The print() function will display those rows in the output.
+
+# Print the data types of each variable in the census dataframe
+print(census.dtypes)  # This will show the data type of each column in the DataFrame
+
+# Print the unique values of the birth_year variable
+print(census['birth_year'].unique())  # This will display the unique values in the 'birth_year' column
+
+# replace the missing value with 1967
+census['birth_year'] = census['birth_year'].replace(['missing'], 1967)
+# The .replace() method replaces the 'missing' values in the 'birth_year' column with 1967.
+
+# print out the unique values
+print(census['birth_year'].unique())  # This will display the unique values in the 'birth_year' column after the replacement
+
+# use the astype method to switch data types to int
+census['birth_year'] = census['birth_year'].astype(int)  
+# The .astype(int) method changes the data type of the 'birth_year' column from string to integer.
+
+# print the data types in the census dataframe
+print(census.dtypes)  # This will print the data types of all columns in the census DataFrame, showing that 'birth_year' is now an integer.
+
+# Print the average birth year of the respondents
+print(census['birth_year'].mean())  # The .mean() method calculates the average value of the 'birth_year' column and prints it.
+
+# Converting the higher_tax column to categorical data with the specified order
+census['higher_tax'] = pd.Categorical(census['higher_tax'], ['strongly disagree', 'disagree', 'neutral', 'agree', 'strongly agree'], ordered=True)
+# The pd.Categorical() function is used to convert the 'higher_tax' column into a categorical variable.
+# The list of values defines the order of categories from 'strongly disagree' to 'strongly agree'.
+# The 'ordered=True' parameter ensures that the categories have a specific order.
+
+# Print out unique values in the higher_tax column
+print(census['higher_tax'].unique())  # This will display the unique values in the 'higher_tax' column with the new order.
+
+# Use cat.codes to label encode the higher_tax variable
+census['higher_tax'] = census['higher_tax'].cat.codes
+# The .cat.codes method is used to label encode the categories of the 'higher_tax' column.
+# This will convert each category into a corresponding numerical value based on its order: 
+# 'strongly disagree' = 0, 'disagree' = 1, 'neutral' = 2, 'agree' = 3, 'strongly agree' = 4.
+
+# Print out the median of the higher_tax variable
+print(census['higher_tax'].median())  # This calculates and prints the median of the 'higher_tax' column (encoded numerically).
+
+# Use get_dummies to OHE the marital_status
+census = pd.get_dummies(census, columns=['marital_status'])
+# The pd.get_dummies() function is used to One-Hot Encode the 'marital_status' column.
+# It creates binary (0 or 1) variables for each category in the 'marital_status' column.
+
+# Print out the first 5 rows in the census dataframe
+print(census.head())  # This will display the first five rows of the DataFrame, showing the new dummy variables.
