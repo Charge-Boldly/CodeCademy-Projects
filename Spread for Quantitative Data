@@ -1,0 +1,26 @@
+import pandas as pd
+
+# Load the dataset
+movies = pd.read_csv('movies.csv')
+
+# Save the range to range_budget
+range_budget = movies['production_budget'].max() - movies['production_budget'].min()
+print(f"Range Budget: {range_budget}")
+
+# Save the interquartile range to iqr_budget
+iqr_budget = movies['production_budget'].quantile(0.75) - movies['production_budget'].quantile(0.25)
+print(f"Interquartile Range Budget: {iqr_budget}")
+
+# Save the variance to var_budget
+var_budget = movies['production_budget'].var()
+print(f"Variance Budget: {var_budget}")
+
+# Save the standard deviation to std_budget
+std_budget = movies['production_budget'].std()
+print(f"Standard Deviation Budget: {std_budget}")
+
+# Save the mean absolute deviation to mad_budget
+mad_budget = movies['production_budget'].mad()
+print(f"Mean Absolute Deviation Budget: {mad_budget}")
+
+
