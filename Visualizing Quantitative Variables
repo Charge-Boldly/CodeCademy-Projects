@@ -1,0 +1,21 @@
+import codecademylib3
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+movies = pd.read_csv('movies.csv')
+
+# Create a boxplot for movie budget
+plt.figure(figsize=(10, 6))  # Set the size of the plot
+sns.boxplot(data=movies, x='production_budget')  # Explicitly specify the data parameter
+plt.title('Boxplot of Movie Production Budget')  # Title of the plot
+plt.show()  # Display the plot
+plt.close()  # Close the plot to avoid overlapping with future plots
+
+# Create a histogram for movie budget
+plt.figure(figsize=(10, 6))  # Set the size of the plot
+sns.histplot(data=movies, x='production_budget', kde=True, bins=30)  # Specify 'x' parameter
+plt.title('Histogram of Movie Production Budget')  # Title of the plot
+plt.show()  # Display the plot
+plt.close()  # Close the plot
