@@ -1,0 +1,67 @@
+import codecademylib3  # This is for using Codecademy’s library for exercises, but it's not necessary for regular Python code.
+import pandas as pd  # Importing pandas, a library for data manipulation and analysis.
+import numpy as np  # Importing numpy, a library used for working with NaN (Not a Number) values.
+
+# Load the dataset into a pandas DataFrame from a CSV file called 'diabetes.csv'
+diabetes_data = pd.read_csv('diabetes.csv')
+
+# Check for explicit missing values in the dataset
+# .isnull() checks where there are NaN (missing) values in the dataset
+# .sum() counts the number of NaN values in each column
+print("Explicit missing values (using .isnull().sum()):")
+print(diabetes_data.isnull().sum())  # Display the number of missing values in each column
+
+# Identify columns where missing values might be represented by 0 (zeros)
+# We will check these specific columns for 0s, which might actually represent missing data
+columns_with_potential_missing_values = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
+
+# Now we loop through the selected columns and count how many 0s there are in each
+# We do this because sometimes zeros are used as placeholders for missing data
+print("\nHidden missing values (count of zeros):")
+for column in columns_with_potential_missing_values:
+    zero_count = (diabetes_data[column] == 0).sum()  # Count the number of zeros in each column
+    print(f"{column}: {zero_count} zeros")  # Print the count of zeros for each column
+
+# Replace zeros with NaN (Not a Number) in the specified columns to treat them as missing values
+diabetes_data[columns_with_potential_missing_values] = diabetes_data[columns_with_potential_missing_values].replace(0, np.nan)
+
+# After replacing 0s with NaN, check again for missing values
+# This will show if the number of missing values increased in the columns where we replaced 0s with NaN
+print("\nMissing values after replacing zeros with NaN:")
+print(diabetes_data.isnull().sum())  # Display the number of missing values in each column again
+
+# Now, let’s calculate summary statistics for the dataset
+# This gives us basic statistical information like the mean, min, and max for each column
+print("\nSummary statistics after replacing zeros with NaN:")
+print(diabetes_data.describe())  # Show statistical summary of the dataset
+
+# Print out all the rows that contain at least one missing value
+# .isnull().any(axis=1) will return True for rows where at least one column has a missing value
+# We use this to filter the rows and show them
+print("\nRows with missing values:")
+print(diabetes_data[diabetes_data.isnull().any(axis=1)])  # Display rows with missing values
+
+# Check the data types of each column
+# This helps us verify that each column is in the expected format (e.g., numeric or categorical)
+print("\nData types of each column:")
+print(diabetes_data.dtypes)  # Show the data types of all columns
+
+# Check the dataset info using .info() which gives a summary of non-null values, data types, and memory usage
+print("\nInfo summary of the DataFrame:")
+print(diabetes_data.info())  # Show a concise summary of the DataFrame
+
+# Now, let's check for unexpected non-numeric values in the 'Outcome' column, which should only be 0 or 1
+print("\nUnique values in the 'Outcome' column:")
+print(diabetes_data['Outcome'].unique())  # Display all unique values in the 'Outcome' column
+
+# The 'Outcome' column should only contain 0 and 1, but there might be some invalid data
+# In this case, we replace any occurrence of 'O' (which was a misentry) with 0
+diabetes_data['Outcome'] = diabetes_data['Outcome'].replace('O', 0)  # Replace 'O' with 0 in the 'Outcome' column
+
+# After replacing invalid entries, we now convert the 'Outcome' column to integers (0 or 1)
+# This ensures the column is numeric (int64) rather than object (string) type
+diabetes_data['Outcome'] = diabetes_data['Outcome'].astype(int)  # Convert 'Outcome' to integers (0 and 1)
+
+# Finally, check the data types again to confirm that the 'Outcome' column is now an integer type
+print("\nData types after conversion:")
+print(diabetes_data.dtypes)  # Display the data types of all columns again to verify 'Outcome' is now an integer
