@@ -1,0 +1,14 @@
+# Import the pandas library, which is used for data manipulation and analysis
+import pandas as pd
+
+# Read the 'movies.csv' file and store its content into a DataFrame called 'movies'
+# A DataFrame is like a table of data with rows and columns
+movies = pd.read_csv('movies.csv')
+
+# Use the 'value_counts(normalize=True)' method to calculate the proportion of movies in each genre
+# 'normalize=True' divides the count of each genre by the total number of movies
+# Save the resulting proportions in a variable called 'genre_props'
+genre_props = movies['genre'].value_counts(normalize=True)
+
+# Print the proportions of movies in each genre
+print(genre_props)
