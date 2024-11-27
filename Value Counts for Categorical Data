@@ -1,0 +1,13 @@
+# Import the pandas library, which is used for data manipulation and analysis
+import pandas as pd
+
+# Read the 'movies.csv' file and store its content into a DataFrame called 'movies'
+# A DataFrame is like a table of data with rows and columns
+movies = pd.read_csv('movies.csv')
+
+# Use the 'value_counts()' method to count how many times each genre appears in the 'genre' column
+# Save the result in a variable called 'genre_counts'
+genre_counts = movies['genre'].value_counts()
+
+# Print the resulting counts of movies in each genre
+print(genre_counts)
