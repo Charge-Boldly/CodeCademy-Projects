@@ -1,0 +1,61 @@
+import numpy as np  # Import the NumPy library for numerical operations.
+import pandas as pd  # Import the Pandas library for data manipulation.
+
+# Load the dataset from a CSV file into a DataFrame named 'students'.
+students = pd.read_csv('students.csv')
+
+# Separate G3 scores for students living in urban areas.
+scores_urban = students.G3[students.address == 'U']
+
+# Separate G3 scores for students living in rural areas.
+scores_rural = students.G3[students.address == 'R']
+
+# Calculate the mean (average) G3 score for urban students.
+scores_urban_mean = np.mean(scores_urban)
+
+# Calculate the mean (average) G3 score for rural students.
+scores_rural_mean = np.mean(scores_rural)
+
+# Print the mean G3 score for urban students.
+print('Mean score - students w/ urban address:')
+print(scores_urban_mean)
+
+# Print the mean G3 score for rural students.
+print('Mean score - students w/ rural address:')
+print(scores_rural_mean)
+
+# Calculate the difference between the urban and rural mean scores.
+mean_diff = scores_urban_mean - scores_rural_mean
+
+# Print the calculated mean difference.
+print('Mean difference:')
+print(mean_diff)
+
+# Calculate the median (middle value) G3 score for urban students.
+scores_urban_median = np.median(scores_urban)
+
+# Calculate the median (middle value) G3 score for rural students.
+scores_rural_median = np.median(scores_rural)
+
+# Print the median G3 score for urban students.
+print('Median score - students w/ urban address:')
+print(scores_urban_median)
+
+# Print the median G3 score for rural students.
+print('Median score - students w/ rural address:')
+print(scores_rural_median)
+
+# Calculate the difference between the urban and rural median scores.
+median_diff = scores_urban_median - scores_rural_median
+
+# Print the calculated median difference.
+print('Median difference:')
+print(median_diff)
+
+# Calculate the absolute value of the mean difference to see the magnitude of the difference.
+mean_diff_magnitude = abs(mean_diff)
+
+# Print the absolute mean difference.
+print('Absolute Mean Difference:')
+print(mean_diff_magnitude)
+
