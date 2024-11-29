@@ -1,0 +1,16 @@
+# Import necessary libraries
+import pandas as pd  # For data manipulation and analysis
+import codecademylib3  # Codecademy-specific library for visualization
+import matplotlib.pyplot as plt  # For creating visualizations
+import seaborn as sns  # For statistical data visualization
+
+# Load the dataset into a Pandas DataFrame named 'students'
+students = pd.read_csv('students.csv')
+
+# Create the boxplot
+# 'x' specifies the categorical variable (address), and 'y' specifies the quantitative variable (G3).
+# 'data' specifies the dataset to be used for plotting.
+sns.boxplot(x='address', y='G3', data=students)
+
+# Show the plot
+plt.show()
