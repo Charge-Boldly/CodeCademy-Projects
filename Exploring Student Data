@@ -1,0 +1,141 @@
+# Import the necessary libraries
+import pandas as pd  # pandas is used to handle data and perform calculations
+import seaborn as sns  # seaborn is used for advanced data visualization (histograms, boxplots, etc.)
+import matplotlib.pyplot as plt  # matplotlib is used for plotting the charts
+
+# Load the data from a CSV file called 'students.csv'
+students = pd.read_csv('students.csv')  # Load the data into a pandas DataFrame
+
+# Calculate the mean (average) of the math grades
+mean_math = students['math_grade'].mean()  # Calculate the mean of the 'math_grade' column
+# Calculate the median (middle value) of the math grades
+median_math = students['math_grade'].median()  # Calculate the median of the 'math_grade' column
+
+# Calculate the mode (most frequent value) of the math grades
+mode_math = students['math_grade'].mode()[0]  # The mode can have multiple values, but we pick the first one
+
+# Print the mode of the math grades
+print(f"Mode of math grades: {mode_math}")  # Display the mode to the user
+
+# Compare the mode with the mean and median and print the results
+print(f"The mode ({mode_math}) compared to:")  # Show a comparison between the mode and the other statistics
+print(f" - The mean ({mean_math})")  # Display the mean value
+print(f" - The median ({median_math})")  # Display the median value
+
+# Describe how the mode compares with the mean and median
+if mode_math > mean_math:  # Check if the mode is greater than the mean
+    print("The mode is larger than the mean.")
+elif mode_math < mean_math:  # Check if the mode is smaller than the mean
+    print("The mode is smaller than the mean.")
+else:  # If neither of the above, the mode must be equal to the mean
+    print("The mode is equal to the mean.")
+
+if mode_math > median_math:  # Check if the mode is greater than the median
+    print("The mode is larger than the median.")
+elif mode_math < median_math:  # Check if the mode is smaller than the median
+    print("The mode is smaller than the median.")
+else:  # If neither of the above, the mode must be equal to the median
+    print("The mode is equal to the median.")
+
+# Calculate the range of the math grades (difference between the maximum and minimum grade)
+range_math = students['math_grade'].max() - students['math_grade'].min()  # Max value minus the min value gives the range
+
+# Print the range value
+print(f"Range of math grades: {range_math}")  # Display the range of math grades
+
+# Calculate the standard deviation of the math grades (how spread out the grades are)
+std_dev_math = students['math_grade'].std()  # Use pandas' std() method to calculate the standard deviation
+
+# Print the standard deviation value
+print(f"Standard deviation of math grades: {std_dev_math}")  # Display the standard deviation
+
+# Calculate the lower and upper bounds for one standard deviation from the mean
+lower_bound = mean_math - std_dev_math  # Lower bound is mean minus standard deviation
+upper_bound = mean_math + std_dev_math  # Upper bound is mean plus standard deviation
+
+# Print the range where about two-thirds of students' grades are likely to fall
+print(f"About two thirds of the students' grades fall between {lower_bound:.2f} and {upper_bound:.2f}.")  # Show the range
+
+# Interpret what the standard deviation tells us about the consistency of the grades
+if std_dev_math < mean_math:  # If standard deviation is small compared to the mean
+    print(f"The standard deviation ({std_dev_math}) is relatively small compared to the mean ({mean_math}), suggesting that the grades are fairly consistent.")
+else:  # If standard deviation is large compared to the mean
+    print(f"The standard deviation ({std_dev_math}) is large compared to the mean ({mean_math}), suggesting a wider variation in the grades.")
+
+# Calculate the Mean Absolute Deviation (MAD) for math grades
+mad_math = students['math_grade'].mad()  # MAD is calculated using pandas' mad() method
+
+# Print the MAD value
+print(f"Mean Absolute Deviation of math grades: {mad_math}")  # Display the MAD value
+
+# Interpret what the MAD tells us about how much grades differ from the mean
+print(f"The Mean Absolute Deviation is {mad_math:.2f}, which means that on average, each student's grade differs from the mean by about {mad_math:.2f} points.")  # Explain the MAD
+
+# Create a histogram to visualize the distribution of math grades
+sns.histplot(x='math_grade', data=students, kde=True)  # Create a histogram with a kernel density estimate (KDE) to smooth the distribution
+
+# Display the histogram plot
+plt.show()  # Show the plot to the user
+
+# Clear the current plot to avoid overlapping with the next plot
+plt.clf()  # Clear the figure
+
+# Create a boxplot to visualize the spread, median, and outliers of math grades
+sns.boxplot(x='math_grade', data=students)  # Create a boxplot to show distribution and potential outliers
+
+# Display the boxplot plot
+plt.show()  # Show the boxplot to the user
+
+# Clear the current plot to avoid overlapping with any future plots
+plt.clf()  # Clear the figure after showing the boxplot
+
+# Summarize the 'Mjob' column to see how many students have mothers with each job type
+mjob_summary = students['Mjob'].value_counts()  # Use the value_counts() method to get the number of occurrences of each unique job type
+
+# Print the summary of the 'Mjob' column
+print("Summary of students' mothers' jobs:")
+print(mjob_summary)  # Display the counts of each job type
+
+# Find the most common 'Mjob' value (the job that appears most frequently)
+most_common_mjob = mjob_summary.idxmax()  # The job with the highest count is the most common
+print(f"The most common value of 'Mjob' is: {most_common_mjob}")  # Display the most common job
+
+# Calculate the proportion of students who have mothers with each job type
+mjob_proportion = students['Mjob'].value_counts(normalize=True)  # Use normalize=True to get the proportion
+
+# Print the proportion of students with each job type
+print("Proportion of students' mothers' jobs:")
+print(mjob_proportion)  # Display the proportions of each job type
+
+# Calculate the proportion of students whose mothers work in health
+health_proportion = mjob_proportion.get('health', 0)  # Use .get() to safely access 'health' or default to 0 if not found
+
+# Print the proportion of students whose mothers work in health
+print(f"The proportion of students whose mothers work in health is: {health_proportion:.2f}")
+
+# Calculate the proportion of students who have mothers with each job type
+mjob_proportion = students['Mjob'].value_counts(normalize=True)  # Use normalize=True to get the proportion
+
+# Print the proportion of students with each job type
+print("Proportion of students' mothers' jobs:")
+print(mjob_proportion)  # Display the proportions of each job type
+
+# Calculate the proportion of students whose mothers work in health
+health_proportion = mjob_proportion.get('health', 0)  # Use .get() to safely access 'health' or default to 0 if not found
+
+# Print the proportion of students whose mothers work in health
+print(f"The proportion of students whose mothers work in health is: {health_proportion:.2f}")
+# Calculate the proportion of students who have mothers with each job type
+mjob_proportion = students['Mjob'].value_counts(normalize=True)  # Use normalize=True to get the proportion
+
+# Print the proportion of students with each job type
+print("Proportion of students' mothers' jobs:")
+print(mjob_proportion)  # Display the proportions of each job type
+
+# Calculate the proportion of students whose mothers work in health
+health_proportion = mjob_proportion.get('health', 0)  # Use .get() to safely access 'health' or default to 0 if not found
+
+# Print the proportion of students whose mothers work in health
+print(f"The proportion of students whose mothers work in health is: {health_proportion:.2f}")
+
+
