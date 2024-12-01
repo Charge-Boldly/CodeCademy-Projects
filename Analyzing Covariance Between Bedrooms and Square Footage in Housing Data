@@ -1,0 +1,43 @@
+# Import necessary libraries
+import numpy as np  # For numerical operations
+import pandas as pd  # For handling and analyzing data
+import matplotlib.pyplot as plt  # For creating visualizations
+import codecademylib3  # Codecademy environment library
+
+# Load the dataset
+housing = pd.read_csv('housing_sample.csv')  # Reads the data into a DataFrame
+
+# Preview the first few rows of the dataset to understand its structure
+print(housing.head())  # Displays the first 5 rows of the dataset
+
+# Create a scatter plot to analyze the relationship between beds and sqfeet
+plt.scatter(x=housing.beds, y=housing.sqfeet, alpha=0.6, color='blue')  
+# 'x=housing.beds' sets the number of bedrooms on the x-axis
+# 'y=housing.sqfeet' sets the area on the y-axis
+# 'alpha=0.6' adds transparency to points for better visualization
+# 'color="blue"' specifies the color of the points
+
+# Add labels and title to the plot for clarity
+plt.xlabel('Number of Bedrooms')  # Label for the x-axis
+plt.ylabel('Area (Square Feet)')  # Label for the y-axis
+plt.title('Scatter Plot: Bedrooms vs. Square Footage')  # Title of the scatter plot
+
+# Display the plot
+plt.show()  # Renders the scatter plot
+
+# Calculate the covariance matrix for sqfeet and beds
+cov_mat_sqfeet_beds = np.cov(housing.sqfeet, housing.beds)  
+# np.cov() calculates the covariance matrix between two variables
+
+# Print the covariance matrix
+print("Covariance Matrix for sqfeet and beds:")
+print(cov_mat_sqfeet_beds)  
+# Displays the covariance matrix, which includes variance and covariance values
+
+# Extract the covariance value between sqfeet and beds
+cov_sqfeet_beds = cov_mat_sqfeet_beds[0, 1]  
+# Accesses the element in the first row and second column of the matrix (covariance)
+
+# Print the extracted covariance value
+print("Covariance between sqfeet and beds:")
+print(cov_sqfeet_beds)
