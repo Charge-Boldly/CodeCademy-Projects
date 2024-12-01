@@ -1,0 +1,32 @@
+# Import necessary libraries
+import pandas as pd  # For handling and analyzing data
+import matplotlib.pyplot as plt  # For creating visualizations
+import codecademylib3  # Codecademy environment library
+from scipy.stats import pearsonr  # For calculating the Pearson correlation coefficient
+
+# Load the dataset
+housing = pd.read_csv('housing_sample.csv')  # Reads the data into a DataFrame
+
+# Calculate the Pearson correlation coefficient between sqfeet and beds
+corr_sqfeet_beds, p = pearsonr(housing.sqfeet, housing.beds)  
+# 'pearsonr()' calculates the Pearson correlation coefficient and the p-value
+# The result is stored in 'corr_sqfeet_beds' (correlation coefficient) and 'p' (p-value)
+
+# Print the Pearson correlation coefficient
+print("Pearson correlation coefficient between sqfeet and beds:")
+print(corr_sqfeet_beds)  # Displays the strength of the linear association between the two variables
+
+# Create a scatter plot to visualize the relationship between sqfeet and beds
+plt.scatter(x=housing.beds, y=housing.sqfeet, alpha=0.6, color='blue')  
+# 'x=housing.beds' sets the number of bedrooms on the x-axis
+# 'y=housing.sqfeet' sets the area on the y-axis
+# 'alpha=0.6' adds transparency to points for better visualization
+# 'color="blue"' specifies the color of the points
+
+# Add labels and title to the scatter plot for clarity
+plt.xlabel('Number of Bedrooms')  # Label for the x-axis
+plt.ylabel('Area (Square Feet)')  # Label for the y-axis
+plt.title('Scatter Plot: Bedrooms vs. Square Footage')  # Title of the scatter plot
+
+# Display the scatter plot
+plt.show()  # Renders the scatter plot
