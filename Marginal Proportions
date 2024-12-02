@@ -1,0 +1,21 @@
+import pandas as pd
+import numpy as np
+
+# Load the data
+npi = pd.read_csv("npi_sample.csv")
+
+# Create the contingency table of frequencies
+special_authority_freq = pd.crosstab(npi.special, npi.authority)
+
+# Convert frequencies to proportions
+special_authority_prop = special_authority_freq / len(npi)
+
+# Calculate the marginal proportions for the authority variable
+authority_marginals = special_authority_prop.sum(axis=0)
+print("Authority Marginals:")
+print(authority_marginals)
+
+# Calculate the marginal proportions for the special variable
+special_marginals = special_authority_prop.sum(axis=1)
+print("\nSpecial Marginals:")
+print(special_marginals)
