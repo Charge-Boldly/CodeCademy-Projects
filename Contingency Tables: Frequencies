@@ -1,0 +1,10 @@
+import pandas as pd
+
+# Load the data
+npi = pd.read_csv("npi_sample.csv")
+
+# Create the contingency table for 'special' and 'authority'
+special_authority_freq = pd.crosstab(npi['special'], npi['authority'])
+
+# Print the contingency table
+print(special_authority_freq)
