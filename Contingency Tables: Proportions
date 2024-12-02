@@ -1,0 +1,14 @@
+import pandas as pd
+import numpy as np
+
+# Load the data
+npi = pd.read_csv("npi_sample.csv")
+
+# Create the contingency table
+special_authority_freq = pd.crosstab(npi.special, npi.authority)
+
+# Convert the frequencies to proportions
+special_authority_prop = special_authority_freq / len(npi)
+
+# Print the table of proportions
+print(special_authority_prop)
