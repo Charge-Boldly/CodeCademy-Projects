@@ -1,0 +1,103 @@
+# Import necessary libraries
+import numpy as np
+import pandas as pd
+from scipy.stats import pearsonr, chi2_contingency
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the data
+nba = pd.read_csv('./nba_games.csv')
+
+# Step 1: Subset data for 2010 and 2014 seasons
+nba_2010 = nba[nba.year_id == 2010]
+nba_2014 = nba[nba.year_id == 2014]
+
+# Verify the data
+print("2010 Data Sample:")
+print(nba_2010.head())
+print("\n2014 Data Sample:")
+print(nba_2014.head())
+
+# Step 2: Calculate the average points scored for Knicks and Nets in 2010
+# Create Series for Knicks and Nets points in 2010
+knicks_pts_10 = nba_2010.pts[nba_2010.fran_id == "Knicks"]
+nets_pts_10 = nba_2010.pts[nba_2010.fran_id == "Nets"]
+
+# Calculate the means
+knicks_mean_score = np.mean(knicks_pts_10)
+nets_mean_score = np.mean(nets_pts_10)
+
+# Compute the difference in mean points
+diff_means_2010 = knicks_mean_score - nets_mean_score
+print("\nMean Score Difference (2010):", diff_means_2010)
+
+# Step 3: Plot overlapping histograms of points scored
+plt.clf()
+plt.hist(knicks_pts_10, alpha=0.8, normed=True, label='Knicks')
+plt.hist(nets_pts_10, alpha=0.8, normed=True, label='Nets')
+plt.legend()
+plt.title("2010 Season - Knicks vs Nets Points Distribution")
+plt.xlabel("Points per Game")
+plt.ylabel("Density")
+plt.show()
+
+# Step 4: Repeat steps for 2014
+knicks_pts_14 = nba_2014.pts[nba_2014.fran_id == "Knicks"]
+nets_pts_14 = nba_2014.pts[nba_2014.fran_id == "Nets"]
+
+knicks_mean_score_14 = np.mean(knicks_pts_14)
+nets_mean_score_14 = np.mean(nets_pts_14)
+
+diff_means_2014 = knicks_mean_score_14 - nets_mean_score_14
+print("\nMean Score Difference (2014):", diff_means_2014)
+
+plt.clf()
+plt.hist(knicks_pts_14, alpha=0.8, normed=True, label='Knicks')
+plt.hist(nets_pts_14, alpha=0.8, normed=True, label='Nets')
+plt.legend()
+plt.title("2014 Season - Knicks vs Nets Points Distribution")
+plt.xlabel("Points per Game")
+plt.ylabel("Density")
+plt.show()
+
+# Step 5: Boxplot for all teams in 2010
+plt.clf()
+sns.boxplot(data=nba_2010, x='fran_id', y='pts')
+plt.xticks(rotation=90)
+plt.title("2010 Points Distribution by Team")
+plt.xlabel("Team")
+plt.ylabel("Points")
+plt.show()
+
+# Step 6: Contingency table for game_result and game_location
+location_result_freq = pd.crosstab(nba_2010.game_result, nba_2010.game_location)
+print("\nContingency Table (Frequencies):")
+print(location_result_freq)
+
+# Step 7: Table of proportions
+location_result_proportions = location_result_freq / len(nba_2010)
+print("\nContingency Table (Proportions):")
+print(location_result_proportions)
+
+# Step 8: Chi-Square test
+chi2, pval, dof, expected = chi2_contingency(location_result_freq)
+print("\nExpected Contingency Table:")
+print(expected)
+print("\nChi-Square Statistic:", chi2)
+
+# Step 9: Covariance between forecast and point_diff
+point_diff_forecast_cov = np.cov(nba_2010.forecast, nba_2010.point_diff)
+print("\nCovariance Matrix:")
+print(point_diff_forecast_cov)
+
+# Step 10: Correlation between forecast and point_diff
+point_diff_forecast_corr, pval_corr = pearsonr(nba_2010.forecast, nba_2010.point_diff)
+print("\nCorrelation (Forecast vs Point Differential):", point_diff_forecast_corr)
+
+# Step 11: Scatter plot of forecast vs point_diff
+plt.clf()
+plt.scatter(nba_2010.forecast, nba_2010.point_diff)
+plt.xlabel('Forecasted Win Probability')
+plt.ylabel('Point Differential')
+plt.title("Forecast vs Point Differential (2010)")
+plt.show()
