@@ -1,0 +1,65 @@
+# Function to calculate the probability of events A or B using the addition rule
+def prob_a_or_b(a, b, all_possible_outcomes):
+    # Calculate the probability of event A (size of set A divided by total outcomes)
+    prob_a = len(a) / len(all_possible_outcomes)
+    
+    # Calculate the probability of event B (size of set B divided by total outcomes)
+    prob_b = len(b) / len(all_possible_outcomes)
+    
+    # Find the intersection of events A and B (common elements between the two sets)
+    inter = a.intersection(b)
+    
+    # Calculate the probability of the intersection of A and B
+    prob_inter = len(inter) / len(all_possible_outcomes)
+    
+    # Apply the addition rule: P(A or B) = P(A) + P(B) - P(A and B)
+    add_rule_formula = prob_a + prob_b - prob_inter
+    
+    # Return the result of the addition rule calculation
+    return add_rule_formula
+
+# Scenario 1: Rolling a die once and getting an even number or an odd number
+# Define the set of even numbers
+evens = {2, 4, 6}
+# Define the set of odd numbers
+odds = {1, 3, 5}
+# Define all possible outcomes of rolling a die
+all_possible_rolls = {1, 2, 3, 4, 5, 6}
+
+# Call the function for Scenario 1 and print the result
+# Probability of rolling an even or odd number (mutually exclusive events)
+print("Probability of rolling an even number or an odd number:", prob_a_or_b(evens, odds, all_possible_rolls))
+
+# Scenario 2: Rolling a die once and getting an odd number or a number greater than 2
+# Define the set of odd numbers
+odds = {1, 3, 5}
+# Define the set of numbers greater than 2
+greater_than_two = {3, 4, 5, 6}
+# Define all possible outcomes of rolling a die
+all_possible_rolls = {1, 2, 3, 4, 5, 6}
+
+# Call the function for Scenario 2 and print the result
+# Probability of rolling an odd number or a number greater than 2
+print("Probability of rolling an odd number or a number greater than 2:", prob_a_or_b(odds, greater_than_two, all_possible_rolls))
+
+# Scenario 3: Selecting a diamond card or a face card from a standard deck of cards
+# Define the set of diamond cards (13 cards in a standard deck)
+diamond_cards = {'ace_diamond', '2_diamond', '3_diamond', '4_diamond', '5_diamond', '6_diamond', '7_diamond', 
+                 '8_diamond', '9_diamond', '10_diamond', 'jack_diamond', 'queen_diamond', 'king_diamond'}
+# Define the set of face cards (12 face cards total across all suits)
+face_cards = {'jack_diamond', 'jack_spade', 'jack_heart', 'jack_club', 
+              'queen_diamond', 'queen_spade', 'queen_heart', 'queen_club', 
+              'king_diamond', 'king_spade', 'king_heart', 'king_club'}
+# Define all possible cards in a standard deck (52 cards)
+all_possible_cards = {'ace_diamond', '2_diamond', '3_diamond', '4_diamond', '5_diamond', '6_diamond', '7_diamond', 
+                      '8_diamond', '9_diamond', '10_diamond', 'jack_diamond', 'queen_diamond', 'king_diamond', 
+                      'ace_heart', '2_heart', '3_heart', '4_heart', '5_heart', '6_heart', '7_heart', '8_heart', 
+                      '9_heart', '10_heart', 'jack_heart', 'queen_heart', 'king_heart', 
+                      'ace_spade', '2_spade', '3_spade', '4_spade', '5_spade', '6_spade', '7_spade', '8_spade', 
+                      '9_spade', '10_spade', 'jack_spade', 'queen_spade', 'king_spade', 
+                      'ace_club', '2_club', '3_club', '4_club', '5_club', '6_club', '7_club', '8_club', '9_club', 
+                      '10_club', 'jack_club', 'queen_club', 'king_club'}
+
+# Call the function for Scenario 3 and print the result
+# Probability of selecting a diamond card or a face card
+print("Probability of selecting a diamond card or a face card:", prob_a_or_b(diamond_cards, face_cards, all_possible_cards))
