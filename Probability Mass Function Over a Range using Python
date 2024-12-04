@@ -1,0 +1,19 @@
+import scipy.stats as stats
+
+# Checkpoint 1
+# Probability of observing between 4 to 6 heads in 10 coin flips
+prob_1 = (
+    stats.binom.pmf(4, n=10, p=0.5) + 
+    stats.binom.pmf(5, n=10, p=0.5) + 
+    stats.binom.pmf(6, n=10, p=0.5)
+)
+print("Probability of observing between 4 to 6 heads in 10 coin flips:", prob_1)
+
+# Checkpoint 2
+# Probability of observing more than 2 heads in 10 coin flips
+prob_2 = 1 - (
+    stats.binom.pmf(0, n=10, p=0.5) +
+    stats.binom.pmf(1, n=10, p=0.5) +
+    stats.binom.pmf(2, n=10, p=0.5)
+)
+print("Probability of observing more than 2 heads in 10 coin flips:", prob_2)
