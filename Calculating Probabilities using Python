@@ -1,0 +1,12 @@
+import scipy.stats as stats
+
+# Calculate prob_1: Probability of observing 3 heads in 10 flips
+x = 3  # Number of heads
+n = 10  # Number of flips
+p = 0.5  # Probability of heads
+prob_1 = stats.binom.pmf(x, n, p)
+print("Probability of observing 3 heads in 10 fair coin flips:", prob_1)
+
+# Calculate prob_2: Probability of observing 7 heads in 20 flips
+prob_2 = stats.binom.pmf(7, 20, 0.5)
+print("Probability of observing 7 heads in 20 fair coin flips:", prob_2)
