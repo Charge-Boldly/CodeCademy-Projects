@@ -1,0 +1,5 @@
+import scipy.stats as stats
+
+# Probability that a woman is less than 175 cm tall
+prob = stats.norm.cdf(175, loc=167.64, scale=8)
+print("Probability that a randomly chosen woman is less than 175 cm tall:", prob)
