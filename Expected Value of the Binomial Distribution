@@ -1,0 +1,4 @@
+## Checkpoint 2
+# Calculate the expected number of late arrivals
+expected_late = 180 * (1 - 0.98)
+print("Expected number of times arriving late:", expected_late)
