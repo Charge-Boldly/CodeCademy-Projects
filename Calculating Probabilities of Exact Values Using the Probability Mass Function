@@ -1,0 +1,15 @@
+import scipy.stats as stats
+
+# Checkpoint 1
+# Probability of exactly 15 calls in the hour
+prob_15 = stats.poisson.pmf(15, mu=15)
+print("Probability of exactly 15 calls:", prob_15)
+
+# Checkpoint 2
+# Probability of observing between 7 to 9 calls in the hour
+prob_7_to_9 = (
+    stats.poisson.pmf(7, mu=15) +
+    stats.poisson.pmf(8, mu=15) +
+    stats.poisson.pmf(9, mu=15)
+)
+print("Probability of between 7 to 9 calls:", prob_7_to_9)
