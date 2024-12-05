@@ -1,0 +1,11 @@
+import scipy.stats as stats
+
+# Checkpoint 1
+# Probability that the weather is between 18 and 25 degrees Celsius
+temp_prob_1 = stats.norm.cdf(25, loc=20, scale=3) - stats.norm.cdf(18, loc=20, scale=3)
+print("Probability of weather being between 18 and 25 degrees Celsius:", temp_prob_1)
+
+# Checkpoint 2
+# Probability that the weather is greater than 24 degrees Celsius
+temp_prob_2 = 1 - stats.norm.cdf(24, loc=20, scale=3)
+print("Probability of weather being greater than 24 degrees Celsius:", temp_prob_2)
