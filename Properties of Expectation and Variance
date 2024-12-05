@@ -1,0 +1,28 @@
+import scipy.stats as stats
+import numpy as np
+
+## Checkpoint 1
+# Calculate the expected value of the bonuses
+expected_bonus = 0.08 * 75000
+print("Expected bonus:", expected_bonus)
+
+## Checkpoint 2
+# Generate 100 random draws from a Poisson distribution with lambda = 4
+num_goals = stats.poisson.rvs(mu=4, size=100)
+print("Random draws of goals:", num_goals)
+
+## Checkpoint 3
+# Calculate and print the variance of num_goals
+variance_num_goals = np.var(num_goals)
+print("Variance of num_goals:", variance_num_goals)
+
+## Checkpoint 4
+# Multiply each value of num_goals by 2
+num_goals_2 = num_goals * 2
+# Calculate and print the variance of num_goals_2
+variance_num_goals_2 = np.var(num_goals_2)
+print("Variance of num_goals_2:", variance_num_goals_2)
+
+# Verify relationship: variance_num_goals_2 = variance_num_goals * 4
+assert variance_num_goals_2 == variance_num_goals * 4
+print("Variance relationship verified!")
