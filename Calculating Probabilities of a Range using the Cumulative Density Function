@@ -1,0 +1,11 @@
+import scipy.stats as stats
+
+# Checkpoint 1
+# Probability of observing more than 20 calls in the hour
+prob_more_than_20 = 1 - stats.poisson.cdf(20, mu=15)
+print("Probability of observing more than 20 calls:", prob_more_than_20)
+
+# Checkpoint 2
+# Probability of observing between 17 and 21 calls
+prob_17_to_21 = stats.poisson.cdf(21, mu=15) - stats.poisson.cdf(16, mu=15)
+print("Probability of observing between 17 and 21 calls:", prob_17_to_21)
