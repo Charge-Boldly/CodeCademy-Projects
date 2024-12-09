@@ -1,0 +1,52 @@
+import scipy.stats as stats
+import numpy as np
+
+# Task 1: Define the rate parameter
+lam = 9  # Average number of defects per day
+
+# Task 2: Probability of observing exactly `lam` defects
+prob_exact_lam = stats.poisson.pmf(lam, lam)
+print("Task 2: Probability of exactly lam defects =", prob_exact_lam)
+
+# Task 3: Probability of 4 or fewer defects
+prob_good_day = stats.poisson.cdf(4, lam)
+print("Task 3: Probability of 4 or fewer defects =", prob_good_day)
+
+# Task 4: Probability of having more than 9 defects
+prob_bad_day = 1 - stats.poisson.cdf(9, lam)
+print("Task 4: Probability of more than 9 defects =", prob_bad_day)
+
+# Task 5: Generate 365 random values from Poisson distribution
+year_defects = stats.poisson.rvs(lam, size=365)
+
+# Task 6: Print the first 20 values from year_defects
+print("Task 6: First 20 values in year_defects =", year_defects[:20])
+
+# Task 7: Total expected defects over 365 days
+expected_total_defects = lam * 365
+print("Task 7: Total expected defects over 365 days =", expected_total_defects)
+
+# Task 8: Total sum of year_defects
+actual_total_defects = sum(year_defects)
+print("Task 8: Total actual defects =", actual_total_defects)
+print("Task 8: Difference between actual and expected =", actual_total_defects - expected_total_defects)
+
+# Task 9: Average defects per day
+average_defects = np.mean(year_defects)
+print("Task 9: Average defects per day =", average_defects)
+
+# Task 10: Maximum number of defects in a single day
+max_defects = year_defects.max()
+print("Task 10: Maximum number of defects in a single day =", max_defects)
+
+# Task 11: Probability of observing `max_defects` or more
+prob_max_or_more = 1 - stats.poisson.cdf(max_defects - 1, lam)
+print("Task 11: Probability of observing max_defects or more =", prob_max_or_more)
+
+# Task 12: Number of defects at the 90th percentile
+percentile_90 = stats.poisson.ppf(0.90, lam)
+print("Task 12: Defects at 90th percentile =", percentile_90)
+
+# Task 13: Proportion of days with defects >= 90th percentile value
+proportion_above_90th = sum(year_defects >= percentile_90) / len(year_defects)
+print("Task 13: Proportion of days >= 90th percentile defects =", proportion_above_90th)
