@@ -1,0 +1,27 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import codecademylib3
+
+# Load the cod weight population data
+population = pd.read_csv("cod_population.csv")
+population = np.array(population['Cod_Weight'])
+
+# Define sample size and initialize list for sample means
+sample_size = 50
+sample_means = []
+
+# Generate 500 random samples and calculate their means
+for i in range(50):
+    samp = np.random.choice(population, sample_size, replace=False)
+    this_sample_mean = np.mean(samp)  # Calculate the mean of the sample
+    sample_means.append(this_sample_mean)  # Append the mean to the list
+
+# Plot the sampling distribution of the mean
+sns.histplot(sample_means, stat='density')
+plt.title("Sampling Distribution of the Mean")
+plt.xlabel("Weight (lbs)")
+plt.show()
+
+
