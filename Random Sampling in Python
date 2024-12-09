@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import codecademylib3
+
+# Load population data
+population = pd.read_csv("salmon_population.csv")
+population = np.array(population.Salmon_Weight)
+
+# Calculate and display population mean
+pop_mean = round(np.mean(population), 3)
+sns.histplot(population, stat='density')
+plt.axvline(pop_mean, color='r', linestyle='dashed')
+plt.title(f"Population Mean: {pop_mean}")
+plt.xlabel("Weight (lbs)")
+# plt.show()  # Commented to avoid excessive scrolling
+plt.clf()  # Clear the plot
+
+# Generate a random sample
+samp_size = 10
+sample = np.random.choice(np.array(population), samp_size, replace=False)
+
+# Define sample mean
+sample_mean = round(np.mean(sample), 3)
+
+# Plot the sample data
+sns.histplot(sample, stat='density')
+plt.axvline(sample_mean, color='r', linestyle='dashed')
+plt.title(f"Sample Mean: {sample_mean}")
+plt.xlabel("Weight (lbs)")
+plt.show()
