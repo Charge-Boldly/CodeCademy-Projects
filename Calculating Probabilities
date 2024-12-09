@@ -1,0 +1,23 @@
+import numpy as np
+import scipy.stats as stats
+
+# Setting up our parameters
+std_dev = 20  # standard deviation of the cod fish population (in lbs)
+samp_size = 25  # sample size
+
+# Calculating the standard error
+standard_error = std_dev / (samp_size**0.5)
+
+# Output the standard error
+print(f"The standard error for a sample size of {samp_size} is: {standard_error:.2f} lbs")
+
+# Given values for the probability calculation
+x = 30  # sample mean weight to check the probability for
+mean = 36  # mean weight of cod (in lbs)
+
+# Calculate the probability using the normal CDF
+cod_cdf = stats.norm.cdf(x, mean, standard_error)
+
+# Output the probability
+print(f"The probability that the sample mean weight of 25 cod is less than or equal to {x} lbs is: {cod_cdf:.4f}")
+
