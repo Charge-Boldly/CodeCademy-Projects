@@ -1,0 +1,80 @@
+# Import necessary libraries
+import numpy as np         # For numerical operations like mean and standard deviation
+import pandas as pd        # For working with data in DataFrame format
+import matplotlib.pyplot as plt  # For creating plots and visualizations
+from scipy import stats     # For statistical functions like cumulative distribution function (CDF)
+import seaborn as sns      # For more advanced visualizations (optional, can be used for styling)
+
+# Task 1: Load the Spotify dataset
+spotify_data = pd.read_csv('spotify_data.csv')  # Load the csv file into a pandas DataFrame
+
+# Task 2: Preview the dataset
+print(spotify_data.head())  # Display the first 5 rows of the dataset to get an idea of its structure
+
+# Task 3: Select the relevant column (tempo)
+song_tempos = spotify_data['tempo']  # Create a variable to hold the tempo data (beats per minute)
+
+# Task 5: Plot the population distribution with the mean labeled
+def population_distribution(population_data):
+    """Plots the population distribution."""
+    plt.figure(figsize=(10, 6))
+    sns.histplot(population_data, kde=True, color='blue', bins=30)  # Plot a histogram with a Kernel Density Estimate (KDE)
+    plt.title("Population Distribution")  # Title of the plot
+    plt.xlabel('Tempo (bpm)')  # Label for x-axis
+    plt.ylabel('Frequency')  # Label for y-axis
+    population_mean = np.mean(population_data)  # Calculate the population mean
+    plt.axvline(population_mean, color='red', linestyle='--', label=f'Mean: {population_mean:.2f}')  # Mark the population mean with a red dashed line
+    plt.legend()  # Show the legend
+    plt.show()  # Display the plot
+
+population_distribution(song_tempos)  # Call the function to plot the population distribution
+
+# Task 6: Sampling distribution of the sample mean
+def sampling_distribution(population_data, samp_size, stat):
+    """Plots the sampling distribution of a given statistic."""
+    sample_means = []  # List to store sample means
+    for _ in range(1000):  # Generate 1000 samples
+        sample = np.random.choice(population_data, samp_size, replace=True)  # Take a random sample of size 'samp_size'
+        if stat == "Mean":
+            sample_stat = np.mean(sample)  # Calculate the mean of the sample
+        elif stat == "Minimum":
+            sample_stat = np.min(sample)  # Calculate the minimum of the sample
+        elif stat == "Variance":
+            sample_stat = np.var(sample, ddof=1)  # Calculate the variance (with ddof=1 to make it unbiased)
+        sample_means.append(sample_stat)  # Append the statistic to the list
+    
+    plt.figure(figsize=(10, 6))  # Create a new figure for the plot
+    sns.histplot(sample_means, kde=True, color='green', bins=30)  # Plot the histogram of sample statistics
+    plt.title(f"Sampling Distribution of the {stat}")  # Title of the plot
+    plt.xlabel(f'{stat} of Sample')  # Label for x-axis
+    plt.ylabel('Frequency')  # Label for y-axis
+    plt.show()  # Display the plot
+
+sampling_distribution(song_tempos, 30, "Mean")  # Plot the sampling distribution of the mean with sample size 30
+
+# Task 8: Sampling distribution of the sample minimum
+sampling_distribution(song_tempos, 30, "Minimum")  # Plot the sampling distribution of the minimum with sample size 30
+
+# Task 10: Sampling distribution of the sample variance
+sampling_distribution(song_tempos, 30, "Variance")  # Plot the sampling distribution of the variance with sample size 30
+
+# Task 13: Calculate the population mean and standard deviation
+population_mean = np.mean(song_tempos)  # Calculate the population mean of the song tempos
+population_std = np.std(song_tempos, ddof=0)  # Calculate the population standard deviation (ddof=0 for population)
+
+print(f'Population Mean: {population_mean:.2f}')  # Print the population mean
+print(f'Population Standard Deviation: {population_std:.2f}')  # Print the population standard deviation
+
+# Task 14: Calculate the standard error
+sample_size = 30  # Define the sample size
+standard_error = population_std / np.sqrt(sample_size)  # Standard error formula: standard deviation / sqrt(sample size)
+
+print(f'Standard Error: {standard_error:.2f}')  # Print the standard error
+
+# Task 15: Calculate the probability of observing an average tempo of 140bpm or lower
+prob_140bpm_or_lower = stats.norm.cdf(140, population_mean, standard_error)  # Calculate the CDF for 140 bpm
+print(f'Probability of an average tempo of 140 bpm or lower: {prob_140bpm_or_lower:.4f}')  # Print the result
+
+# Task 16: Calculate the probability of observing an average tempo of 150bpm or higher
+prob_150bpm_or_higher = 1 - stats.norm.cdf(150, population_mean, standard_error)  # Calculate the probability for 150 bpm or higher
+print(f'Probability of an average tempo of 150 bpm or higher: {prob_150bpm_or_higher:.4f}')  # Print the result
