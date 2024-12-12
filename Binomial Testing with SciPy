@@ -1,0 +1,35 @@
+import numpy as np
+from scipy.stats import binom_test
+
+# Simulating a binomial test function
+def simulation_binomial_test(observed_successes, n, p):
+    # Initialize null_outcomes
+    null_outcomes = []
+  
+    # Generate the simulated null distribution
+    for i in range(10000):
+        simulated_monthly_visitors = np.random.choice(['y', 'n'], size=n, p=[p, 1-p])
+        num_purchased = np.sum(simulated_monthly_visitors == 'y')
+        null_outcomes.append(num_purchased)
+
+    # Calculate a 1-sided p-value
+    null_outcomes = np.array(null_outcomes)
+    p_value = np.sum(null_outcomes <= observed_successes) / len(null_outcomes) 
+    return p_value
+
+# Test data
+observed_successes = 41
+n = 500
+p = 0.1
+
+# Running the simulation-based binomial test
+simulation_p_value = simulation_binomial_test(observed_successes, n, p)
+print("Simulation p-value: ", simulation_p_value)
+
+# Running the scipy binom_test for comparison (Two-sided test)
+p_value_2sided = binom_test(observed_successes, n=n, p=p)
+print("Two-sided p-value (binom_test):", p_value_2sided)
+
+# Running the scipy binom_test for the one-sided test (alternative='less')
+p_value_1sided = binom_test(observed_successes, n=n, p=p, alternative='less')
+print("One-sided p-value (binom_test):", p_value_1sided)
