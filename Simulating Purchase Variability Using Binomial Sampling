@@ -1,0 +1,22 @@
+import numpy as np
+import pandas as pd
+
+# Initialize an empty list to store the number of purchases in each simulation
+null_outcomes = []
+
+# Run the simulation 10,000 times
+for i in range(10000):
+    # Simulate a week of 500 visitors, each with a 10% chance of making a purchase
+    week_of_visitors = np.random.choice(['y', 'n'], size=500, p=[0.1, 0.9])
+    # Calculate the number of purchases in this simulation
+    num_purchased = np.sum(week_of_visitors == 'y')
+    # Append the number of purchases to the list
+    null_outcomes.append(num_purchased)
+
+# Calculate the minimum and maximum values in null_outcomes
+null_min = np.min(null_outcomes)
+null_max = np.max(null_outcomes)
+
+# Print the results
+print(f"Minimum number of purchases: {null_min}")
+print(f"Maximum number of purchases: {null_max}")
