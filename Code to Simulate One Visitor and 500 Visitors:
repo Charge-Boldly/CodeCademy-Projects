@@ -1,0 +1,19 @@
+import numpy as np
+import pandas as pd
+
+# Load the dataset
+monthly_report = pd.read_csv('monthly_report.csv')
+
+# Step 1: Simulate one visitor with a 10% chance of making a purchase
+# Use np.random.choice to randomly generate 'y' (purchase) or 'n' (no purchase)
+one_visitor = np.random.choice(['y', 'n'], size=1, p=[0.1, 0.9])
+print("Single visitor outcome:", one_visitor)
+
+# Step 2: Simulate 500 visitors
+# Use np.random.choice to simulate purchases for 500 visitors
+simulated_monthly_visitors = np.random.choice(['y', 'n'], size=500, p=[0.1, 0.9])
+print("Simulated outcomes for 500 visitors:", simulated_monthly_visitors)
+
+# Optional: Check how many purchases occurred among the 500 simulated visitors
+num_simulated_purchases = np.sum(simulated_monthly_visitors == 'y')
+print("Number of simulated purchases:", num_simulated_purchases)
