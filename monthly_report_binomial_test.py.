@@ -1,0 +1,21 @@
+# Import necessary libraries
+import numpy as np  # For numerical operations
+import pandas as pd  # For working with data frames
+import codecademylib3  # Codecademy-specific library for visualizations and setup
+
+# Load the data from the CSV file into a pandas DataFrame
+monthly_report = pd.read_csv('monthly_report.csv')
+
+# Step 1: Print the first five rows of the data to inspect the structure and contents
+# The .head() method displays the first 5 rows of the DataFrame
+print(monthly_report.head())
+
+# Step 2: Calculate the total number of visitors (sample size)
+# len() is used to count the number of rows in the DataFrame
+sample_size = len(monthly_report)
+print("Sample size (total visitors):", sample_size)
+
+# Step 3: Calculate the number of visitors who made a purchase
+# Use a conditional statement to check for 'y' in the 'purchase' column and sum them
+num_purchased = np.sum(monthly_report['purchase'] == 'y')
+print("Number of purchases:", num_purchased)
