@@ -1,0 +1,31 @@
+import numpy as np
+import pandas as pd
+
+null_outcomes = []
+
+# Run the simulation 10,000 times
+for i in range(10000):
+    simulated_monthly_visitors = np.random.choice(
+        ['y', 'n'], size=500, p=[0.1, 0.9]
+    )
+    
+    # Calculate the number of purchases in this simulation
+    num_purchased = np.sum(simulated_monthly_visitors == 'y')
+    
+    # Append the result to the list
+    null_outcomes.append(num_purchased)
+
+# Convert null_outcomes to a numpy array for efficient operations
+null_outcomes = np.array(null_outcomes)
+
+# Calculate the two-sided p-value
+observed_value = 41
+expected_value = 50  # Under the null hypothesis of 10% purchase probability
+lower_bound = expected_value - 9  # 9 fewer than expected
+upper_bound = expected_value + 9  # 9 more than expected
+
+# Calculate the p-value for a two-sided test
+p_value = np.sum((null_outcomes <= lower_bound) | (null_outcomes >= upper_bound)) / len(null_outcomes)
+
+# Print the p-value
+print("P-value:", p_value)
