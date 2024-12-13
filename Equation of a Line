@@ -1,0 +1,38 @@
+# Load libraries
+import codecademylib3
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read in the data
+students = pd.read_csv('test_data.csv')
+
+# Step 1: Adjust the slope to 10
+# The equation of the line with slope 10 and y-intercept 20
+predicted_score = 10 * students.hours_studied + 20
+
+# Create the scatter plot and overlay the line
+plt.scatter(students.hours_studied, students.score, label='Data Points')
+plt.plot(students.hours_studied, predicted_score, color='red', label='Line: m=10, b=20')
+plt.xlabel('Hours Studied')
+plt.ylabel('Score')
+plt.title('Linear Regression: Adjusting Slope')
+plt.legend()
+
+# Show the plot for Step 1
+plt.show()
+
+# Step 2: Adjust the y-intercept to 45
+# The equation of the line with slope 10 and y-intercept 45
+predicted_score = 10 * students.hours_studied + 45
+
+# Create the scatter plot and overlay the adjusted line
+plt.scatter(students.hours_studied, students.score, label='Data Points')
+plt.plot(students.hours_studied, predicted_score, color='green', label='Line: m=10, b=45')
+plt.xlabel('Hours Studied')
+plt.ylabel('Score')
+plt.title('Linear Regression: Adjusting Y-Intercept')
+plt.legend()
+
+# Show the plot for Step 2
+plt.show()
