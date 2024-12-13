@@ -1,0 +1,28 @@
+# Load libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read in the data
+students = pd.read_csv('test_data.csv')
+
+# Step 1: Create a scatter plot with hours_studied on the x-axis and score on the y-axis
+# This helps visualize the relationship between hours studied and test scores.
+plt.scatter(students.hours_studied, students.score, label='Data Points')
+
+# Step 2: Write the equation for the line (linear relationship)
+# This equation represents a predicted score based on the hours studied.
+y = 9.85 * students.hours_studied + 43
+
+# Step 3: Plot the line to check if it fits the data points
+# This line models the relationship observed in the scatter plot.
+plt.plot(students.hours_studied, y, color='red', label='Regression Line')
+
+# Add labels and title for clarity
+plt.xlabel('Hours Studied')
+plt.ylabel('Test Score')
+plt.title('Relationship Between Hours Studied and Test Score')
+plt.legend()  # Add a legend to differentiate data points and regression line
+
+# Display the plot
+plt.show()
