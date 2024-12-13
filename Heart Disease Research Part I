@@ -1,0 +1,87 @@
+# Import necessary libraries
+import pandas as pd
+import numpy as np
+from scipy.stats import ttest_1samp, binom_test
+
+# Load the dataset containing heart disease data
+heart = pd.read_csv('heart_disease.csv')
+
+# Split the data into two groups: patients with heart disease (yes_hd) and patients without heart disease (no_hd)
+yes_hd = heart[heart.heart_disease == 'presence']
+no_hd = heart[heart.heart_disease == 'absence']
+
+# 1. Save the cholesterol levels for patients with heart disease in a variable
+chol_hd = yes_hd['chol']
+# chol_hd now contains the cholesterol levels for those with heart disease
+
+# 2. Calculate and print the mean cholesterol level for patients with heart disease
+mean_chol_hd = np.mean(chol_hd)
+print("Mean cholesterol level for heart disease patients:", mean_chol_hd)
+
+# 3. Hypothesis test: We want to know if heart disease patients have an average cholesterol level greater than 240 mg/dl.
+# Null hypothesis: The average cholesterol level is 240 mg/dl.
+# Alternative hypothesis: The average cholesterol level is greater than 240 mg/dl.
+
+# We use a one-sample t-test to test if the mean cholesterol level is different from 240
+t_statistic, p_value = ttest_1samp(chol_hd, 240)
+
+# To perform a one-sided test, divide the p-value by 2
+p_value_one_sided = p_value / 2
+print("P-value for one-sided test (heart disease patients):", p_value_one_sided)
+
+# 4. Make a conclusion based on the p-value. If the p-value is less than 0.05, we reject the null hypothesis.
+if p_value_one_sided < 0.05:
+    print("We can conclude that heart disease patients have an average cholesterol level significantly higher than 240 mg/dl.")
+else:
+    print("We cannot conclude that heart disease patients have an average cholesterol level significantly higher than 240 mg/dl.")
+
+# 5. Now we repeat the analysis for patients without heart disease (no_hd).
+
+# Save the cholesterol levels for patients without heart disease in a variable
+chol_no_hd = no_hd['chol']
+# chol_no_hd now contains the cholesterol levels for those without heart disease
+
+# Calculate and print the mean cholesterol level for patients without heart disease
+mean_chol_no_hd = np.mean(chol_no_hd)
+print("Mean cholesterol level for patients without heart disease:", mean_chol_no_hd)
+
+# Run the same one-sample t-test to check if patients without heart disease have an average cholesterol level higher than 240 mg/dl
+t_statistic_no_hd, p_value_no_hd = ttest_1samp(chol_no_hd, 240)
+
+# For a one-sided test, divide the p-value by 2
+p_value_one_sided_no_hd = p_value_no_hd / 2
+print("P-value for one-sided test (no heart disease):", p_value_one_sided_no_hd)
+
+# Check if the p-value is below 0.05 to make a conclusion
+if p_value_one_sided_no_hd < 0.05:
+    print("We can conclude that patients without heart disease have an average cholesterol level significantly higher than 240 mg/dl.")
+else:
+    print("We cannot conclude that patients without heart disease have an average cholesterol level significantly higher than 240 mg/dl.")
+
+# 6. Now, let’s calculate how many patients are in the dataset (heart) in total.
+num_patients = len(heart)
+print("Total number of patients in the dataset:", num_patients)
+
+# 7. Calculate the number of patients whose fasting blood sugar is greater than 120 mg/dl.
+# The fbs column indicates whether fasting blood sugar is greater than 120 (1 = yes, 0 = no).
+num_highfbs_patients = np.sum(heart['fbs'] == 1)
+print("Number of patients with fasting blood sugar > 120 mg/dl:", num_highfbs_patients)
+
+# 8. The U.S. population in 1988 had around 8% of people with diabetes, which can be indicated by fasting blood sugar > 120 mg/dl.
+# Calculate how many people in the sample would be expected to have diabetes, assuming 8% of the population had it.
+expected_patients = num_patients * 0.08
+print("Expected number of patients with fasting blood sugar > 120 mg/dl (if 8% of the population has it):", expected_patients)
+
+# 9. Now we need to perform a binomial test to check if the rate of fasting blood sugar > 120 mg/dl in this sample is significantly greater than 8%.
+# The null hypothesis is that 8% of people in the population have fasting blood sugar > 120 mg/dl.
+# The alternative hypothesis is that more than 8% of people have fasting blood sugar > 120 mg/dl.
+
+# Run a binomial test
+p_value_fbs = binom_test(num_highfbs_patients, num_patients, 0.08, alternative='greater')
+print("P-value for binomial test (fbs > 120):", p_value_fbs)
+
+# 10. Finally, check if the p-value is below 0.05 to make a conclusion.
+if p_value_fbs < 0.05:
+    print("We can conclude that this sample comes from a population where more than 8% of people have fasting blood sugar > 120 mg/dl.")
+else:
+    print("We cannot conclude that this sample comes from a population where more than 8% of people have fasting blood sugar > 120 mg/dl.")
