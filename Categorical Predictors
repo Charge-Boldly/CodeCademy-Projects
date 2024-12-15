@@ -1,0 +1,27 @@
+# Load libraries
+import codecademylib3
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Read in the data
+students = pd.read_csv('test_data.csv')
+
+# Calculate group means
+mean_scores = students.groupby('breakfast').mean().score
+print(mean_scores)
+
+# Create scatter plot
+plt.scatter(students.breakfast, students.score, alpha=0.7, edgecolor='black')
+plt.title("Scores by Breakfast")
+plt.xlabel("Breakfast (0 = No, 1 = Yes)")
+plt.ylabel("Score")
+
+# Add the line using calculated group means
+plt.plot([0, 1], [mean_scores[0], mean_scores[1]], color='red', linestyle='--', linewidth=2, label="Best-Fit Line")
+
+# Add a legend
+plt.legend()
+
+# Show the plot
+plt.show()
