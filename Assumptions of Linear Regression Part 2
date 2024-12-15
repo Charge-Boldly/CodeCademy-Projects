@@ -1,0 +1,36 @@
+# Load libraries
+import pandas as pd
+import numpy as np  # Ensure np is defined
+import matplotlib.pyplot as plt  # Import Matplotlib for plotting
+import statsmodels.api as sm
+
+# Read in the data
+students = pd.read_csv('test_data.csv')
+
+# Fit the model
+model = sm.OLS.from_formula('score ~ hours_studied', students)
+results = model.fit()
+
+# Calculate fitted values
+fitted_values = results.predict(students)
+
+# Calculate residuals
+residuals = students['score'] - fitted_values
+
+# Print the first 5 residuals
+print(residuals.head())
+
+# Create a histogram of the residuals to check normality
+plt.hist(residuals, bins=10, edgecolor='black', alpha=0.7)
+plt.title("Histogram of Residuals")
+plt.xlabel("Residuals")
+plt.ylabel("Frequency")
+plt.show()
+
+# Create a scatter plot of residuals vs. fitted values
+plt.scatter(fitted_values, residuals, alpha=0.7, edgecolor='k')
+plt.axhline(0, color='red', linestyle='--', linewidth=1)
+plt.title("Residuals vs. Fitted Values")
+plt.xlabel("Fitted Values")
+plt.ylabel("Residuals")
+plt.show()
