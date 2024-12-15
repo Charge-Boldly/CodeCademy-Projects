@@ -1,0 +1,20 @@
+# Load libraries
+import pandas as pd
+import numpy as np  # Ensure np is defined
+import statsmodels.api as sm
+
+# Read in the data
+students = pd.read_csv('test_data.csv')
+
+# Fit the model
+model = sm.OLS.from_formula('score ~ hours_studied', students)
+results = model.fit()
+
+# Calculate fitted values
+fitted_values = results.predict(students)
+
+# Calculate residuals
+residuals = students['score'] - fitted_values
+
+# Print the first 5 residuals
+print(residuals.head())
