@@ -1,0 +1,11 @@
+from matplotlib import pyplot as plt
+
+# Define the data
+days = [0, 1, 2, 3, 4, 5, 6]
+money_spent = [10, 12, 12, 10, 14, 22, 24]
+
+# Create the line plot
+plt.plot(days, money_spent)
+
+# Display the plot
+plt.show()
