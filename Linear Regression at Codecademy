@@ -1,0 +1,107 @@
+# Import necessary libraries
+import pandas as pd  # For handling data structures like DataFrames
+import numpy as np  # For numerical operations
+import matplotlib.pyplot as plt  # For plotting graphs
+import seaborn as sns  # For enhanced plotting (like boxplots and lmplot)
+import statsmodels.api as sm  # For statistical models (like OLS regression)
+
+# Read in the data
+# This reads a CSV file containing the Codecademy data and loads it into a DataFrame named 'codecademy'
+codecademy = pd.read_csv('codecademy.csv')
+
+# Print the first five rows of the dataset to check the data
+# Using .head() gives a quick snapshot of the data, and print() displays it
+print(codecademy.head())
+
+# Task 2: Scatter plot of score vs. completed
+# This creates a scatter plot with 'completed' on the x-axis and 'score' on the y-axis
+plt.scatter(codecademy.completed, codecademy.score)
+plt.title('Scatter plot of Score vs Completed')  # Adding a title to the plot
+plt.xlabel('Number of Completed Lessons')  # Label for the x-axis
+plt.ylabel('Quiz Score')  # Label for the y-axis
+plt.show()  # Show the plot
+plt.clf()  # Clear the plot to avoid overlay when creating new plots
+
+# Task 3: Fit a linear regression model to predict score using completed
+# sm.OLS (Ordinary Least Squares) creates the linear regression model
+model = sm.OLS.from_formula('score ~ completed', data=codecademy)
+results = model.fit()  # Fit the model to the data
+
+# Print the model coefficients (intercept and slope)
+print(results.params)
+
+# Task 4: Interpret the intercept and slope
+# These are comments, you can interpret based on the printed output:
+# Intercept: The score we expect when 'completed' is 0.
+# Slope: The change in the score for every additional lesson completed.
+
+# Task 5: Scatter plot with regression line
+# Create the scatter plot again, then add the regression line
+plt.scatter(codecademy.completed, codecademy.score)  # Plotting the points
+plt.plot(codecademy.completed, results.predict(codecademy), color='red')  # Adding the regression line
+plt.title('Score vs Completed with Regression Line')  # Adding title
+plt.xlabel('Number of Completed Lessons')  # x-axis label
+plt.ylabel('Quiz Score')  # y-axis label
+plt.show()  # Show the plot
+plt.clf()  # Clear the plot
+
+# Task 6: Predict score for a learner who has completed 20 lessons
+# We create a new DataFrame with the value '20' for 'completed'
+newdata = {'completed': [20]}
+newdf = pd.DataFrame(newdata)  # Convert the dictionary to a DataFrame
+predicted_score = results.predict(newdf)  # Use the model to predict score
+print(predicted_score)  # Print the predicted score for 20 completed lessons
+
+# Task 7: Calculate fitted values
+# Fitted values are the predicted values of 'score' based on the regression model
+fitted_values = results.predict(codecademy)  # Use the model to get fitted values
+
+# Task 8: Calculate residuals
+# Residuals are the difference between the actual 'score' and the predicted 'fitted_values'
+residuals = codecademy.score - fitted_values
+print(residuals.head())  # Print the first few residuals for inspection
+
+# Task 9: Check normality assumption (histogram of residuals)
+# Plot a histogram to see if residuals are normally distributed
+plt.hist(residuals, bins=20, edgecolor='black')  # Create histogram
+plt.title('Histogram of Residuals')  # Add title
+plt.xlabel('Residuals')  # x-axis label
+plt.ylabel('Frequency')  # y-axis label
+plt.show()  # Show the plot
+plt.clf()  # Clear the plot
+
+# Task 10: Check homoscedasticity assumption (plot residuals vs fitted values)
+# Homoscedasticity means the variance of residuals is constant across all fitted values
+plt.scatter(fitted_values, residuals)  # Plot fitted values on x-axis, residuals on y-axis
+plt.title('Residuals vs Fitted Values')  # Add title
+plt.xlabel('Fitted Values')  # x-axis label
+plt.ylabel('Residuals')  # y-axis label
+plt.show()  # Show the plot
+plt.clf()  # Clear the plot
+
+# Task 11: Boxplot of score vs lesson
+# This creates a boxplot showing the distribution of 'score' for each 'lesson' (A or B)
+sns.boxplot(x='lesson', y='score', data=codecademy)
+plt.title('Score vs Lesson')  # Add title
+plt.show()  # Show the plot
+plt.clf()  # Clear the plot
+
+# Task 12: Fit a linear regression model to predict score using lesson as the predictor
+# This creates a regression model using 'lesson' as the predictor variable
+model_lesson = sm.OLS.from_formula('score ~ lesson', data=codecademy)
+results_lesson = model_lesson.fit()  # Fit the model
+print(results_lesson.params)  # Print the model coefficients for lesson
+
+# Task 13: Calculate and print the mean quiz scores for learners who took lesson A and lesson B
+mean_score_a = np.mean(codecademy.score[codecademy.lesson == 'Lesson A'])  # Mean score for Lesson A
+mean_score_b = np.mean(codecademy.score[codecademy.lesson == 'Lesson B'])  # Mean score for Lesson B
+mean_diff = mean_score_b - mean_score_a  # Difference in means
+print('Mean score for Lesson A:', mean_score_a)
+print('Mean score for Lesson B:', mean_score_b)
+print('Mean difference between lessons:', mean_diff)
+
+# Task 14: Use sns.lmplot() to plot score vs. completed colored by lesson
+# This function plots a scatter plot with a regression line, colored by lesson
+sns.lmplot(x='completed', y='score', hue='lesson', data=codecademy)
+plt.title('Score vs Completed Colored by Lesson')  # Add title
+plt.show()  # Show the plot
