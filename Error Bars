@@ -1,0 +1,23 @@
+import codecademylib
+from matplotlib import pyplot as plt
+
+# Data
+drinks = ["cappuccino", "latte", "chai", "americano", "mocha", "espresso"]
+ounces_of_milk = [6, 9, 4, 0, 9, 0]
+error = [0.6, 0.9, 0.4, 0, 0.9, 0]  # 10% error for each drink's milk content
+
+# Plot the bar chart with error bars
+plt.bar(
+    range(len(drinks)),  # x-axis positions
+    ounces_of_milk,  # heights of bars
+    yerr=error,  # error bars
+    capsize=5  # size of the caps
+)
+
+# Add labels and title
+plt.xticks(range(len(drinks)), drinks)  # Label the x-axis with drink names
+plt.ylabel("Ounces of Milk")  # Label for y-axis
+plt.title("Milk Content in Drinks with Error Bars")  # Title of the chart
+
+# Show the chart
+plt.show()
