@@ -1,0 +1,20 @@
+import codecademylib
+from matplotlib import pyplot as plt
+
+# Data
+drinks = ["cappuccino", "latte", "chai", "americano", "mocha", "espresso"]
+sales1 = [91, 76, 56, 66, 52, 27]  # Sales from location 1
+sales2 = [65, 82, 36, 68, 38, 40]  # Sales from location 2
+
+# Create the stacked bar chart
+plt.bar(range(len(drinks)), sales1, label="Location 1")  # Bottom bars (sales1)
+plt.bar(range(len(drinks)), sales2, bottom=sales1, label="Location 2")  # Top bars (sales2)
+
+# Add labels and legend
+plt.xticks(range(len(drinks)), drinks)  # Add labels for the x-axis
+plt.ylabel("Sales")  # Label for y-axis
+plt.title("Sales by Drink Type at Two Locations")  # Title
+plt.legend()  # Add the legend to distinguish locations
+
+# Show the plot
+plt.show()
