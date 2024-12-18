@@ -1,0 +1,33 @@
+import codecademylib
+from matplotlib import pyplot as plt
+
+# Data
+months = range(12)
+month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+revenue = [16000, 14000, 17500, 19500, 21500, 21500, 22000, 23000, 20000, 19500, 18000, 16500]
+
+# Plot the revenue as a line
+plt.plot(months, revenue, label="Projected Revenue")
+
+# Step 2: Set custom x-ticks
+ax = plt.gca()  # Get the current axis
+ax.set_xticks(months)
+ax.set_xticklabels(month_names)
+
+# Step 3: Calculate the lower bound (10% less)
+y_lower = [0.9 * i for i in revenue]
+
+# Step 4: Calculate the upper bound (10% more)
+y_upper = [1.1 * i for i in revenue]
+
+# Step 5: Shade the error with fill_between()
+plt.fill_between(months, y_lower, y_upper, alpha=0.2, label="Projection Range")
+
+# Add labels, title, and legend
+plt.xlabel("Month")
+plt.ylabel("Revenue ($)")
+plt.title("Projected Revenue with Error Margin")
+plt.legend()
+
+# Show the plot
+plt.show()
