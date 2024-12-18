@@ -1,0 +1,13 @@
+import codecademylib
+from matplotlib import pyplot as plt
+import numpy as np
+
+payment_method_names = ["Card Swipe", "Cash", "Apple Pay", "Other"]
+payment_method_freqs = [270, 77, 32, 11]
+
+# Make your pie chart here
+plt.pie(payment_method_freqs, labels=payment_method_names, autopct='%1.1f%%')
+plt.axis('equal')  # Set axes to be equal for a proper circle
+plt.title("Payment Method Distribution")  # Optional: Add a title
+
+plt.show()
