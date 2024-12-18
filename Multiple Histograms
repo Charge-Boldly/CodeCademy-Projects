@@ -1,0 +1,16 @@
+import codecademylib3
+from matplotlib import pyplot as plt
+from script import sales_times1
+from script import sales_times2
+
+# Plot the first histogram with normalization and transparency
+plt.hist(sales_times1, bins=20, alpha=0.4, density=True, label='Store 1')
+
+# Plot the second histogram with normalization and transparency
+plt.hist(sales_times2, bins=20, alpha=0.4, density=True, label='Store 2')
+
+# Add a legend to differentiate the two histograms
+plt.legend()
+
+# Display the plot
+plt.show()
