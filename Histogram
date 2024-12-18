@@ -1,0 +1,9 @@
+import codecademylib
+from matplotlib import pyplot as plt
+from script import sales_times  # Assuming the sales_times list is imported from script.py
+
+# Create the histogram with 20 bins
+plt.hist(sales_times, bins=20)
+
+# Display the histogram
+plt.show()
