@@ -1,0 +1,23 @@
+import matplotlib.pyplot as plt  # Import the matplotlib library for plotting
+import pandas as pd  # Import pandas for data manipulation
+import codecademylib3  # Codecademy library for compatibility (not used directly in the code)
+
+# Step 1: Load the dataset
+water_usage = pd.read_csv("water_usage.csv")  # Load water usage data from the CSV file
+print(water_usage.head())  # Print the first few rows to preview the data structure
+
+# Step 2: Create variables for pie chart
+# Extract the proportions of water usage
+wedge_sizes = water_usage["prop"]  # Column "prop" contains the proportion of each category
+# Extract the labels for the pie chart
+pie_labels = water_usage["water_source"]  # Column "water_source" contains the labels
+
+# Step 3: Plot the pie chart
+plt.pie(wedge_sizes, labels=pie_labels)  # Plot the pie chart with sizes and labels
+
+# Step 4: Adjust the chart
+plt.axis('equal')  # Ensures the pie chart is a perfect circle
+plt.title("Distribution of House Water Usage")  # Add a title to the chart
+
+# Step 5: Display the chart
+plt.show()  # Render the plot
