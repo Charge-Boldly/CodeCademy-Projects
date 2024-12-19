@@ -1,0 +1,21 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+games_data = pd.read_csv("games.csv")
+
+# Print the first five rows to understand the dataset
+print(games_data.head())
+
+# Create a countplot for the 'victory_status' column
+sns.countplot(x="victory_status", data=games_data)
+
+# Add title and labels for better understanding
+plt.title("Count of Victory Status in Chess Games")
+plt.xlabel("Victory Status")
+plt.ylabel("Count")
+
+# Display the plot
+plt.show()
