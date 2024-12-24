@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Create the dataset directly for testing
+data = {
+    "miles": [792, 3163, 1832, 925, 967],
+    "passengers": [172, 214, 212, 213, 217],
+    "delay": [0, 0, 0, 0, 0],
+    "inflight_meal": ["No", "No", "No", "No", "Yes"],
+    "inflight_entertainment": ["Yes", "Yes", "Yes", "Yes", "Yes"],
+    "inflight_wifi": ["Yes", "Yes", "No", "Yes", "Yes"],
+    "day_of_week": ["Sunday", "Sunday", "Friday", "Saturday", "Monday"],
+    "redeye": ["Yes", "No", "No", "No", "Yes"],
+    "weekend": ["Yes", "Yes", "Yes", "Yes", "No"],
+    "coach_price": [338.82, 472.655, 351.96, 387.835, 400.5],
+    "firstclass_price": [1571.02, 1663.7, 1429.86, 1558.76, 1600.0],
+    "hours": [1, 6, 3, 2, 2]
+}
+
+flight = pd.DataFrame(data)
+
+# Continue with the tasks...
