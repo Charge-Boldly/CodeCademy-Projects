@@ -1,0 +1,30 @@
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+# Step 1: Print out the columns of the students DataFrame
+print("Columns of the students DataFrame:")
+print(students.columns)
+
+# Step 2: Print the .head() of the gender_age column
+print("\nHead of the gender_age column:")
+print(students['gender_age'].head())
+
+# Step 3: Separate out the gender into a new column
+students['gender'] = students['gender_age'].str[0]
+
+# Step 4: Separate out the age into a new column
+students['age'] = students['gender_age'].str[1:]
+
+# Step 5: Print the .head() of the updated students DataFrame
+print("\nHead of the students DataFrame after creating new columns:")
+print(students.head())
+
+# Step 6: Drop the gender_age column
+students = students.drop(columns=['gender_age'])
+
+# Final printout to confirm changes
+print("\nColumns of the students DataFrame after dropping 'gender_age':")
+print(students.columns)
+print("\nUpdated DataFrame:")
+print(students.head())
