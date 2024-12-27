@@ -1,0 +1,21 @@
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+# Step 1: Print out the first five rows of the 'grade' column
+print(students['grade'].head())
+
+# Step 2: Use regex to extract the number from each string in 'grade' and store it back in the 'grade' column
+students['grade'] = students['grade'].str.extract('(\d+)')
+
+# Step 3: Print out the dtypes of the students table
+print(students.dtypes)
+
+# Step 4: Convert the 'grade' column to be numerical values instead of objects
+students['grade'] = pd.to_numeric(students['grade'])
+
+# Step 5: Calculate the mean of the 'grade' column and store it in 'avg_grade'
+avg_grade = students['grade'].mean()
+
+# Print out the mean of the 'grade' column
+print(f"The average grade is: {avg_grade}")
