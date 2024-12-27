@@ -1,0 +1,18 @@
+import codecademylib3_seaborn
+import pandas as pd
+from students import students
+
+# Step 1: Get the mean of the score column and store it in score_mean
+score_mean = students['score'].mean()
+
+# Print the mean of the score column
+print(f"Mean score before filling NaNs: {score_mean}")
+
+# Step 2: Fill NaN values in the 'score' column with 0
+students['score'] = students['score'].fillna(0)
+
+# Step 3: Get the mean of the score column again after filling NaNs
+score_mean_2 = students['score'].mean()
+
+# Print the new mean of the score column
+print(f"Mean score after filling NaNs with 0: {score_mean_2}")
