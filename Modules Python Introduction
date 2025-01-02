@@ -1,0 +1,8 @@
+# Step 1: Import datetime from the datetime module
+from datetime import datetime
+
+# Step 2: Create a variable `current_time` and set it to the current date and time
+current_time = datetime.now()
+
+# Step 3: Print the current time
+print(current_time)
