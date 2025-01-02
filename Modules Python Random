@@ -1,0 +1,14 @@
+# Step 1: Import random below
+import random
+
+# Step 2: Create random_list below
+random_list = []
+
+# Step 3: Populate random_list using list comprehension with random.randint()
+random_list = [random.randint(1, 100) for _ in range(101)]
+
+# Step 4: Create randomer_number below
+randomer_number = random.choice(random_list)
+
+# Step 5: Print randomer_number below
+print(randomer_number)
