@@ -1,0 +1,33 @@
+# Importing necessary libraries
+import pandas as pd  # Library to handle and manipulate tabular data.
+import numpy as np  # For performing numerical operations.
+import matplotlib.pyplot as plt  # For creating visualizations.
+import glob  # For finding files based on patterns in their names.
+
+# Step 1: Collect all census files that start with 'states' using glob.
+files = glob.glob("states*.csv")  # Finds all files in the current directory that match the pattern 'states*.csv'.
+
+# Step 2: Create an empty list to store individual DataFrames for each file.
+df_list = []  # An empty list to hold DataFrames for all the census files.
+
+# Step 3: Loop through each file to read its data and add it to the list.
+for filename in files:  
+    data = pd.read_csv(filename)  # Read the current file into a DataFrame.
+    df_list.append(data)  # Append the DataFrame to the list.
+
+# Step 4: Combine all the DataFrames into a single DataFrame.
+us_census = pd.concat(df_list)  # Concatenates all DataFrames vertically to create one large DataFrame.
+
+# Step 5: Inspect the structure and data types of the combined DataFrame.
+print(us_census.columns)  # Display column names to understand the structure of the data.
+print(us_census.dtypes)  # Show data types of each column to identify potential issues.
+
+# Step 6: Display the first few rows of the DataFrame to preview the data.
+print(us_census.head())  # Prints the first 5 rows for a quick look at the data.
+
+# Step 7: Clean the 'Income' column by removing dollar signs and converting it to a numeric type.
+us_census['Income'] = us_census['Income'].replace('[\$,]', '', regex=True).astype(float)
+# Removes '$' and ',' symbols using regex and converts the column values to float for numerical operations.
+
+# Step 8: Separate the 'GenderPop' column into 'Men' and 'Women' columns.
+gender_split = us_census
