@@ -1,0 +1,17 @@
+import numpy as np
+
+# Define the coefficient matrix A
+A = np.array([
+    [4, 0, 1],   # Coefficients from equation 1
+    [-3, -1, 2], # Coefficients from equation 2
+    [-1, 0.5, -1.5] # Coefficients from equation 3
+])
+
+# Define the result vector b
+b = np.array([2, 0, -4])
+
+# Solve for [x, y, z]
+x, y, z = np.linalg.solve(A, b)
+
+# Print the solution
+print((x, y, z))
