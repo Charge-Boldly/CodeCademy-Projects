@@ -1,0 +1,43 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Heart image as a NumPy array
+heart_img = np.array([
+    [255, 0, 0, 255, 0, 0, 255],
+    [0, 255/2, 255/2, 0, 255/2, 255/2, 0],
+    [0, 255/2, 255/2, 255/2, 255/2, 255/2, 0],
+    [0, 255/2, 255/2, 255/2, 255/2, 255/2, 0],
+    [255, 0, 255/2, 255/2, 255/2, 0, 255],
+    [255, 255, 0, 255/2, 0, 255, 255],
+    [255, 255, 255, 0, 255, 255, 255]
+])
+
+# Helper function to display images
+def show_image(image, name_identifier):
+    plt.imshow(image, cmap="gray")
+    plt.title(name_identifier)
+    plt.axis('off')  # Remove axes for better visualization
+    plt.show()
+
+# Task 1: Show the heart image
+show_image(heart_img, "Heart Image")
+
+# Task 2: Invert the colors of the heart image
+inverted_heart_img = 255 - heart_img
+show_image(inverted_heart_img, "Inverted Heart Image")
+
+# Task 3: Rotate the heart image (transpose rows and columns)
+rotated_heart_img = heart_img.T
+show_image(rotated_heart_img, "Rotated Heart Image")
+
+# Task 4: Create and display a random 7x7 image
+random_img = np.random.randint(0, 255, (7, 7))
+show_image(random_img, "Random Image")
+
+# Task 5: Solve the equation random_img * x = heart_img
+x = np.linalg.solve(random_img, heart_img)
+show_image(x, "x")
+
+# Task 6: Recreate the heart image using the solution
+solved_heart_img = np.matmul(random_img, x)
+show_image(solved_heart_img, "Solved Heart Image")
