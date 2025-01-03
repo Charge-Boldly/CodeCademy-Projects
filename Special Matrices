@@ -1,0 +1,30 @@
+import numpy as np
+
+# Given matrices
+A = np.array([[1, -1, 1], [0, 1, 0], [-1, 2, 1]])
+B = np.array([[0.5, 1.5, -0.5], [0, 1, 0], [0.5, -0.5, 0.5]])
+
+# Calculate and print the matrix products
+AB = np.matmul(A, B)
+BA = np.matmul(B, A)
+
+print("Matrix AB:")
+print(AB)
+print("\nMatrix BA:")
+print(BA)
+
+# Check if AB and BA result in the identity matrix
+print("\nAB is the identity matrix:", np.allclose(AB, np.eye(3)))
+print("BA is the identity matrix:", np.allclose(BA, np.eye(3)))
+
+# Calculate and print the transposes
+A_transpose = A.T
+B_transpose = B.T
+
+print("\nTranspose of Matrix A:")
+print(A_transpose)
+print("First row of Transpose of A:", A_transpose[0])
+
+print("\nTranspose of Matrix B:")
+print(B_transpose)
+print("First row of Transpose of B:", B_transpose[0])
