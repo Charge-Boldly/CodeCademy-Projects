@@ -1,0 +1,80 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from math import sin, cos, log, pi
+
+# This function approximates the derivative of a function using the limit definition.
+def limit_derivative(f, x, h):
+    """
+    f: the function to be differentiated
+    x: the point at which to calculate the derivative
+    h: the small distance between points to use for approximating the derivative
+    """
+    # The formula for the derivative using the limit definition:
+    # (f(x + h) - f(x)) / h
+    return (f(x + h) - f(x)) / h
+
+# Function 1: f1(x) = sin(x)
+def f1(x):
+    return sin(x)
+
+# Function 2: f2(x) = x^4
+def f2(x):
+    return pow(x, 4)
+
+# Function 3: f3(x) = x^2 * log(x)
+def f3(x):
+    return pow(x, 2) * log(x)
+
+# Testing the limit_derivative function for different functions
+# Use limit_derivative to compute derivative of f3 at x = 1 using different h values
+print("Derivative of f3 at x=1:")
+print(limit_derivative(f3, 1, 2))       # h=2
+print(limit_derivative(f3, 1, 0.1))     # h=0.1
+print(limit_derivative(f3, 1, 0.00001)) # h=0.00001
+
+# For f2, we calculate the derivative at x=5 for h=0.5
+print("\nDerivative of f2 at x=5:")
+print(limit_derivative(f2, 5, 0.5)) 
+
+# Graphing the true derivative (for example, the derivative of f1 = cos(x))
+x_vals = np.linspace(1, 10, 200)  # Create an array of x-values from 1 to 10 (200 points)
+y_vals = [cos(val) for val in x_vals]  # Calculate the true derivative of sin(x) (cos(x)) for each x value
+
+plt.figure(1)  # Create a new figure for plotting
+plt.plot(x_vals, y_vals, label="True Derivative", linewidth=4)  # Plot the true derivative as a solid line
+
+# Function to plot approximate derivatives for different h-values
+def plot_approx_deriv(f):
+    x_vals = np.linspace(1, 10, 200)  # Create an array of x-values from 1 to 10 (200 points)
+    h_vals = [10, 1, .25, .01]         # Different values for h to test accuracy
+
+    # Loop through the different h-values
+    for h in h_vals:
+        derivative_values = []  # List to store the derivative values for each x
+        # Calculate the approximate derivative for each x value using the limit definition
+        for x in x_vals:
+            derivative_values.append(limit_derivative(f, x, h))  # Calculate the derivative for the current x and h
+        # Plot the derivative approximation for the current h value as a dashed line
+        plt.plot(x_vals, derivative_values, linestyle='--', label="h=" + str(h)) 
+    
+    plt.legend()  # Show a legend on the plot to label the curves
+    plt.title("Convergence to Derivative by varying h")  # Title of the plot
+    plt.show()  # Display the plot
+
+# Now we use the plot_approx_deriv function to plot the derivative approximations of f1(x)
+plot_approx_deriv(f1)
+
+# Next, let's repeat the process for f2 (x^4). We want to graph the derivative of x^4, which is 4x^3.
+# To do that, we change the y-values to 4*x^3 for the true derivative of f2.
+y_vals = [4 * pow(val, 3) for val in x_vals]  # Compute the true derivative of x^4 (which is 4x^3)
+
+# Plotting the true derivative of f2 (4x^3)
+plt.figure(2)  # Create a new figure for f2
+plt.plot(x_vals, y_vals, label="True Derivative of f2 (4x^3)", linewidth=4)
+plt.legend()
+plt.title("Derivative of x^4")
+plt.show()
+
+# Now we can graph the approximate derivatives for f2(x) = x^4
+plot_approx_deriv(f2)
+
