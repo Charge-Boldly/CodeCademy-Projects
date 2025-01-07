@@ -1,0 +1,19 @@
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+import pandas as pd
+
+# Store the data
+veryants = pd.read_csv('veryants.csv')
+
+# Run Tukey's range test
+tukey_results = pairwise_tukeyhsd(veryants.Sale, veryants.Store, 0.05)
+print(tukey_results)
+
+# Determine significance for each pair of stores
+a_b_significant = tukey_results.reject[0]  # A vs. B
+a_c_significant = tukey_results.reject[1]  # A vs. C
+b_c_significant = tukey_results.reject[2]  # B vs. C
+
+# Print significance results
+print(f"A vs B significant: {a_b_significant}")
+print(f"A vs C significant: {a_c_significant}")
+print(f"B vs C significant: {b_c_significant}")
