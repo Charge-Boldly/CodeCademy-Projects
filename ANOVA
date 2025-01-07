@@ -1,0 +1,18 @@
+from scipy.stats import f_oneway
+import pandas as pd
+
+# Store the data
+veryants = pd.read_csv('veryants.csv')
+a = veryants.Sale[veryants.Store == 'A']
+b = veryants.Sale[veryants.Store == 'B']
+c = veryants.Sale[veryants.Store == 'C']
+
+# Run ANOVA
+fstat, pval = f_oneway(a, b, c)
+
+# Print p-value
+print(f"P-value from ANOVA: {pval}")
+
+# Determine significance
+significant = pval < 0.05
+print(f"Significant difference among stores: {significant}")
