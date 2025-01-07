@@ -1,0 +1,67 @@
+# Import the required libraries for analysis and visualization
+import codecademylib3  # Codecademy library to load necessary environment for the code to work
+import pandas as pd  # Library for working with data in table (DataFrame) format
+import numpy as np  # Library for numerical calculations
+import matplotlib.pyplot as plt  # Library for creating static plots
+import seaborn as sns  # Library for creating beautiful statistical visualizations
+from scipy.stats import ttest_ind, f_oneway, chi2_contingency  # Import statistical functions
+
+# Load the heart disease dataset into a pandas DataFrame
+heart = pd.read_csv('heart_disease.csv')  # Reads the CSV file and loads it into a DataFrame called 'heart'
+
+# Inspect the first few rows of the dataset to get an overview of the data
+print(heart.head())  # Prints the first 5 rows of the DataFrame 'heart'
+
+# Create a box plot to compare the maximum heart rate ('thalach') for people with and without heart disease
+sns.boxplot(x=heart['heart_disease'], y=heart['thalach'])  # Creates a box plot with 'heart_disease' on the x-axis and 'thalach' on the y-axis
+plt.show()  # Displays the box plot to visualize the distribution of thalach for each group
+
+# Separate the thalach values for patients diagnosed with heart disease (presence)
+thalach_hd = heart.thalach[heart.heart_disease == 'presence']  # Filter data to get thalach values for patients with heart disease
+
+# Similarly, separate the thalach values for patients without heart disease (absence)
+thalach_no_hd = heart.thalach[heart.heart_disease == 'absence']  # Filter data to get thalach values for patients without heart disease
+
+# Calculate the mean difference in maximum heart rate (thalach) between those with and without heart disease
+mean_diff = np.mean(thalach_no_hd) - np.mean(thalach_hd)  # Subtract the mean of thalach for no heart disease from the mean for heart disease
+print('thalach mean Difference: ', mean_diff)  # Print the mean difference
+
+# Now, calculate the median difference in maximum heart rate (thalach)
+median_diff = np.median(thalach_no_hd) - np.median(thalach_hd)  # Same approach, but using median instead of mean
+print('thalach median Difference: ', median_diff)  # Print the median difference
+
+# Perform a two-sample t-test to see if there is a significant difference in thalach between the two groups
+t_stat, p_value = ttest_ind(thalach_no_hd, thalach_hd)  # This tests whether the means of the two groups are significantly different
+print('p-value from t-test: ', p_value)  # Print the p-value, which tells us if the difference is statistically significant
+
+# Plot a box plot for the 'age' variable to see how it relates to the presence of heart disease
+plt.clf()  # Clears any previous plot
+sns.boxplot(x=heart['heart_disease'], y=heart['age'])  # Create a box plot with 'age' on the y-axis and 'heart_disease' on the x-axis
+plt.show()  # Display the box plot
+
+# Perform the t-test for age to see if there's a significant difference between the two groups
+t_stat_age, p_value_age = ttest_ind(heart.age[heart.heart_disease == 'presence'], heart.age[heart.heart_disease == 'absence'])  # Perform the t-test for age
+print('p-value for age: ', p_value_age)  # Print the p-value for age
+
+# Create box plots for the 'thalach' variable (maximum heart rate) for each type of chest pain ('cp')
+plt.clf()  # Clear any previous plot
+sns.boxplot(x=heart['cp'], y=heart['thalach'])  # Create box plots showing the distribution of thalach for each chest pain type
+plt.show()  # Display the box plot
+
+# Separate the thalach values for each type of chest pain
+thalach_typical = heart.thalach[heart.cp == 'typical angina']  # For 'typical angina'
+thalach_asymptom = heart.thalach[heart.cp == 'asymptomatic']  # For 'asymptomatic'
+thalach_nonangin = heart.thalach[heart.cp == 'non-anginal pain']  # For 'non-anginal pain'
+thalach_atypical = heart.thalach[heart.cp == 'atypical angina']  # For 'atypical angina'
+
+# Use ANOVA (Analysis of Variance) to test if there is a significant difference in thalach for different chest pain types
+Fstat, pval = f_oneway(thalach_typical, thalach_asymptom, thalach_nonangin, thalach_atypical)  # Perform ANOVA
+print('p-value from ANOVA: ', pval)  # Print the p-value from the ANOVA test
+
+# Create a contingency table to see the relationship between chest pain type ('cp') and heart disease ('heart_disease')
+Xtab = pd.crosstab(heart['cp'], heart['heart_disease'])  # Create a table showing the counts for each combination of 'cp' and 'heart_disease'
+print(Xtab)  # Print the contingency table
+
+# Now, run a Chi-Square test to see if there's an association between chest pain type and heart disease
+chi2, pval_chi2, dof, expected = chi2_contingency(Xtab)  # Perform the test on the contingency table
+print('p-value from Chi-Square test: ', pval_chi2)  # Print the p-value from the Chi-Square test
