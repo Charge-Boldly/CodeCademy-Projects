@@ -1,0 +1,27 @@
+import codecademylib3
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load distributions
+dist_1 = np.genfromtxt("1.csv")
+dist_2 = np.genfromtxt("2.csv")
+
+# Calculate ratio of standard deviations
+ratio = np.std(dist_1) / np.std(dist_2)
+print(f"Ratio of standard deviations: {ratio}")
+
+# Check if standard deviations are roughly equal
+if 0.9 <= ratio <= 1.1:
+    print("Standard deviations are roughly equal.")
+else:
+    print("Standard deviations are not equal.")
+
+# Check normality assumption visually
+plt.hist(dist_1, alpha=0.8, normed=True, label="dist 1")  # Use 'normed' for older Matplotlib versions
+plt.hist(dist_2, alpha=0.8, normed=True, label="dist 2")
+plt.legend()
+plt.show()
+
+# Based on visual inspection, set normality assumption
+normal_assumption = True  # Set to True based on the histograms appearing normal
+print(f"Normality assumption: {normal_assumption}")
