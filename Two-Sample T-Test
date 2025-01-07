@@ -1,0 +1,31 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import ttest_ind
+
+# Load data
+data = pd.read_csv('version_time.csv')
+
+# Separate out times for two versions
+old = data.time_minutes[data.version == 'old']
+new = data.time_minutes[data.version == 'new']
+
+# Run the t-test
+tstat, pval = ttest_ind(old, new)
+
+# Print the p-value
+print(f"P-value: {pval}")
+
+# Determine significance
+significant = pval < 0.05
+
+# Plot overlapping histograms
+plt.hist(old, alpha=0.8, label='old')
+plt.hist(new, alpha=0.8, label='new')
+plt.legend()
+plt.show()
+
+# Print result of significance test
+if significant:
+    print("The difference is statistically significant.")
+else:
+    print("The difference is not statistically significant.")
