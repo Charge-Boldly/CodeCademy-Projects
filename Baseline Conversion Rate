@@ -1,0 +1,9 @@
+# Historical data
+number_of_site_visitors = 10000  # Example value
+number_of_converted_visitors = 1200  # Example value
+
+# Calculate the baseline conversion rate as a percentage
+baseline_rate = (number_of_converted_visitors / number_of_site_visitors) * 100
+
+# Print the baseline conversion rate
+print(baseline_rate)
