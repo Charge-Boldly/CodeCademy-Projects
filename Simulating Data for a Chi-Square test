@@ -1,0 +1,23 @@
+import numpy as np
+import pandas as pd
+
+# Set sample size to 4 for the first test
+sample_size = 4  # Change this as needed
+
+# Parameters
+lift = 0.3  # 30% lift
+control_rate = 0.5  # 50% probability for control group
+name_rate = (1 + lift) * control_rate  # Probability for "name" group (65%)
+
+# Simulate the data
+sample_control = np.random.choice(['yes', 'no'], size=int(sample_size/2), p=[control_rate, 1-control_rate])
+sample_name = np.random.choice(['yes', 'no'], size=int(sample_size/2), p=[name_rate, 1-name_rate])
+
+# Combine groups
+group = ['control'] * int(sample_size/2) + ['name'] * int(sample_size/2)
+outcome = list(sample_control) + list(sample_name)
+sim_data = {"Email": group, "Opened": outcome}
+sim_data = pd.DataFrame(sim_data)
+
+# Output the simulated data
+print(sim_data)
