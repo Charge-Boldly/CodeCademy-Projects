@@ -1,0 +1,9 @@
+# Given baseline conversion rate and new conversion rate
+baseline = 8  # Baseline conversion rate in percentage
+new = 12  # New conversion rate in percentage
+
+# Calculate the minimum detectable effect
+mde = (new - baseline) / baseline * 100
+
+# Print the MDE
+print(mde)
