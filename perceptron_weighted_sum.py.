@@ -1,0 +1,39 @@
+class Perceptron:
+    def __init__(self, num_inputs=2, weights=[2, 1]):
+        """
+        Initialize the Perceptron with number of inputs and corresponding weights.
+        
+        Parameters:
+        num_inputs (int): Number of input features (default: 2).
+        weights (list): List of weights for each input feature (default: [2, 1]).
+        """
+        self.num_inputs = num_inputs
+        self.weights = weights
+
+    def weighted_sum(self, inputs):
+        """
+        Calculate the weighted sum of the inputs and weights.
+        
+        Parameters:
+        inputs (list): List of input values.
+        
+        Returns:
+        float: Weighted sum of inputs and weights.
+        """
+        # Initialize the weighted sum to 0
+        weighted_sum = 0
+        # Loop through all inputs and weights to calculate the weighted sum
+        for i in range(self.num_inputs):
+            weighted_sum += inputs[i] * self.weights[i]
+        return weighted_sum
+
+
+# Create a Perceptron object
+cool_perceptron = Perceptron()
+
+# Test the weighted_sum method with inputs [24, 55]
+inputs = [24, 55]
+weighted_sum_result = cool_perceptron.weighted_sum(inputs)
+
+# Print the result
+print(f"The weighted sum for inputs {inputs} is: {weighted_sum_result}")
