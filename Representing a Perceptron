@@ -1,0 +1,29 @@
+class Perceptron:
+    def __init__(self, num_inputs=2, weights=[1, 1]):
+        """
+        Initialize the Perceptron with a given number of inputs and weights.
+        
+        Parameters:
+        num_inputs (int): Number of input features (default: 2).
+        weights (list): List of weights for each input feature (default: [1, 1]).
+        """
+        # Assign the number of inputs to an instance variable
+        self.num_inputs = num_inputs
+        # Assign the weights to an instance variable
+        self.weights = weights
+
+    def __repr__(self):
+        """
+        Define a string representation for the Perceptron object.
+        
+        Returns:
+        str: Readable string representation of the Perceptron object.
+        """
+        return f"Perceptron(num_inputs={self.num_inputs}, weights={self.weights})"
+
+
+# Create a Perceptron object using default arguments
+cool_perceptron = Perceptron()
+
+# Print the Perceptron object
+print(cool_perceptron)
