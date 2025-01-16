@@ -1,0 +1,51 @@
+# Import necessary libraries
+import pandas as pd
+from surprise import Reader, Dataset, KNNBasic
+from surprise.model_selection import train_test_split
+from surprise import accuracy
+import codecademylib3
+
+# Load data
+book_ratings = pd.read_csv('goodreads_ratings.csv')
+
+# 1. Print dataset size and examine column data types
+print("Dataset size:", book_ratings.shape)
+print("Data types:\n", book_ratings.info())
+print("First five rows:\n", book_ratings.head())
+
+# 2. Distribution of ratings
+print("Distribution of ratings:\n", book_ratings['rating'].value_counts())
+
+# 3. Filter ratings that are out of range
+book_ratings = book_ratings[book_ratings['rating'] != 0]
+
+# 4. Prepare data for Surprise: build a Surprise Reader object
+reader = Reader(rating_scale=(1, 5))
+
+# 5. Load `book_ratings` into a Surprise Dataset
+data = Dataset.load_from_df(book_ratings[['user_id', 'book_id', 'rating']], reader)
+
+# 6. Create an 80:20 train-test split and set the random state to 7
+trainset, testset = train_test_split(data, test_size=0.2, random_state=7)
+
+# 7. Use KNNBasic from Surprise to train a collaborative filter
+algo = KNNBasic()
+algo.fit(trainset)
+
+# 8. Evaluate the recommender system
+predictions = algo.test(testset)
+rmse = accuracy.rmse(predictions)
+print("Root Mean Squared Error (RMSE):", rmse)
+
+# 9. Prediction on a user who gave "The Three-Body Problem" a rating of 5
+user_id = '8842281e1d1347389f2ab93d60773d4d'
+book_id = '18007564'  # The Martian
+pred = algo.predict(user_id, book_id)
+print(f"Predicted rating for user {user_id} on book {book_id}:", pred.est)
+
+# 10. Hyperparameter tuning (example: adjusting k and min_k in KNNBasic)
+tuned_algo = KNNBasic(k=20, min_k=5, sim_options={'name': 'cosine', 'user_based': False})
+tuned_algo.fit(trainset)
+tuned_predictions = tuned_algo.test(testset)
+tuned_rmse = accuracy.rmse(tuned_predictions)
+print("Tuned Root Mean Squared Error (RMSE):", tuned_rmse)
