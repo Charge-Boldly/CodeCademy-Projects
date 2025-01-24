@@ -1,0 +1,19 @@
+import pandas as pd
+import numpy as np
+
+# Get NYC Trees Data
+nyc_trees = pd.read_csv("nyc_tree_census.csv")
+
+# Checkpoint 1: Frequency and proportion of trees recorded as 'Alive'
+living_frequency = np.sum(nyc_trees.status == 'Alive')  # Count of 'Alive' trees
+living_proportion = (nyc_trees.status == 'Alive').mean()  # Proportion of 'Alive' trees
+
+print("Living Trees Frequency:", living_frequency)
+print("Living Trees Proportion:", living_proportion)
+
+# Checkpoint 2: Frequency and proportion of trees with trunk_diam > 30
+giant_frequency = np.sum(nyc_trees.trunk_diam > 30)  # Count of trees with trunk diameter > 30
+giant_proportion = (nyc_trees.trunk_diam > 30).mean()  # Proportion of trees with trunk diameter > 30
+
+print("Giant Trees Frequency:", giant_frequency)
+print("Giant Trees Proportion:", giant_proportion)
