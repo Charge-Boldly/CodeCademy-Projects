@@ -1,0 +1,9 @@
+# Code to load the car evaluation dataset and display the first few rows
+
+import pandas as pd
+
+# Load the car evaluation dataset
+car_eval = pd.read_csv('car_eval_dataset.csv')
+
+# Print the first few rows of the dataset
+print(car_eval.head())
