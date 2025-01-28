@@ -1,0 +1,71 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# 1. Import necessary libraries
+# Already done above
+
+# 2. Load and inspect the restaurant data
+restaurants = pd.read_csv('restaurants.csv')
+print(restaurants.head())
+print(restaurants.info())
+
+# 3. Check the number of unique cuisines
+unique_cuisines = restaurants['cuisine'].nunique()
+print(f"Number of unique cuisines: {unique_cuisines}")
+
+cuisine_counts = restaurants['cuisine'].value_counts()
+print(cuisine_counts)
+
+# 4. Create a pie chart
+plt.figure(figsize=(8, 8))
+cuisine_counts.plot(kind='pie', autopct='%1.1f%%', startangle=90)
+plt.title('Cuisine Distribution on FoodWheel')
+plt.ylabel('')
+plt.show()
+
+# 5. Load and inspect the orders data
+orders = pd.read_csv('orders.csv')
+print(orders.head())
+print(orders.info())
+
+# 6. Create a new column for the month
+orders['month'] = pd.to_datetime(orders['date']).dt.month
+print(orders.head())
+
+# 7. Calculate average and standard deviation of price per month
+avg_order = orders.groupby('month')['price'].mean()
+std_order = orders.groupby('month')['price'].std()
+
+print(avg_order)
+print(std_order)
+
+# 8. Create a bar plot
+plt.figure(figsize=(10, 6))
+avg_order.plot(kind='bar', yerr=std_order, capsize=5, color='skyblue', alpha=0.8)
+plt.xlabel('Month')
+plt.ylabel('Average Order Price ($)')
+plt.title('Average Order Price Over Time')
+plt.xticks(range(6), ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'], rotation=45)
+plt.show()
+
+# 9. Create customer amount dataframe
+customer_amount = orders.groupby('customer_id')['price'].sum()
+print(customer_amount.head())
+
+# 10. Create a histogram of total spent by customers
+plt.figure(figsize=(10, 6))
+plt.hist(customer_amount, bins=40, range=(0, 200), color='coral', edgecolor='black')
+plt.xlabel('Total Spent ($)')
+plt.ylabel('Number of Customers')
+plt.title('Distribution of Total Spent by Customers')
+plt.show()
+
+# 11. Extra Challenge: Visualization of restaurant count by neighborhood
+neighborhood_counts = restaurants['neighborhood'].value_counts()
+plt.figure(figsize=(12, 6))
+neighborhood_counts.plot(kind='bar', color='teal', alpha=0.7)
+plt.xlabel('Neighborhood')
+plt.ylabel('Number of Restaurants')
+plt.title('Number of Restaurants per Neighborhood')
+plt.xticks(rotation=45)
+plt.show()
