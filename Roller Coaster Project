@@ -1,0 +1,40 @@
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load rankings data
+wood_rankings = pd.read_csv('Golden_Ticket_Award_Winners_Wood.csv')
+steel_rankings = pd.read_csv('Golden_Ticket_Award_Winners_Steel.csv')
+coasters = pd.read_csv('roller_coasters.csv')
+
+# Task 3: Function to plot rankings over time for one roller coaster
+def plot_rankings_over_time(name, park_name, rankings_df):
+    coaster_data = rankings_df[(rankings_df['Name'] == name) & (rankings_df['Park'] == park_name)]
+    plt.plot(coaster_data['Year of Rank'], coaster_data['Rank'], marker='o', label=name)
+    plt.gca().invert_yaxis()  # Invert y-axis for rankings
+    plt.title(f'Ranking of {name} over time')
+    plt.xlabel('Year')
+    plt.ylabel('Ranking')
+    plt.legend()
+    plt.show()
+
+# Example: El Toro at Six Flags Great Adventure
+plot_rankings_over_time('El Toro', 'Six Flags Great Adventure', wood_rankings)
+
+# Task 4: Function to plot rankings of two roller coasters
+def plot_two_coasters_rankings(name1, park1, name2, park2, rankings_df):
+    coaster1 = rankings_df[(rankings_df['Name'] == name1) & (rankings_df['Park'] == park1)]
+    coaster2 = rankings_df[(rankings_df['Name'] == name2) & (rankings_df['Park'] == park2)]
+    plt.plot(coaster1['Year of Rank'], coaster1['Rank'], marker='o', label=name1)
+    plt.plot(coaster2['Year of Rank'], coaster2['Rank'], marker='o', label=name2)
+    plt.gca().invert_yaxis()
+    plt.title(f'Rankings of {name1} and {name2} over time')
+    plt.xlabel('Year')
+    plt.ylabel('Ranking')
+    plt.legend()
+    plt.show()
+
+# Example: El Toro and Boulder Dash
+plot_two_coasters_rankings('El Toro', 'Six Flags Great Adventure', 'Boulder Dash', 'Lake Compounce', wood_rankings)
+
+# Task
