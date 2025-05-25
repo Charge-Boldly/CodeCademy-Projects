@@ -1,0 +1,54 @@
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { animals } from './animals';
+
+// Get reference to the container
+const container = document.getElementById('app');
+const root = createRoot(container);
+
+// Define title with a default value using ||
+const title = "";
+const headerText = title || "Click an animal for a fun fact!";
+
+// Define the background image
+const showBackground = true;
+const background = showBackground && (
+  <img className="background" alt="ocean" src="/images/ocean.jpg" />
+);
+
+// Create an array of images
+const images = [];
+for (const animal in animals) {
+  images.push(
+    <img 
+      key={animal} 
+      className="animal" 
+      alt={animal} 
+      src={animals[animal].image} 
+      aria-label={animal} 
+      role="button"
+      onClick={displayFact}
+    />
+  );
+}
+
+// Function to display a fun fact
+function displayFact(e) {
+  const animalName = e.target.alt;
+  const factIndex = Math.floor(Math.random() * animals[animalName].facts.length);
+  const fact = animals[animalName].facts[factIndex];
+  document.getElementById('fact').innerHTML = fact;
+}
+
+// JSX structure for rendering
+const animalFacts = (
+  <div>
+    <h1>{headerText}</h1>
+    {background}
+    <div className="animals">{images}</div>
+    <p id="fact"></p>
+  </div>
+);
+
+// Render the JSX
+root.render(animalFacts);
