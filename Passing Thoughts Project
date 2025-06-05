@@ -1,0 +1,146 @@
+//app.js
+
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import { AddThoughtForm } from './AddThoughtForm';
+import { Thought } from './Thought';
+import { generateId, getNewExpirationTime } from './utilities';
+
+export default function App() {
+  const [thoughts, setThoughts] = useState([
+    {
+      id: generateId(),
+      text: 'This is a place for your passing thoughts.',
+      expiresAt: getNewExpirationTime(),
+    },
+    {
+      id: generateId(),
+      text: "They'll be removed after 15 seconds.",
+      expiresAt: getNewExpirationTime(),
+    },
+  ]);
+
+  function addThought(thought) {
+    setThoughts((prevThoughts) => [thought, ...prevThoughts]);
+  }
+
+  function removeThought(thoughtIdToRemove) {
+    setThoughts((prevThoughts) =>
+      prevThoughts.filter((thought) => thought.id !== thoughtIdToRemove)
+    );
+  }
+
+  return (
+    <div className="App">
+      <header>
+        <h1>Passing Thoughts</h1>
+      </header>
+      <main>
+        <AddThoughtForm addThought={addThought} />
+        <ul className="thoughts">
+          {thoughts.map((thought) => (
+            <Thought
+              key={thought.id}
+              thought={thought}
+              removeThought={removeThought}
+            />
+          ))}
+        </ul>
+      </main>
+    </div>
+  );
+}
+
+// Addthoughtform.js
+import React, { useState } from 'react';
+import { generateId, getNewExpirationTime } from './utilities';
+
+export function AddThoughtForm({ addThought }) {
+  const [text, setText] = useState('');
+
+  function handleTextChange(event) {
+    setText(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (text.trim().length > 0) {
+      const newThought = {
+        id: generateId(),
+        text: text.trim(),
+        expiresAt: getNewExpirationTime(),
+      };
+
+      addThought(newThought);
+      setText(''); // Clear input after submit
+    }
+  }
+
+  return (
+    <form className="AddThoughtForm" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        aria-label="What's on your mind?"
+        placeholder="What's on your mind?"
+        value={text}
+        onChange={handleTextChange}
+      />
+      <input type="submit" value="Add" />
+    </form>
+  );
+}
+
+//thought.js
+
+import React, { useEffect } from 'react';
+
+export function Thought({ thought, removeThought }) {
+  useEffect(() => {
+    const timeRemaining = thought.expiresAt - Date.now();
+
+    if (timeRemaining <= 0) {
+      // Already expired, remove immediately
+      removeThought(thought.id);
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      removeThought(thought.id);
+    }, timeRemaining);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [thought, removeThought]);
+
+  const handleRemoveClick = () => {
+    removeThought(thought.id);
+  };
+
+  return (
+    <li className="Thought">
+      <button
+        aria-label="Remove thought"
+        className="remove-button"
+        onClick={handleRemoveClick}
+      >
+        &times;
+      </button>
+      <div className="text">{thought.text}</div>
+    </li>
+  );
+}
+
+//Utilities.js
+
+export function getNewExpirationTime() {
+  return Date.now() + 15 * 1000;
+}
+
+let nextId = 0;
+export function generateId() {
+  const result = nextId;
+  nextId += 1;
+  return result;
+}
