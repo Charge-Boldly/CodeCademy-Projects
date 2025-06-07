@@ -1,0 +1,40 @@
+import React, { useState } from 'react';
+import styles from './Input.module.css';
+
+function Input() {
+  const [userInput, setUserInput] = useState(''); // ✅ Step 4: Track the input
+
+  // ✅ Step 5: Update the state when the user types
+  function handleUserInput(event) {
+    setUserInput(event.target.value);
+  }
+
+  return (
+    <>
+      <div className={styles.emailContainer}>
+        <h2>Let's stay in touch.</h2>
+        <p>
+          Sign up for our newsletter to stay up-to-date on the latest products,
+          receive exclusive discounts, and connect with other programmers who
+          share your passion for all things tech.
+        </p>
+        <form>
+          <label htmlFor="email">Email: </label>
+          <input 
+            id="email" 
+            type="text" 
+            onChange={handleUserInput} // ✅ Step 3: Listen for changes
+            value={userInput}          // Optional but useful for controlled input
+          />
+        </form>
+      </div>
+
+      <div className={styles.inputDisplay}>
+        <h2>Current User Input: </h2>
+        <h4>{userInput}</h4> {/* ✅ Step 6: Display the input */}
+      </div>
+    </>
+  );
+}
+
+export default Input;
