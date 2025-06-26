@@ -1,0 +1,59 @@
+// 1. Initial state
+const initialWagonState = {
+  supplies: 100,
+  distance: 0,
+  days: 0
+};
+
+// 2. Reducer function
+const wagonReducer = (state = initialWagonState, action) => {
+  switch (action.type) {
+    case 'gather': {
+      return {
+        ...state,
+        supplies: state.supplies + 15,
+        days: state.days + 1
+      };
+    }
+    case 'travel': {
+      const daysToTravel = action.payload;
+      const suppliesNeeded = 20 * daysToTravel;
+      if (state.supplies < suppliesNeeded) {
+        return state; // not enough supplies
+      }
+      return {
+        ...state,
+        supplies: state.supplies - suppliesNeeded,
+        distance: state.distance + 10 * daysToTravel,
+        days: state.days + daysToTravel
+      };
+    }
+    case 'tippedWagon': {
+      return {
+        ...state,
+        supplies: state.supplies - 30,
+        days: state.days + 1
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+// 7–11. Game simulation
+let wagon = wagonReducer(undefined, {});
+console.log('Initial:', wagon);
+
+wagon = wagonReducer(wagon, { type: 'travel', payload: 1 });
+console.log('After 1 day travel:', wagon);
+
+wagon = wagonReducer(wagon, { type: 'gather' });
+console.log('After gathering:', wagon);
+
+wagon = wagonReducer(wagon, { type: 'tippedWagon' });
+console.log('After tipped wagon:', wagon);
+
+wagon = wagonReducer(wagon, { type: 'travel', payload: 3 });
+console.log('After 3 more days travel:', wagon);
+
+// Output should match the expected state at each step
