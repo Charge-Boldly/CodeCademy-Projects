@@ -1,0 +1,85 @@
+//App.js
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.js";
+import { store } from "./store.js";
+
+const root = createRoot(document.getElementById("app"));
+
+// Store State Change Listener
+const render = () => {
+  root.render(
+    <App 
+      state={store.getState()} 
+      dispatch={store.dispatch} 
+    />
+  );
+};
+
+render();
+
+// Subscribe to state changes so UI updates automatically
+store.subscribe(render);
+
+
+//store.js
+import { createStore } from 'redux';
+
+// Action Creators
+export const increment = () => ({ type: 'increment' });
+export const decrement = () => ({ type: 'decrement' });
+
+// Reducer / Store
+const initialState = 0;
+const countReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'increment':
+      return state + 1; 
+    case 'decrement':
+      return state - 1; 
+    default:
+      return state;
+  }
+};
+
+export const store = createStore(countReducer);
+
+
+//index.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <main id="app"/>
+	<script src="https://content.codecademy.com/courses/React/react-18-course-bundle.min.js"></script>
+  <script src="index.compiled.js"></script>
+</body>
+</html>
+
+
+//Index.js
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.js";
+import { store } from "./store.js";
+
+const root = createRoot(document.getElementById("app"));
+
+// Store State Change Listener
+const render = () => {
+  root.render(
+    <App 
+      state={store.getState()} 
+      dispatch={store.dispatch} 
+    />
+  );
+};
+
+render();
+
+// Subscribe to state changes so UI updates automatically
+store.subscribe(render);
