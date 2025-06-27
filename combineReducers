@@ -1,0 +1,107 @@
+//store.js
+
+import { createStore, combineReducers } from 'redux';
+import allRecipesData from './data.js';
+
+// Action Creators
+////////////////////////////////////////
+
+export const addRecipe = (recipe) => {
+  return { 
+    type: 'favoriteRecipes/addRecipe', 
+    payload: recipe 
+  };
+}
+
+export const removeRecipe = (recipe) => {
+  return { 
+    type: 'favoriteRecipes/removeRecipe', 
+    payload: recipe 
+  };
+}
+
+export const setSearchTerm = (term) => {
+  return {
+    type: 'searchTerm/setSearchTerm',
+    payload: term
+  };
+}
+
+export const clearSearchTerm = () => {
+  return {
+    type: 'searchTerm/clearSearchTerm'
+  }; 
+}
+
+export const loadData = () => {
+  return { 
+    type: 'allRecipes/loadData', 
+    payload: allRecipesData
+  };
+}
+
+// Reducers
+////////////////////////////////////////
+
+const initialAllRecipes = [];
+const allRecipesReducer = (allRecipes = initialAllRecipes, action) => {
+  switch(action.type) {
+    case 'allRecipes/loadData': 
+      return action.payload;
+    default:
+      return allRecipes;
+  }
+}
+
+const initialSearchTerm = '';
+const searchTermReducer = (searchTerm = initialSearchTerm, action) => {
+  switch(action.type) {
+    case 'searchTerm/setSearchTerm':
+      return action.payload;
+    case 'searchTerm/clearSearchTerm':
+      return '';
+    default: 
+      return searchTerm;
+  }
+}
+
+const initialFavoriteRecipes = [];
+const favoriteRecipesReducer = (favoriteRecipes = initialFavoriteRecipes, action) => {
+  switch(action.type) {
+    case 'favoriteRecipes/addRecipe':
+      return [...favoriteRecipes, action.payload];
+    case 'favoriteRecipes/removeRecipe':
+      return favoriteRecipes.filter(recipe => recipe.id !== action.payload.id);
+    default:
+      return favoriteRecipes;
+  }
+}
+
+// Combine slice reducers into a rootReducer
+const reducers = {
+  allRecipes: allRecipesReducer,
+  favoriteRecipes: favoriteRecipesReducer,
+  searchTerm: searchTermReducer,
+};
+
+const rootReducer = combineReducers(reducers);
+
+// Create the Redux store
+export const store = createStore(rootReducer);
+
+//data.js
+const allRecipesData = [
+  { id: 0, name: 'Biscuits', img: 'img/biscuits.jpg'},
+  { id: 1, name: 'Bulgogi', img: 'img/bulgogi.jpg'},
+  { id: 2, name: 'Calamari', img: 'img/calamari.jpg'},
+  { id: 3, name: 'Ceviche', img: 'img/ceviche.jpg'},
+  { id: 4, name: 'Cheeseburger', img: 'img/cheeseburger.jpg'},
+  { id: 5, name: 'Churrasco', img: 'img/churrasco.jpg'},
+  { id: 6, name: 'Dumplings', img: 'img/dumplings.jpg'},
+  { id: 7, name: 'Fish & Chips', img: 'img/fishnchips.jpg'},
+  { id: 8, name: 'Hummus', img: 'img/hummus.jpg'},
+  { id: 9, name: 'Masala Dosa', img: 'img/masaladosa.jpg'},
+  { id: 10, name: 'Pad Thai', img: 'img/padthai.jpg'},
+];
+
+export default allRecipesData;
