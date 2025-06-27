@@ -1,0 +1,44 @@
+//store.js
+import { createStore, combineReducers } from 'redux';
+
+// Import the slice reducers here.
+import { allRecipesReducer } from '../features/allRecipes/allRecipesSlice.js';
+import { favoriteRecipesReducer } from '../features/favoriteRecipes/favoriteRecipesSlice.js';
+import { searchTermReducer } from '../features/searchTerm/searchTermSlice.js';
+
+const reducers = {
+  allRecipes: allRecipesReducer,
+  favoriteRecipes: favoriteRecipesReducer,
+  searchTerm: searchTermReducer
+}
+
+// Declare the store here.
+export const store = createStore(combineReducers(reducers));
+
+
+//favoriteRecipesSlice.js
+export const addRecipe = (recipe) => {
+  return { 
+    type: 'favoriteRecipes/addRecipe', 
+    payload: recipe 
+  };
+}
+
+export const removeRecipe = (recipe) => {
+  return { 
+    type: 'favoriteRecipes/removeRecipe', 
+    payload: recipe 
+  };
+}
+
+const initialFavoriteRecipes = [];
+export const favoriteRecipesReducer = (favoriteRecipes = initialFavoriteRecipes, action) => {
+  switch(action.type) {
+    case 'favoriteRecipes/addRecipe':
+      return [...favoriteRecipes, action.payload];
+    case 'favoriteRecipes/removeRecipe':
+      return favoriteRecipes.filter(recipe => recipe.id !== action.payload.id);
+    default:
+      return favoriteRecipes;
+  }
+}
