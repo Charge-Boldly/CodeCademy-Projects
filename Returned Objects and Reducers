@@ -1,0 +1,37 @@
+import { createSlice } from '@reduxjs/toolkit'; // Import createSlice to define Redux slices
+import { selectSearchTerm } from './searchTermSlice.js'; // Import selector for search term
+
+// Create the favoriteRecipes slice with initial state and reducers
+export const favoriteRecipesSlice = createSlice({
+  name: "favoriteRecipes", // Name used for action type prefixes
+  initialState: [],        // Start with an empty array of recipes
+  reducers: {
+    // Add a recipe by pushing the new recipe onto the state array (mutating state safely with Immer)
+    addRecipe: (state, action) => {
+      state.push(action.payload);
+    },
+    // Remove a recipe by returning a new array excluding the one with matching id
+    removeRecipe: (state, action) => {
+      return state.filter(recipe => recipe.id !== action.payload.id);
+    },
+  },
+});
+
+// Selector to get the whole favoriteRecipes state slice
+export const selectFavoriteRecipes = (state) => state.favoriteRecipes;
+
+// Selector to filter favorite recipes based on the current search term
+export const selectFilteredFavoriteRecipes = (state) => {
+  const favoriteRecipes = selectFavoriteRecipes(state);
+  const searchTerm = selectSearchTerm(state);
+
+  return favoriteRecipes.filter((recipe) =>
+    recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+// Export the generated action creators for use in dispatching actions elsewhere
+export const { addRecipe, removeRecipe } = favoriteRecipesSlice.actions;
+
+// Export the reducer as the default export for integration with the Redux store
+export default favoriteRecipesSlice.reducer;
