@@ -1,0 +1,108 @@
+//BudgetsSlice.js
+// Import createSlice from Redux Toolkit for simplified Redux logic
+import { createSlice } from '@reduxjs/toolkit';
+
+// Predefined categories for budgets
+export const CATEGORIES = [
+  "housing",
+  "food",
+  "transportation",
+  "utilities",
+  "clothing",
+  "healthcare",
+  "personal",
+  "education",
+  "entertainment",
+];
+
+// Initialize state: for each category, create an object with amount 0
+const initialState = CATEGORIES.map(category => ({
+  category: category,
+  amount: 0,
+}));
+
+// Create a slice named 'budgets' with initial state and reducers
+const budgetsSlice = createSlice({
+  name: 'budgets',          // slice name, used as action type prefix
+  initialState,             // initial budgets array
+  reducers: {
+    // editBudget reducer updates the amount for a given category
+    editBudget: (state, action) => {
+      // Find the budget object with matching category
+      const budget = state.find(b => b.category === action.payload.category);
+
+      // If budget exists, update its amount using Immer's mutable logic
+      if (budget) {
+        budget.amount = action.payload.amount;
+      }
+    }
+  }
+});
+
+// Export the generated editBudget action creator for dispatching
+export const { editBudget } = budgetsSlice.actions;
+
+// Selector function to get budgets slice from the state
+export const selectBudgets = (state) => state.budgets;
+
+// Export the reducer function as default to be used in the store
+export default budgetsSlice.reducer;
+
+
+//TransactionsSlice.js
+// Import createSlice from Redux Toolkit to simplify reducers and actions
+import { createSlice } from '@reduxjs/toolkit';
+
+// Categories for transactions, same as before
+export const CATEGORIES = [
+  "housing",
+  "food",
+  "transportation",
+  "utilities",
+  "clothing",
+  "healthcare",
+  "personal",
+  "education",
+  "entertainment",
+];
+
+// Initial state: an object with keys as categories, each with an empty array
+const initialState = Object.fromEntries(
+  CATEGORIES.map(category => [category, []])
+);
+
+// Create the transactions slice
+const transactionsSlice = createSlice({
+  name: 'transactions',   // slice name for action type prefixes
+  initialState,           // initial empty arrays per category
+  reducers: {
+    // Add a new transaction to the correct category array
+    addTransaction: (state, action) => {
+      const category = action.payload.category;
+      // Push the new transaction into the array for its category
+      state[category].push(action.payload);
+    },
+
+    // Delete a transaction from the correct category array by id
+    deleteTransaction: (state, action) => {
+      const category = action.payload.category;
+      // Filter out the transaction with matching id
+      state[category] = state[category].filter(
+        transaction => transaction.id !== action.payload.id
+      );
+    }
+  }
+});
+
+// Export the generated action creators for use in dispatching
+export const { addTransaction, deleteTransaction } = transactionsSlice.actions;
+
+// Selector to get all transactions state from the store
+export const selectTransactions = (state) => state.transactions;
+
+// Selector to flatten all category arrays into a single array of transactions
+export const selectFlattenedTransactions = (state) =>
+  Object.values(state.transactions).reduce((acc, transactions) => [...acc, ...transactions], []);
+
+// Export the reducer as the default export for the store
+export default transactionsSlice.reducer;
