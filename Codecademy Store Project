@@ -1,0 +1,187 @@
+//cartslice.js
+export const cartReducer = (cart = initialCart, action) => {
+  switch (action.type) {
+    case 'cart/addItem': {
+      const { name, price } = action.payload;
+      const quantity = cart[name] ? cart[name].quantity + 1 : 1;
+      const newItem = { price, quantity };
+      return { 
+        ...cart, 
+        [name]: newItem 
+      };
+    }
+    case 'cart/changeItemQuantity': {
+      const { name, newQuantity } = action.payload;
+      const itemToUpdate = cart[name];
+
+      // Create updatedItem immutably
+      const updatedItem = {
+        ...itemToUpdate,
+        quantity: newQuantity,
+      };
+
+      // Return new cart state with updatedItem
+      return {
+        ...cart,
+        [name]: updatedItem,
+      };
+    }
+    default:
+      return cart;
+  }
+};
+
+
+//store.js
+// Import createStore and combineReducers here.
+import { createStore, combineReducers } from 'redux';
+
+// Import the slice reducers here.
+import { inventoryReducer } from '../features/inventory/inventorySlice.js';
+import { cartReducer } from '../features/cart/cartSlice.js';
+import { currencyFilterReducer } from '../features/currencyFilter/currencyFilterSlice.js';
+
+// Create and export the store here.
+const rootReducer = combineReducers({
+  inventory: inventoryReducer,
+  cart: cartReducer,
+  currencyFilter: currencyFilterReducer,
+});
+
+export const store = createStore(rootReducer);
+
+
+//index.js
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+
+import { App } from './app/App.js';
+// Import the store here.
+import { store } from './app/store.js';
+
+const root = createRoot(document.getElementById('root'));
+
+// Pass state and dispatch props to the <App /> component.
+const render = () => {
+  root.render(
+    <App 
+      state={store.getState()}
+      dispatch={store.dispatch}
+    />
+  );
+};
+render();
+
+// Subscribe render to the store.
+store.subscribe(render);
+
+
+//app.js
+import React from 'react';
+
+import { Inventory } from '../features/inventory/Inventory.js';
+import { CurrencyFilter } from '../features/currencyFilter/CurrencyFilter.js';
+// Import the Cart component here.
+import { Cart } from '../features/cart/Cart.js';
+
+// Render the Cart component below <Inventory />
+export const App = (props) => {
+  const { state, dispatch } = props;
+
+  return (
+    <div>
+      <CurrencyFilter
+        currencyFilter={state.currencyFilter}
+        dispatch={dispatch}
+      />
+
+      <Inventory
+        inventory={state.inventory}
+        currencyFilter={state.currencyFilter}
+        dispatch={dispatch}
+      />
+
+      {/* Render Cart here */}
+      <Cart
+        cart={state.cart}
+        currencyFilter={state.currencyFilter}
+        dispatch={dispatch}
+      />
+    </div>
+  );
+};
+
+
+//cart.js
+import React from 'react';
+import {
+  calculateTotal,
+  getCurrencySymbol,
+} from '../../utilities/utilities.js';
+
+// Import the changeItemQuantity() action creator.
+import { changeItemQuantity } from './cartSlice.js';
+
+export const Cart = (props) => {
+  const { cart, currencyFilter, dispatch } = props;
+
+  const onInputChangeHandler = (name, input) => {
+    // If the user enters a bad value...
+    if (input === '') {
+      return;
+    }
+
+    // Otherwise, convert the input into a number and pass it along as the newQuantity.
+    const newQuantity = Number(input);
+
+    // Dispatch an action to change the quantity of the given name and quantity.
+    dispatch(changeItemQuantity(name, newQuantity));
+  };
+
+  // Use the cart and currencyFilter slices to render their data.
+  // Create an array of <li> elements for each item in the cart.
+  const cartElements = Object.keys(cart).map(createCartItem);
+
+  // Calculate the total price using the helper function.
+  const total = calculateTotal(cart, currencyFilter);
+
+  return (
+    <div id="cart-container">
+      <ul id="cart-items">{cartElements}</ul>
+      <h3 className="total">
+        Total{' '}
+        <span className="total-value">
+          {getCurrencySymbol(currencyFilter)}
+          {total} {currencyFilter}
+        </span>
+      </h3>
+    </div>
+  );
+
+  function createCartItem(name) {
+    const item = cart[name];
+
+    if (item.quantity === 0) {
+      return null;
+    }
+
+    return (
+      <li key={name}>
+        <p>{name}</p>
+        <select
+          className="item-quantity"
+          value={item.quantity}
+          onChange={(e) => {
+            onInputChangeHandler(name, e.target.value);
+          }}
+        >
+          {[...Array(100).keys()].map((_, index) => (
+            <option key={index} value={index}>
+              {index}
+            </option>
+          ))}
+        </select>
+      </li>
+    );
+  }
+};
