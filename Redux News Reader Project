@@ -1,0 +1,165 @@
+//comments.js
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
+// Async thunk to load comments for a specific article by ID
+export const loadCommentsForArticleId = createAsyncThunk(
+  'comments/loadCommentsForArticleId',
+  async (articleId) => {
+    const response = await fetch(`api/articles/${articleId}/comments`);
+    const json = await response.json();
+    return json; // array of comments for the article
+  }
+);
+
+// Async thunk to post a new comment for a specific article
+export const postCommentForArticleId = createAsyncThunk(
+  'comments/postCommentForArticleId',
+  async ({ articleId, comment }) => {
+    const requestBody = JSON.stringify({ comment });
+    const response = await fetch(`api/articles/${articleId}/comments`, {
+      method: 'POST',
+      body: requestBody,
+    });
+    const json = await response.json();
+    return json; // newly created comment object
+  }
+);
+
+export const commentsSlice = createSlice({
+  name: 'comments',
+  initialState: {
+    byArticleId: {},             // stores comments keyed by article ID
+    isLoadingComments: false,    // true when loading comments
+    failedToLoadComments: false, // true if loading comments failed
+    createCommentIsPending: false, // true when posting a comment
+    failedToCreateComment: false,  // true if posting comment failed
+  },
+  extraReducers: {
+    // Handle loading comments lifecycle
+    [loadCommentsForArticleId.pending]: (state) => {
+      state.isLoadingComments = true;
+      state.failedToLoadComments = false;
+    },
+    [loadCommentsForArticleId.fulfilled]: (state, action) => {
+      const articleId = action.meta.arg;
+      state.byArticleId[articleId] = action.payload;
+      state.isLoadingComments = false;
+      state.failedToLoadComments = false;
+    },
+    [loadCommentsForArticleId.rejected]: (state) => {
+      state.isLoadingComments = false;
+      state.failedToLoadComments = true;
+    },
+
+    // Handle posting comment lifecycle
+    [postCommentForArticleId.pending]: (state) => {
+      state.createCommentIsPending = true;
+      state.failedToCreateComment = false;
+    },
+    [postCommentForArticleId.fulfilled]: (state, action) => {
+      const articleId = action.payload.articleId;
+      if (!state.byArticleId[articleId]) {
+        state.byArticleId[articleId] = [];
+      }
+      state.byArticleId[articleId].push(action.payload);
+      state.createCommentIsPending = false;
+      state.failedToCreateComment = false;
+    },
+    [postCommentForArticleId.rejected]: (state) => {
+      state.createCommentIsPending = false;
+      state.failedToCreateComment = true;
+    },
+  }
+});
+
+
+
+
+//commentform.js
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createCommentIsPending,
+} from '../features/comments/commentsSlice';
+
+export default function CommentForm({ articleId }) {
+  const dispatch = useDispatch();
+  const [comment, setComment] = useState('');
+  // Declare isCreatePending here.
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // dispatch your asynchronous action here!
+
+    setComment('');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label for='comment' className='label'>
+        Add Comment:
+      </label>
+      <div id='input-container'>
+        <input
+          id='comment'
+          value={comment}
+          onChange={(e) => setComment(e.currentTarget.value)}
+          type='text'
+        />
+        <button
+
+          className='comment-button'
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  );
+}
+
+
+
+
+
+//CommentList.js
+import React from 'react';
+import Comment from './Comment';
+
+export default function CommentList({ comments }) {
+  if (comments) {
+    return (
+      <ul className='comments-list'>
+        
+      </ul>
+    );
+  }
+  return null;
+}
+
+
+
+
+//FullArticle.js
+import React from 'react';
+
+export default function FullArticle({ article }) {
+  return (
+    <>
+      <div className='article-full-image-container'>
+        <img src={article.image} alt='' />
+      </div>
+      <div key={article.id} className='current-article-container'>
+        <h1 className='current-article-title'>{article.title}</h1>
+        <div className='article-full-text'>{article.fullText}</div>
+      </div>
+    </>
+  );
+}
+
+
+export const selectComments = (state) => state.comments.byArticleId;
+export const isLoadingComments = (state) => state.comments.isLoadingComments;
+export const createCommentIsPending = (state) => state.comments.createCommentIsPending;
+
+export default commentsSlice.reducer;
