@@ -1,0 +1,15 @@
+const remindMeTo = task => {
+  return `Remember to ${task}!!!`;
+};
+
+// Checkpoint 1: Log the result of remindMeTo('call mom')
+console.log(remindMeTo('call mom'));
+
+const remindMeLater = (task) => {
+  return () => {
+    return remindMeTo(task);
+  };
+};
+
+const reminder = remindMeLater('get groceries');
+console.log(reminder());
