@@ -1,0 +1,15 @@
+const readline = require('readline');
+const fs = require('fs');
+
+// Step 1: Create the interface
+const myInterface = readline.createInterface({
+  input: fs.createReadStream('shoppingList.txt')
+});
+
+// Step 2: Define the callback function
+function printData(data) {
+  console.log(`Item: ${data}`);
+}
+
+// Step 3: Assign the function to the 'line' event
+myInterface.on('line', printData);
