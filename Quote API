@@ -1,0 +1,38 @@
+// Log requests
+app.use(morgan('dev'));
+
+// GET /api/quotes/random — return one random quote wrapped in { quote: ... }
+app.get('/api/quotes/random', (req, res) => {
+  const randomQuote = getRandomElement(quotes);
+  res.send({ quote: randomQuote });
+});
+
+// GET /api/quotes — return all quotes or filter by ?person= query
+app.get('/api/quotes', (req, res) => {
+  const { person } = req.query;
+
+  if (person) {
+    const filteredQuotes = quotes.filter(q => q.person.toLowerCase() === person.toLowerCase());
+    res.send({ quotes: filteredQuotes });
+  } else {
+    res.send({ quotes });
+  }
+});
+
+// POST /api/quotes — add a new quote from query parameters quote & person
+app.post('/api/quotes', (req, res) => {
+  const { quote, person } = req.query;
+
+  if (!quote || !person) {
+    return res.status(400).send(); // Missing required data
+  }
+
+  const newQuote = { quote, person };
+  quotes.push(newQuote);
+  res.status(201).send({ quote: newQuote });
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
