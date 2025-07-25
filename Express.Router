@@ -1,0 +1,114 @@
+const express = require('express');
+const app = express();
+
+const { getElementById, getIndexById, updateElement,
+  seedElements, createElement } = require('./utils');
+
+const PORT = process.env.PORT || 4001;
+app.use(express.static('public'));
+
+let expressions = [];
+seedElements(expressions, 'expressions');
+
+let animals = [];
+seedElements(animals, 'animals');
+
+// Create routers
+const expressionsRouter = express.Router();
+const animalsRouter = express.Router();
+
+// EXPRESSIONS ROUTES
+expressionsRouter.get('/', (req, res) => {
+  res.send(expressions);
+});
+
+expressionsRouter.get('/:id', (req, res) => {
+  const foundExpression = getElementById(req.params.id, expressions);
+  if (foundExpression) {
+    res.send(foundExpression);
+  } else {
+    res.status(404).send();
+  }
+});
+
+expressionsRouter.post('/', (req, res) => {
+  const newExpression = createElement('expressions', req.query);
+  if (newExpression) {
+    expressions.push(newExpression);
+    res.status(201).send(newExpression);
+  } else {
+    res.status(400).send();
+  }
+});
+
+expressionsRouter.put('/:id', (req, res) => {
+  const index = getIndexById(req.params.id, expressions);
+  if (index !== -1) {
+    updateElement(req.params.id, req.query, expressions);
+    res.send(expressions[index]);
+  } else {
+    res.status(404).send();
+  }
+});
+
+expressionsRouter.delete('/:id', (req, res) => {
+  const index = getIndexById(req.params.id, expressions);
+  if (index !== -1) {
+    expressions.splice(index, 1);
+    res.status(204).send();
+  } else {
+    res.status(404).send();
+  }
+});
+
+// ANIMALS ROUTES
+animalsRouter.get('/', (req, res) => {
+  res.send(animals);
+});
+
+animalsRouter.get('/:id', (req, res) => {
+  const foundAnimal = getElementById(req.params.id, animals);
+  if (foundAnimal) {
+    res.send(foundAnimal);
+  } else {
+    res.status(404).send();
+  }
+});
+
+animalsRouter.post('/', (req, res) => {
+  const newAnimal = createElement('animals', req.query);
+  if (newAnimal) {
+    animals.push(newAnimal);
+    res.status(201).send(newAnimal);
+  } else {
+    res.status(400).send();
+  }
+});
+
+animalsRouter.put('/:id', (req, res) => {
+  const index = getIndexById(req.params.id, animals);
+  if (index !== -1) {
+    updateElement(req.params.id, req.query, animals);
+    res.send(animals[index]);
+  } else {
+    res.status(404).send();
+  }
+});
+
+animalsRouter.delete('/:id', (req, res) => {
+  const index = getIndexById(req.params.id, animals);
+  if (index !== -1) {
+    animals.splice(index, 1);
+    res.status(204).send();
+  } else {
+    res.status(404).send();
+  }
+});
+
+// Mount routers
+app.use('/expressions', expressionsRouter);
+app.use('/animals', animalsRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
