@@ -1,0 +1,95 @@
+const express = require('express');
+const morgan = require('morgan');
+const app = express();
+
+app.use(express.static('public'));
+
+const PORT = process.env.PORT || 4001;
+
+// Bean storage
+const jellybeanBag = {
+  mystery: { number: 4 },
+  lemon: { number: 5 },
+  rootBeer: { number: 25 },
+  cherry: { number: 3 },
+  licorice: { number: 1 }
+};
+
+// Body-parsing middleware
+const bodyParser = (req, res, next) => {
+  let bodyData = '';
+  req.on('data', (chunk) => {
+    bodyData += chunk;
+  });
+  req.on('end', () => {
+    if (bodyData) {
+      req.body = JSON.parse(bodyData);
+    }
+    next();
+  });
+};
+
+// Logging Middleware using 'dev' format
+app.use(morgan('dev'));
+
+// Middleware to handle bean existence for /beans/:beanName routes
+app.use('/beans/:beanName', (req, res, next) => {
+  const beanName = req.params.beanName;
+  if (!jellybeanBag[beanName]) {
+    return res.status(404).send('Bean with that name does not exist');
+  }
+  req.bean = jellybeanBag[beanName];
+  req.beanName = beanName;
+  next();
+});
+
+// Routes
+app.get('/beans/', (req, res) => {
+  res.send(jellybeanBag);
+});
+
+app.post('/beans/', bodyParser, (req, res) => {
+  const { name: beanName, number } = req.body;
+  if (jellybeanBag[beanName] || jellybeanBag[beanName] === 0) {
+    return res.status(400).send('Bag with that name already exists!');
+  }
+  jellybeanBag[beanName] = { number: Number(number) || 0 };
+  res.send(jellybeanBag[beanName]);
+});
+
+app.get('/beans/:beanName', (req, res) => {
+  res.send(req.bean);
+});
+
+app.post('/beans/:beanName/add', bodyParser, (req, res) => {
+  const numberToAdd = Number(req.body.number) || 0;
+  req.bean.number += numberToAdd;
+  res.send(req.bean);
+});
+
+app.post('/beans/:beanName/remove', bodyParser, (req, res) => {
+  const numberToRemove = Number(req.body.number) || 0;
+  if (req.bean.number < numberToRemove) {
+    return res.status(400).send('Not enough beans in the jar to remove!');
+  }
+  req.bean.number -= numberToRemove;
+  res.send(req.bean);
+});
+
+app.delete('/beans/:beanName', (req, res) => {
+  jellybeanBag[req.beanName] = null;
+  res.status(204).send();
+});
+
+app.put('/beans/:beanName/name', bodyParser, (req, res) => {
+  const oldName = req.beanName;
+  const newName = req.body.name;
+  jellybeanBag[newName] = req.bean;
+  jellybeanBag[oldName] = null;
+  res.send(jellybeanBag[newName]);
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
