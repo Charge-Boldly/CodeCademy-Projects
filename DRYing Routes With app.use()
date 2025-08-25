@@ -1,0 +1,57 @@
+const express = require('express');
+const app = express();
+
+const jellybeanBag = {
+  'red': 0,
+  'green': 0,
+  'blue': 0
+};
+
+// ✅ Global middleware for logging requests
+app.use((req, res, next) => {
+  console.log(`${req.method} Request Received`);
+  next(); // pass control to the next middleware/route
+});
+
+// GET all beans
+app.get('/beans/', (req, res, next) => {
+  res.send(jellybeanBag);
+  console.log('Response Sent');
+});
+
+// GET single bean
+app.get('/beans/:beanName', (req, res, next) => {
+  const beanName = req.params.beanName;
+  res.send(jellybeanBag[beanName]);
+  console.log('Response Sent');
+});
+
+// POST new bean count
+app.post('/beans/:beanName/:num', (req, res, next) => {
+  const beanName = req.params.beanName;
+  const num = Number(req.params.num);
+  jellybeanBag[beanName] += num;
+  res.send(jellybeanBag);
+  console.log('Response Sent');
+});
+
+// PUT set bean count
+app.put('/beans/:beanName/:num', (req, res, next) => {
+  const beanName = req.params.beanName;
+  const num = Number(req.params.num);
+  jellybeanBag[beanName] = num;
+  res.send(jellybeanBag);
+  console.log('Response Sent');
+});
+
+// DELETE bean count
+app.delete('/beans/:beanName', (req, res, next) => {
+  const beanName = req.params.beanName;
+  jellybeanBag[beanName] = 0;
+  res.send(jellybeanBag);
+  console.log('Response Sent');
+});
+
+app.listen(4001, () => {
+  console.log('App is listening on port 4001');
+});
