@@ -1,0 +1,60 @@
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+
+app.use(express.static('public'));
+
+const spiceRack = [
+  { id: 1, name: 'cardamom', grams: 45 },
+  { id: 2, name: 'pimentón', grams: 20 },
+  { id: 3, name: 'cumin', grams: 450 },
+  { id: 4, name: 'sichuan peppercorns', grams: 107 }
+];
+
+let nextSpiceId = 5;
+
+app.use(bodyParser.json());
+
+// Middleware to handle spiceId parameter
+app.param('spiceId', (req, res, next, spiceId) => {
+  const index = spiceRack.findIndex(spice => spice.id === Number(spiceId));
+  if (index !== -1) {
+    req.spiceIndex = index;
+    next();
+  } else {
+    res.status(404).send('Spice not found.');
+  }
+});
+
+// Routes
+app.get('/spices', (req, res) => {
+  res.send(spiceRack);
+});
+
+app.post('/spices', (req, res) => {
+  const newSpice = req.body.spice;
+  if (newSpice.name && newSpice.grams) {
+    newSpice.id = nextSpiceId++;
+    spiceRack.push(newSpice);
+    res.send(newSpice);
+  } else {
+    res.status(400).send();
+  }
+});
+
+app.get('/spices/:spiceId', (req, res) => {
+  res.send(spiceRack[req.spiceIndex]);
+});
+
+app.put('/spices/:spiceId', (req, res) => {
+  spiceRack[req.spiceIndex] = req.body.spice;
+  res.send(spiceRack[req.spiceIndex]);
+});
+
+app.delete('/spices/:spiceId', (req, res) => {
+  spiceRack.splice(req.spiceIndex, 1);
+  res.status(204).send();
+});
+
+// Export app for testing
+module.exports = { app };
