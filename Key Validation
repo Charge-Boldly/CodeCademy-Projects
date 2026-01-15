@@ -1,0 +1,29 @@
+-- Validate primary key on book table
+SELECT
+  constraint_name,
+  table_name,
+  column_name
+FROM
+  information_schema.key_column_usage
+WHERE
+  table_name = 'book';
+
+-- Validate primary key on chapter table
+SELECT
+  constraint_name,
+  table_name,
+  column_name
+FROM
+  information_schema.key_column_usage
+WHERE
+  table_name = 'chapter';
+
+-- Validate primary key on author table
+SELECT
+  constraint_name,
+  table_name,
+  column_name
+FROM
+  information_schema.key_column_usage
+WHERE
+  table_name = 'author';
