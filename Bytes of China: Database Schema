@@ -1,0 +1,156 @@
+-- ===============================
+-- Bytes of China: Database Schema
+-- ===============================
+
+-- 1. Restaurant Table
+CREATE TABLE restaurant (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    telephone VARCHAR(20)
+);
+
+-- 2. Address Table (One-to-One with restaurant)
+CREATE TABLE address (
+    id SERIAL PRIMARY KEY,
+    street_address VARCHAR(50),
+    city VARCHAR(30),
+    state CHAR(2),
+    zip_code CHAR(5),
+    restaurant_id INT UNIQUE REFERENCES restaurant(id)
+);
+
+-- 3. Category Table
+CREATE TABLE category (
+    id CHAR(2) PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    description TEXT
+);
+
+-- 4. Dish Table
+CREATE TABLE dish (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    description TEXT,
+    is_spicy BOOLEAN DEFAULT FALSE
+);
+
+-- 5. Review Table (One-to-Many: restaurant → review)
+CREATE TABLE review (
+    id SERIAL PRIMARY KEY,
+    rating DECIMAL(2,1),
+    description TEXT,
+    review_date DATE,
+    restaurant_id INT REFERENCES restaurant(id)
+);
+
+-- 6. Many-to-Many: Category ↔ Dish
+CREATE TABLE categories_dishes (
+    category_id CHAR(2) REFERENCES category(id),
+    dish_id INT REFERENCES dish(id),
+    price MONEY,
+    PRIMARY KEY (category_id, dish_id)
+);
+
+-- ===============================
+-- Sample Data Inserts
+-- ===============================
+
+-- Restaurant
+INSERT INTO restaurant (name, telephone)
+VALUES ('Bytes of China', '617-555-1212');
+
+-- Address
+INSERT INTO address (street_address, city, state, zip_code, restaurant_id)
+VALUES ('2020 Busy Street', 'Chinatown', 'MA', '02139', 1);
+
+-- Categories
+INSERT INTO category (id, name, description) VALUES
+('AP', 'Appetizers', NULL),
+('S', 'Soup', NULL),
+('CH', 'Chicken', NULL),
+('B', 'Beef', NULL),
+('V', 'Veal', NULL),
+('VE', 'Vegetarian', NULL),
+('RN', 'Rice and Noodles', NULL),
+('LS', 'Luncheon Specials', 'Served with Hot and Sour Soup or Egg Drop Soup and Fried or Steamed Rice 11:00am-3:00pm Mon-Fri'),
+('HS', 'House Specials', NULL);
+
+-- Dishes
+INSERT INTO dish (name, description, is_spicy) VALUES
+('Spring Rolls', 'Crispy vegetable rolls', FALSE),
+('Hot and Sour Soup', 'Spicy and tangy soup', TRUE),
+('Chicken with Broccoli', 'Tender chicken with fresh broccoli', FALSE),
+('Kung Pao Chicken', 'Spicy chicken with peanuts', TRUE),
+('Beef with Broccoli', 'Sliced beef with broccoli', FALSE),
+('Moo Shu Pork', 'Pork with vegetables and pancakes', FALSE),
+('Vegetable Lo Mein', 'Noodles with fresh vegetables', FALSE),
+('Luncheon Chicken Special', 'Served with soup and rice', FALSE);
+
+-- Categories_Dishes (price depends on category)
+INSERT INTO categories_dishes (category_id, dish_id, price) VALUES
+('AP', 1, 4.95),
+('S', 2, 3.95),
+('CH', 3, 6.95),
+('CH', 4, 7.95),
+('B', 5, 7.95),
+('HS', 6, 8.95),
+('VE', 7, 6.50),
+('LS', 3, 8.95);  -- Chicken with Broccoli also part of Luncheon Specials
+
+-- Reviews
+INSERT INTO review (rating, description, review_date, restaurant_id) VALUES
+(5.0, 'Awesome service. Would love to host another birthday party at Bytes of China!', '2020-05-22', 1),
+(4.5, 'Other than a small mix-up, I would give it a 5.0!', '2020-04-01', 1),
+(3.9, 'A reasonable place to eat for lunch, if you are in a rush!', '2020-03-15', 1);
+
+-- ===============================
+-- Sample Queries
+-- ===============================
+
+-- 1. Restaurant info
+SELECT r.name, a.street_address, r.telephone
+FROM restaurant r
+JOIN address a ON r.id = a.restaurant_id;
+
+-- 2. Best rating
+SELECT MAX(rating) AS best_rating
+FROM review;
+
+-- 3. Dishes with category and price
+SELECT d.name AS dish_name, cd.price, c.name AS category
+FROM dish d
+JOIN categories_dishes cd ON d.id = cd.dish_id
+JOIN category c ON cd.category_id = c.id
+ORDER BY d.name;
+
+-- 4. Dishes sorted by category
+SELECT c.name AS category, d.name AS dish_name, cd.price
+FROM dish d
+JOIN categories_dishes cd ON d.id = cd.dish_id
+JOIN category c ON cd.category_id = c.id
+ORDER BY c.name;
+
+-- 5. Spicy dishes
+SELECT d.name AS spicy_dish_name, c.name AS category, cd.price
+FROM dish d
+JOIN categories_dishes cd ON d.id = cd.dish_id
+JOIN category c ON cd.category_id = c.id
+WHERE d.is_spicy = TRUE;
+
+-- 6. Dishes in multiple categories
+SELECT dish_id, COUNT(dish_id) AS dish_count
+FROM categories_dishes
+GROUP BY dish_id
+HAVING COUNT(dish_id) > 1;
+
+-- 7. Dish names appearing in multiple categories
+SELECT d.name AS dish_name, COUNT(cd.dish_id) AS dish_count
+FROM dish d
+JOIN categories_dishes cd ON d.id = cd.dish_id
+GROUP BY d.name
+HAVING COUNT(cd.dish_id) > 1;
+
+-- 8. Best review with description
+SELECT rating AS best_rating, description
+FROM review
+WHERE rating = (SELECT MAX(rating) FROM review);
