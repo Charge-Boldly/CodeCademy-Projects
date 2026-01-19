@@ -1,0 +1,15 @@
+-- 1. Create the trigger
+CREATE TRIGGER insert_trigger
+  BEFORE INSERT ON customers
+  FOR EACH ROW
+  EXECUTE PROCEDURE insert_function();
+
+-- 2. Check current customers
+SELECT * FROM customers;
+
+-- 3. Insert a new customer
+INSERT INTO customers (first_name, last_name)
+VALUES ('John', 'Doe');
+
+-- 4. Check customers after insert
+SELECT * FROM customers;
