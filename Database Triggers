@@ -1,0 +1,141 @@
+/* =========================================================
+   TASK 1 — Inspect tables
+   ========================================================= */
+
+SELECT * FROM customers ORDER BY customer_id;
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 2 — UPDATE trigger for name changes
+   ========================================================= */
+
+DROP TRIGGER IF EXISTS customer_name_update ON customers;
+
+CREATE TRIGGER customer_name_update
+BEFORE UPDATE ON customers
+FOR EACH ROW
+WHEN (
+    OLD.first_name IS DISTINCT FROM NEW.first_name
+    OR
+    OLD.last_name IS DISTINCT FROM NEW.last_name
+)
+EXECUTE PROCEDURE log_customers_change();
+
+
+/* =========================================================
+   TASK 3 — Test UPDATE trigger (SHOULD log)
+   ========================================================= */
+
+UPDATE customers
+SET first_name = 'Michael'
+WHERE customer_id = 1;
+
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 4 — Test UPDATE trigger (SHOULD NOT log)
+   ========================================================= */
+
+UPDATE customers
+SET city = 'Boston'
+WHERE customer_id = 1;
+
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 5 — INSERT trigger (once per statement)
+   ========================================================= */
+
+DROP TRIGGER IF EXISTS customer_insert ON customers;
+
+CREATE TRIGGER customer_insert
+AFTER INSERT ON customers
+FOR EACH STATEMENT
+EXECUTE PROCEDURE log_customers_change();
+
+
+/* =========================================================
+   TASK 6 — Insert 3 customers (ONE log entry)
+   ========================================================= */
+
+INSERT INTO customers (
+    first_name,
+    last_name,
+    email_address,
+    home_phone,
+    city,
+    state_name,
+    years_old
+)
+VALUES
+('Jeffrey','Cook','Jeffrey.Cook@example.com','202-555-0398','Jersey City','New Jersey',66),
+('Anna','Smith','Anna.Smith@example.com','202-555-0147','Denver','Colorado',34),
+('Luis','Garcia','Luis.Garcia@example.com','202-555-0182','Miami','Florida',29);
+
+SELECT * FROM customers ORDER BY customer_id;
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 7 — Conditional trigger (minimum age)
+   ========================================================= */
+
+DROP TRIGGER IF EXISTS customer_min_age ON customers;
+
+CREATE TRIGGER customer_min_age
+BEFORE UPDATE ON customers
+FOR EACH ROW
+WHEN (NEW.years_old < 13)
+EXECUTE PROCEDURE override_with_min_age();
+
+
+/* =========================================================
+   TASK 8 — Test minimum age trigger
+   ========================================================= */
+
+UPDATE customers
+SET years_old = 10
+WHERE customer_id = 2;
+
+UPDATE customers
+SET years_old = 20
+WHERE customer_id = 3;
+
+SELECT * FROM customers ORDER BY customer_id;
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 9 — Multi-column UPDATE
+   ========================================================= */
+
+UPDATE customers
+SET first_name = 'Johnny',
+    years_old = 5
+WHERE customer_id = 1;
+
+SELECT * FROM customers ORDER BY customer_id;
+SELECT * FROM customers_log;
+
+
+/* =========================================================
+   TASK 10 — Remove minimum age trigger
+   ========================================================= */
+
+DROP TRIGGER customer_min_age ON customers;
+
+
+/* =========================================================
+   TASK 11 — Verify triggers
+   ========================================================= */
+
+SELECT trigger_name,
+       event_manipulation,
+       action_timing,
+       action_orientation
+FROM information_schema.triggers
+WHERE event_object_table = 'customers'
+ORDER BY trigger_name;
